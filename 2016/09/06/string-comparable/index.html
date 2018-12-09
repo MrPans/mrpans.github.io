@@ -1,103 +1,165 @@
 <!DOCTYPE html>
-<html>
+<html lang="z">
 <head>
-  <meta charset="utf-8">
-  
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    
+    <title>深挖 Swift 中的字符串可比性 | PPPan&#39;s 平凡之路</title>
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  
-  <title>深挖 Swift 中的字符串可比性 | PPPan&#39;s 平凡之路</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="在写 《从 Swift 中的 max(_:_:) 看设计哲学》的过程中，产生了这样一个想法: 既然 max(_:_:) 可以用来对比任何 Comparable ,而 String 是符合 Comparable 的，那么用它来比较两个字符串”谁大谁小”会怎么样呢？ 由于实验结果的捉摸不定，于是产生了一探究竟的念头。过程很有趣，结果让人感叹计算机科学之深厚。同时也是典型的 How I Resolve">
-<meta property="og:type" content="article">
-<meta property="og:title" content="深挖 Swift 中的字符串可比性">
-<meta property="og:url" content="https://shengpan.net/2016/09/06/string-comparable/index.html">
-<meta property="og:site_name" content="PPPan&#39;s 平凡之路">
-<meta property="og:description" content="在写 《从 Swift 中的 max(_:_:) 看设计哲学》的过程中，产生了这样一个想法: 既然 max(_:_:) 可以用来对比任何 Comparable ,而 String 是符合 Comparable 的，那么用它来比较两个字符串”谁大谁小”会怎么样呢？ 由于实验结果的捉摸不定，于是产生了一探究竟的念头。过程很有趣，结果让人感叹计算机科学之深厚。同时也是典型的 How I Resolve">
-<meta property="og:locale" content="zh-cn">
-<meta property="og:image" content="https://shengpan.net/content/images/2016/09/google-swift-std-1.png">
-<meta property="og:image" content="https://shengpan.net/content/images/2016/09/swift-source-code.png">
-<meta property="og:image" content="https://shengpan.net/content/images/2016/09/string.png">
-<meta property="og:image" content="https://shengpan.net/content/images/2016/09/Comparable.png">
-<meta property="og:image" content="https://shengpan.net/content/images/2016/09/-.png">
-<meta property="og:image" content="https://shengpan.net/content/images/2016/09/StringComparable.png">
-<meta property="og:updated_time" content="2016-09-06T01:46:11.000Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="深挖 Swift 中的字符串可比性">
-<meta name="twitter:description" content="在写 《从 Swift 中的 max(_:_:) 看设计哲学》的过程中，产生了这样一个想法: 既然 max(_:_:) 可以用来对比任何 Comparable ,而 String 是符合 Comparable 的，那么用它来比较两个字符串”谁大谁小”会怎么样呢？ 由于实验结果的捉摸不定，于是产生了一探究竟的念头。过程很有趣，结果让人感叹计算机科学之深厚。同时也是典型的 How I Resolve">
-<meta name="twitter:image" content="https://shengpan.net/content/images/2016/09/google-swift-std-1.png">
-  
-    <link rel="alternate" href="../../../../atom.xml" title="PPPan&#39;s 平凡之路" type="application/atom+xml">
-  
-  
-    <link rel="icon" href="/favicon.png">
-  
-  
-    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-  
-  <link rel="stylesheet" href="../../../../css/style.css">
+    <meta name="description" content="PPPan&#39;s 平凡之路 一个技术博客覆盖范围包括 iOS Objecticve-C Swift Xcode 等">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="深挖 Swift 中的字符串可比性 | PPPan&#39;s 平凡之路">
+    <meta name="twitter:description" content="PPPan&#39;s 平凡之路 一个技术博客覆盖范围包括 iOS Objecticve-C Swift Xcode 等">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="深挖 Swift 中的字符串可比性 | PPPan&#39;s 平凡之路">
+    <meta property="og:description" content="PPPan&#39;s 平凡之路 一个技术博客覆盖范围包括 iOS Objecticve-C Swift Xcode 等">
+
+    
+    <meta name="author" content="PPPan">
+    
+    <link rel="stylesheet" href="../../../../css/vno.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+
+    
+    <link rel="icon" href="/images/favicon.png">
+    
+
+    <meta name="generator" content="hexo"/>
+    
+    <link rel="alternate" type="application/rss+xml" title="PPPan&#39;s 平凡之路" href="/atom.xml">
+    
+
+    <link rel="canonical" href="https://shengpan.net/2016/09/06/string-comparable/"/>
+
+                 
 </head>
 
-<body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="../../../../index.html" id="logo">PPPan&#39;s 平凡之路</a>
-      </h1>
-      
-        <h2 id="subtitle-wrap">
-          <a href="../../../../index.html" id="subtitle">做一个互联网内容的贡献者</a>
-        </h2>
-      
-    </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
-        
-          <a class="main-nav-link" href="../../../../index.html">Home</a>
-        
-          <a class="main-nav-link" href="../../../../archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="../../../../atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://shengpan.net"></form>
-      </div>
-    </div>
-  </div>
-</header>
-      <div class="outer">
-        <section id="main"><article id="post-string-comparable" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="" class="article-date">
-  <time datetime="2016-09-06T01:13:20.000Z" itemprop="datePublished">2016-09-06</time>
-</a>
+<body class="home-template no-js">
+    <script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="../../../../js/main.js"></script>
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+
     
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+<header class="panel-cover panel-cover--collapsed" style="background-image: url(/images/background-cover.jpg)">
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/" title="前往 PPPan&#39;s 平凡之路 的主页"><img src="/images/avatar.jpg" width="80" alt="PPPan&#39;s 平凡之路 logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for PPPan&#39;s 平凡之路">PPPan&#39;s 平凡之路</a></h1>
         
+        <span class="panel-cover__subtitle panel-subtitle">做一个互联网内容的贡献者</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">PPPan's 平凡之路 一个技术博客覆盖范围包括 iOS Objecticve-C Swift Xcode 等</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+
+        <div class="navigation-wrapper">
+          <div>
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item"><a href="/#blog" title="Visit the blog" class="blog-button">Blog</a></li>
+            
+              <li class="navigation__item"><a href="https://github.com/DeveloperPans">GitHub</a></li>
+            
+            </ul>
+          </nav>
+          </div>
+          <div>
+          <nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  <!-- Weibo-->
   
-    <h1 class="article-title" itemprop="name">
-      深挖 Swift 中的字符串可比性
-    </h1>
+  <li class="navigation__item">
+    <a href="http://weibo.com/u/5666355111" title="Weibo" target="_blank">
+      <i class='social fa fa-weibo'></i>
+      <span class="label">Weibo</span>
+    </a>
+  </li> 
+
+
+  <!-- Github -->
+  
+  <li class="navigation__item">
+    <a href="https://github.com/DeveloperPans" title="GitHub" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+
+
+<!-- Stack Overflow -->
+        
+
+  <!-- Google Plus -->
   
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <hr>
+<!-- Facebook -->
+
+  
+<!-- Twitter -->
+
+  <li class="navigation__item">
+    <a href="https://twitter.com/onlymonniya" title="Twitter" target="_blank">
+      <i class='social fa fa-twitter'></i>
+      <span class="label">Twitter</span>
+    </a>
+  </li>
+
+  
+
+  <li class="navigation__item">
+    <a href="/atom.xml" title="RSS" target="_blank">
+      <i class='social fa fa-rss'></i>
+      <span class="label">RSS</span>
+    </a>
+  </li>
+
+
+
+  </ul>
+</nav>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay cover-blue"></div>
+  </div> 
+</header>
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single">
+
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2016-09-06T01:13:20.000Z" class="post-list__meta--date date">2016-09-06</time> &#8226; <span class="post-meta__tags tags">于  </span>
+      <span class="page-pv">
+       Read <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>
+      </span> 
+   
+    </div>
+    <h1 class="post-title">深挖 Swift 中的字符串可比性</h1>
+  </header>
+
+  <section class="post">
+    <hr>
 <p>在写 <a href="http://shengpan.net/swift-max/">《从 Swift 中的 max(_:_:) 看设计哲学》</a>的过程中，产生了这样一个想法: <em>既然 <code>max(_:_:)</code> 可以用来对比任何 <code>Comparable</code> ,而 <code>String</code> 是符合 <code>Comparable</code> 的，那么用它来比较两个字符串”谁大谁小”会怎么样呢？</em></p>
 <p>由于实验结果的捉摸不定，于是产生了一探究竟的念头。过程很有趣，结果让人感叹计算机科学之深厚。同时也是典型的 <strong>How I Resolve A Problem</strong>,故记。</p>
 <h3 id="用-max-来对比-String"><a href="#用-max-来对比-String" class="headerlink" title="用 max 来对比 String"></a>用 max 来对比 String</h3><blockquote>
@@ -180,124 +242,101 @@
 <li><a href="http://icu-project.org/apiref/icu4c/ucol_8h.html" target="_blank" rel="noopener">ICU 57.1</a></li>
 </ul>
 
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://shengpan.net/2016/09/06/string-comparable/" data-id="cjpgo3oa5000ifzo0awbanuh9" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="../../14/auto-code-review/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          iOS 持续集成系列 - 自动化 Code Review
-        
-      </div>
-    </a>
-  
-  
-    <a href="../../05/swift-max/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">从 Swift 中的 max(_:_:) 看设计哲学</div>
-    </a>
-  
-</nav>
+  </section>
 
-  
 </article>
 
+<section class="read-more">
+           
+    
+               
+            <div class="read-more-item">
+                <span class="read-more-item-dim">Newer Post</span>
+                <h2 class="post-list__post-title post-title"><a href="/2016/09/14/auto-code-review/" title="iOS 持续集成系列 - 自动化 Code Review">iOS 持续集成系列 - 自动化 Code Review</a></h2>
+                <p class="excerpt">
+                
+                
+iOS 持续集成 - 开篇
+iOS 持续集成 - 自动化 Code Review
+[iOS 持续集成 - 自动化单元测试]
+[iOS 持续集成 - 自动化打包与分发]
+
+为了保证代码质量，Code Review 是非常重要的一环。细到*的位置是否正确，大到代码的结构是否符合了软件开发的一些基本原则
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2016-09-13T21:16:55.000Z" class="post-list__meta--date date">2016-09-14</time> &#8226; <span class="post-list__meta--tags tags">于 </span><a class="btn-border-small" href="/2016/09/14/auto-code-review/">继续阅读</a></div>
+                           
+            </div>
+        
+        
+               
+            <div class="read-more-item">
+                <span class="read-more-item-dim">Older Post</span>
+                <h2 class="post-list__post-title post-title"><a href="/2016/09/05/swift-max/" title="从 Swift 中的 max(_:_:) 看设计哲学">从 Swift 中的 max(_:_:) 看设计哲学</a></h2>
+                <p class="excerpt">
+                
+                由于 Swift 不再支持宏了，于是 MAX,MIN 等一些列常用宏都被重写为 Swift 函数。我们来看看函数的定义:
+12@warn_unused_resultpublic func max&amp;lt;T : Comparable&amp;gt;(x: T, _ y: T) -&amp;gt; T
+warn_unu
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2016-09-05T01:18:09.000Z" class="post-list__meta--date date">2016-09-05</time> &#8226; <span class="post-list__meta--tags tags">于 </span><a class="btn-border-small" href="/2016/09/05/swift-max/">继续阅读</a></div>
+                       
+            </div>
+        
+     
+   
+   
+  
 </section>
-        
-          <aside id="sidebar">
-  
-    
 
   
-    
 
-  
+            <footer class="footer">
+    <span class="footer__copyright">
+        &copy; 2018 PPPan - 本站点采用 <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+       
+    </span>
+    <span class="footer__copyright">
+            基于 <a href="http://hexo.io">Hexo</a> 搭建，使用 <a href="https://github.com/monniya/hexo-theme-new-vno ">new-vno</a> 主题，由<a href="https://monniya.com ">@Monniya</a> 修改自 <a href="https://github.com/lenbo-ma/hexo-theme-vno" target="_blank">Vno</a>, 原创出自<a href="http://github.com/onevcat/vno" target="_blank">onevcat</a>
+    </span>
+    <span class="footer__copyright">
+            <a href="http://www.miitbeian.gov.cn/">浙ICP备15035859号</a>
+    </span>
     
-  
     
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/10/">十月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/09/">九月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/07/">七月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/06/">六月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/05/">五月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/04/">四月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/02/">二月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/01/">一月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2015/12/">十二月 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2015/11/">十一月 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2015/10/">十月 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2015/09/">九月 2015</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="../../../10/07/https/">全站 HTTPS 边做边记</a>
-          </li>
-        
-          <li>
-            <a href="../../14/auto-code-review/">iOS 持续集成系列 - 自动化 Code Review</a>
-          </li>
-        
-          <li>
-            <a href="">深挖 Swift 中的字符串可比性</a>
-          </li>
-        
-          <li>
-            <a href="../../05/swift-max/">从 Swift 中的 max(_:_:) 看设计哲学</a>
-          </li>
-        
-          <li>
-            <a href="../../04/ios-ci-index/">iOS 持续集成系列 - 开篇</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-  
-</aside>
-        
-      </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      &copy; 2018 PPPan<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
-    </div>
-  </div>
 </footer>
+
+
+        </div>
     </div>
-    <nav id="mobile-nav">
-  
-    <a href="../../../../index.html" class="mobile-nav-link">Home</a>
-  
-    <a href="../../../../archives" class="mobile-nav-link">Archives</a>
-  
-</nav>
+
+     
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-78918255-1', 'auto');
+	ga('send', 'pageview');
+</script>
+
     
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?9cdad07c755fa23f6aced510c6760e87";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 
-  <link rel="stylesheet" href="../../../../fancybox/jquery.fancybox.css">
-  <script src="../../../../fancybox/jquery.fancybox.pack.js"></script>
-
-
-<script src="../../../../js/script.js"></script>
-
-
-
-  </div>
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    
 </body>
 </html>
