@@ -6336,7 +6336,7 @@ i.fa.fa-spinner.fa-spin {
   color: #fff;
 }
 .cover-navigation {
-  margin-top: 42px;
+  margin-top: 32px;
 }
 .cover-navigation--social {
   margin-left: 30px;
@@ -6376,7 +6376,7 @@ i.fa.fa-spinner.fa-spin {
 }
 .btn,
 .navigation__item a {
-  padding: 10px 20px;
+  padding: 6px 20px;
   border: 1px solid #4e97d8;
   border-radius: 20px;
   font-size: 0.9em;
