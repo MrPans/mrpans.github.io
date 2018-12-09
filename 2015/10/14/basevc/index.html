@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>iOS项目架构 - 统一行为 | PPPan&#39;s 平凡之路</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="“我们虽然在构造软件，但软件也会重新塑造我们”。在写iOS项目架构-模块化的时候，我仍然觉得我所构建的统一行为方式还算不错，可以写出来与大家探讨探讨。昨日将应用发布的闲暇之余阅读了objc中国的这篇文章，令我明白尚有更优的解决方案。本文从实际的例子出发，发表一下我的拙见，用以和上文做对照，权当抛砖引玉。 ###BaseViewController ####例子1我们在构建一个App的时候，会有许多">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS项目架构 - 统一行为">
+<meta property="og:url" content="https://shengpan.net/2015/10/14/basevc/index.html">
+<meta property="og:site_name" content="PPPan&#39;s 平凡之路">
+<meta property="og:description" content="“我们虽然在构造软件，但软件也会重新塑造我们”。在写iOS项目架构-模块化的时候，我仍然觉得我所构建的统一行为方式还算不错，可以写出来与大家探讨探讨。昨日将应用发布的闲暇之余阅读了objc中国的这篇文章，令我明白尚有更优的解决方案。本文从实际的例子出发，发表一下我的拙见，用以和上文做对照，权当抛砖引玉。 ###BaseViewController ####例子1我们在构建一个App的时候，会有许多">
+<meta property="og:locale" content="zh-cn">
+<meta property="og:updated_time" content="2015-10-14T06:58:15.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS项目架构 - 统一行为">
+<meta name="twitter:description" content="“我们虽然在构造软件，但软件也会重新塑造我们”。在写iOS项目架构-模块化的时候，我仍然觉得我所构建的统一行为方式还算不错，可以写出来与大家探讨探讨。昨日将应用发布的闲暇之余阅读了objc中国的这篇文章，令我明白尚有更优的解决方案。本文从实际的例子出发，发表一下我的拙见，用以和上文做对照，权当抛砖引玉。 ###BaseViewController ####例子1我们在构建一个App的时候，会有许多">
+  
+    <link rel="alternate" href="../../../../atom.xml" title="PPPan&#39;s 平凡之路" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="../../../../css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="../../../../index.html" id="logo">PPPan&#39;s 平凡之路</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="../../../../index.html" id="subtitle">做一个互联网内容的贡献者</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="../../../../index.html">Home</a>
+        
+          <a class="main-nav-link" href="../../../../archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="../../../../atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://shengpan.net"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-basevc" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="" class="article-date">
+  <time datetime="2015-10-14T06:55:43.000Z" itemprop="datePublished">2015-10-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      iOS项目架构 - 统一行为
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>“我们虽然在构造软件，但软件也会重新塑造我们”。在写<a href="http://shengpan.coding.io/architecture-module/" target="_blank" rel="noopener">iOS项目架构-模块化</a>的时候，我仍然觉得我所构建的统一行为方式还算不错，可以写出来与大家探讨探讨。昨日将应用发布的闲暇之余阅读了<a href="http://objccn.io/issue-13-4/" target="_blank" rel="noopener">objc中国的这篇文章</a>，令我明白尚有更优的解决方案。本文从实际的例子出发，发表一下我的拙见，用以和上文做对照，权当抛砖引玉。</p>
+<p>###BaseViewController</p>
+<p>####例子1<br>我们在构建一个App的时候，会有许多相同的行为。例如，任何需要网络请求的界面，总会需要一个indicator来告诉用户，“噢，我正在操作，请等我一下”。或者某个时候我们需要给用户一点小提示，来对他们的操作进行反馈等等。每一个ViewController都会有这样的行为。这是我们很直接地想到<strong>我们需要一个父类</strong>。</p>
+<p>于是我们新建一个基类，<code>BaseViewController</code>继承于<code>UIViewController</code></p>
+<pre><code>@interface BaseViewController : UIViewController
+/**
+ *  a little pop window used to replace laertView
+ *
+ *  @param tips tips will show to user
+ */
+- (void)showTips:(NSString *)tips;
+
+/**
+ *  When some operation need user waiting,use this method to show a HDU.
+ *
+ *  @param title will show to user
+ */
+- (void)showIndicatorWithTitle:(NSString *)title;
+
+- (void)hideIndicator;
+@end
+</code></pre><p>好了，现在我们所有的业务相关ViewController都继承自BaseViewController，并且在调用网络请求前轻松地写一句<code>[self showIndicatorWithTitle:@&quot;加载中...&quot;]</code>，并且在网络请求完成后的回调里写下<code>[self hideIndicator]</code>就可以轻松地完成指示器的显示隐藏了。感谢我们的继承！</p>
+<p>####例子2<br>再举个例子。在我的项目里访问服务器的时候需要Token，Token在某些情况下有可能过期。Token过期的时候会返回一个Token过期的状态码，此时需要用户重新登录。这个情况我们可以总结成：</p>
+<ul>
+<li>绝大多数ViewController都会发送网络请求</li>
+<li>每一个网络请求都会返回Token过期</li>
+<li>每个ViewController都需要处理Token过期的情况</li>
+</ul>
+<p>因此我们可以将这一行为抽取出来，写在BaseViewController中。这样只需要在各个业务模块的的Model层收到Token过期消息的时候，用Notification转发给BaseViewController就可以了。其他诸如网络请求失败等情况都是如此。</p>
+<p>每个项目有不同的统一行为，我们需要根据不同的行为抽取不同的基类。</p>
+<p>###使用协议<br>但是有一种情况。例如<code>LoginViewController</code>需要和<code>BaseViewController</code>一样的显示/隐藏Indicator的接口，但却没有其他相同的行为。这时继承就显得不太合适了。</p>
+<p>想象一下<code>BaseViewController</code>因为Token过期Present了<code>LoginViewController</code>,而<code>LoginViewController</code>因为继承了<code>BaseViewController</code>又不停地Present另一个<code>LoginViewController</code>…这时候如果使用继承的话，就不得不写一些脏代码来避免这样的情况。</p>
+<p>正如那篇文章所说，此时我们可以用协议<code>@protocol</code>来替代继承。</p>
+<pre><code>@protocol PSIndicator &lt;NSObject&gt;
+
+- (void)showTips:(NSString *)tips;
+- (void)showIndicatorWithTitle:(NSString *)title;
+- (void)hideIndicator;
+
+@end
+</code></pre><p>然后在<code>LoginViewController</code>中：</p>
+<pre><code>@interface LoginViewController : UIViewController&lt;PSIndicator&gt;
+
+@end
+</code></pre><p>###最后<br>如果你在读这篇文章的时候想到，网络请求相关的内容为什么不直接封装在网络操作相关的模块，由它来负责指示器的显示和隐藏。这样还能省去手动调用的麻烦。关于这一点，在<a href="http://shengpan.coding.io/architecture-module/" target="_blank" rel="noopener">这篇文章</a>里已经做了讨论。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://shengpan.net/2015/10/14/basevc/" data-id="cjpgo3o960001fzo0ywzmyl01" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="../man-tan-ioszhong-de-mvc/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          漫谈iOS中的MVC
+        
+      </div>
+    </a>
+  
+  
+    <a href="../standard/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">iOS项目架构 - 规范</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/10/">十月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/09/">九月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/07/">七月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/06/">六月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/05/">五月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/04/">四月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/02/">二月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/01/">一月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2015/11/">十一月 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2015/10/">十月 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2015/09/">九月 2015</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="../../../../2016/10/07/https/">全站 HTTPS 边做边记</a>
+          </li>
+        
+          <li>
+            <a href="../../../../2016/09/14/auto-code-review/">iOS 持续集成系列 - 自动化 Code Review</a>
+          </li>
+        
+          <li>
+            <a href="../../../../2016/09/06/string-comparable/">深挖 Swift 中的字符串可比性</a>
+          </li>
+        
+          <li>
+            <a href="../../../../2016/09/05/swift-max/">从 Swift 中的 max(_:_:) 看设计哲学</a>
+          </li>
+        
+          <li>
+            <a href="../../../../2016/09/04/ios-ci-index/">iOS 持续集成系列 - 开篇</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 PPPan<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="../../../../index.html" class="mobile-nav-link">Home</a>
+  
+    <a href="../../../../archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="../../../../fancybox/jquery.fancybox.css">
+  <script src="../../../../fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="../../../../js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

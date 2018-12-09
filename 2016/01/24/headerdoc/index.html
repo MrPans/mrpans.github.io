@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>利用HeaderDoc自动生成API文档 | PPPan&#39;s 平凡之路</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="最近在为公司写框架和组件库。大家都建议在文档上需要更加完善一些。于是在思考如何规范地完善文档？面向非技术型的boss们的说明性文档，手工写即可。面向组件使用者的文档呢？一方面，要保证注释的完整性，以保证其他同事在使用的时候只看注释即可。另一方面又需要要一份文本文档，以便随时查阅。如何同时做到这两点？ 关于文档，业界有一些成熟的解决方案。例如评价颇高的AppleDoc，还有从Xcode 5,iOS7">
+<meta property="og:type" content="article">
+<meta property="og:title" content="利用HeaderDoc自动生成API文档">
+<meta property="og:url" content="https://shengpan.net/2016/01/24/headerdoc/index.html">
+<meta property="og:site_name" content="PPPan&#39;s 平凡之路">
+<meta property="og:description" content="最近在为公司写框架和组件库。大家都建议在文档上需要更加完善一些。于是在思考如何规范地完善文档？面向非技术型的boss们的说明性文档，手工写即可。面向组件使用者的文档呢？一方面，要保证注释的完整性，以保证其他同事在使用的时候只看注释即可。另一方面又需要要一份文本文档，以便随时查阅。如何同时做到这两点？ 关于文档，业界有一些成熟的解决方案。例如评价颇高的AppleDoc，还有从Xcode 5,iOS7">
+<meta property="og:locale" content="zh-cn">
+<meta property="og:image" content="https://shengpan.net/content/images/2016/01/-----2016-01-24-13-32-04-2.png">
+<meta property="og:image" content="https://shengpan.net/content/images/2016/01/-----2016-01-24-13-34-03-1.png">
+<meta property="og:image" content="https://shengpan.net/content/images/2016/01/-----2016-01-24-13-36-47-1.png">
+<meta property="og:image" content="https://shengpan.net/content/images/2016/01/-----2016-01-24-13-53-50.png">
+<meta property="og:image" content="https://shengpan.net/content/images/2016/01/5.png">
+<meta property="og:image" content="https://shengpan.net/content/images/2016/01/-----2016-01-24-13-55-14.png">
+<meta property="og:image" content="https://shengpan.net/content/images/2016/01/-----2016-01-24-14-28-23.png">
+<meta property="og:image" content="https://shengpan.net/content/images/2016/01/-----2016-01-24-14-26-41-1.png">
+<meta property="og:updated_time" content="2016-01-23T22:54:06.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="利用HeaderDoc自动生成API文档">
+<meta name="twitter:description" content="最近在为公司写框架和组件库。大家都建议在文档上需要更加完善一些。于是在思考如何规范地完善文档？面向非技术型的boss们的说明性文档，手工写即可。面向组件使用者的文档呢？一方面，要保证注释的完整性，以保证其他同事在使用的时候只看注释即可。另一方面又需要要一份文本文档，以便随时查阅。如何同时做到这两点？ 关于文档，业界有一些成熟的解决方案。例如评价颇高的AppleDoc，还有从Xcode 5,iOS7">
+<meta name="twitter:image" content="https://shengpan.net/content/images/2016/01/-----2016-01-24-13-32-04-2.png">
+  
+    <link rel="alternate" href="../../../../atom.xml" title="PPPan&#39;s 平凡之路" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="../../../../css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="../../../../index.html" id="logo">PPPan&#39;s 平凡之路</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="../../../../index.html" id="subtitle">做一个互联网内容的贡献者</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="../../../../index.html">Home</a>
+        
+          <a class="main-nav-link" href="../../../../archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="../../../../atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://shengpan.net"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-headerdoc" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="" class="article-date">
+  <time datetime="2016-01-23T20:23:57.000Z" itemprop="datePublished">2016-01-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      利用HeaderDoc自动生成API文档
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近在为公司写框架和组件库。大家都建议在文档上需要更加完善一些。于是在思考如何规范地完善文档？<br>面向非技术型的boss们的说明性文档，手工写即可。面向组件使用者的文档呢？一方面，要保证注释的完整性，以保证其他同事在使用的时候只看注释即可。另一方面又需要要一份文本文档，以便随时查阅。如何同时做到这两点？</p>
+<p>关于文档，业界有一些成熟的解决方案。例如评价颇高的<a href="https://github.com/tomaz/appledoc" target="_blank" rel="noopener">AppleDoc</a>，还有从Xcode 5,iOS7开始集成在Xcode中的<a href="https://developer.apple.com/library/mac/documentation/DeveloperTools/Conceptual/HeaderDoc/usage/usage.html" target="_blank" rel="noopener">HeaderDoc</a>。本着一切以官方为准的原则，选择了HeaderDoc来完成这项工作。</p>
+<h3 id="用HeaderDoc有什么好处？"><a href="#用HeaderDoc有什么好处？" class="headerlink" title="用HeaderDoc有什么好处？"></a>用HeaderDoc有什么好处？</h3><p><strong>与Xocde兼容</strong></p>
+<p>将鼠标移动到某一行方法上，按option+鼠标左键试试？</p>
+<p><img src="/content/images/2016/01/-----2016-01-24-13-32-04-2.png" alt=""></p>
+<p><strong>可以自动导出文档</strong></p>
+<p><img src="/content/images/2016/01/-----2016-01-24-13-34-03-1.png" alt=""><br><img src="/content/images/2016/01/-----2016-01-24-13-36-47-1.png" alt=""></p>
+<p>居然如此炫酷，还不赶紧跟我一起用起HeaderDoc,走(tiao)上(jin)人(wen)生(dang)巅(da)峰(keng)？</p>
+<h3 id="HeaderDoc-的注释标准"><a href="#HeaderDoc-的注释标准" class="headerlink" title="HeaderDoc 的注释标准"></a>HeaderDoc 的注释标准</h3><p>HeaderDoc的注释，一般我们会用到以下几种：</p>
+<p><strong>头文件注释</strong></p>
+<p>头文件基本信息。这个用在每个源代码文件的头文件的最开头。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">/*!</span><br><span class="line"> </span><br><span class="line"> @header UIImage+Scale.h</span><br><span class="line"> </span><br><span class="line"> @abstract 图片压缩的Category</span><br><span class="line"> </span><br><span class="line"> @author Created by Pan on 16/1/24.</span><br><span class="line"> </span><br><span class="line"> @version 1.2.0 16/1/24 Creation</span><br><span class="line">  </span><br><span class="line"> */</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>@header</code> 与该源代码文件的名字一致</li>
+<li><code>@abstract</code> 关于这个源代码文件的一些基本描述</li>
+<li><code>@author</code> Sheng Pan (作者信息)</li>
+<li><code>@version</code> 1.2.0 2012/01/20 Creation (此文档的版本信息)</li>
+</ul>
+<p><strong>类注释</strong></p>
+<p>关于此类的一些信息。此注释用在类声明的开头。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">/*!</span><br><span class="line"></span><br><span class="line">@class PSCarouselView</span><br><span class="line"></span><br><span class="line">@abstract 轮播控件，实现了常见的图片轮播功能。</span><br><span class="line"></span><br><span class="line">*/</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>@class</code> 与该类名一致</li>
+</ul>
+<p><strong>属性注释</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">/*!</span><br><span class="line"></span><br><span class="line">@property nameLabel</span><br><span class="line"></span><br><span class="line">@abstract 用于显示用户名的Label</span><br><span class="line"></span><br><span class="line">*/</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>@property</code> 与该属性名一致</li>
+</ul>
+<p><strong>方法注释</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">/*!</span><br><span class="line"> </span><br><span class="line"> @abstract 将图片等比缩小</span><br><span class="line"> </span><br><span class="line"> @discussion 将图片等比缩小,注意:此方法在主线程运行，处理大量图片请使用scaleImageOnBackgroud:</span><br><span class="line"> </span><br><span class="line"> @param ratio 缩小的倍数。例如，如想缩小为原图的1/2 ratio = 2.0</span><br><span class="line"> </span><br><span class="line"> @result UIImage</span><br><span class="line"> </span><br><span class="line"> */</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>@discussion</code> 该方法的详细描述，包括方法的一些注意事项，适用情况条件等等。</li>
+</ul>
+<p><strong>枚举注释</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">/*!</span><br><span class="line"> </span><br><span class="line"> @enum Gender</span><br><span class="line"> </span><br><span class="line"> @abstract 性别枚举</span><br><span class="line"> </span><br><span class="line"> @constant GenderUnknow 性别未知</span><br><span class="line"> </span><br><span class="line"> @constant GenderMale 男</span><br><span class="line"></span><br><span class="line"> @constant GenderFemale 女</span><br><span class="line"></span><br><span class="line"> */</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>@enum</code> 与枚举名称一致</li>
+<li><code>@constant</code> 与枚举值一致，后面添加描述</li>
+</ul>
+<p><strong>Category注释</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">/*!</span><br><span class="line"> </span><br><span class="line"> @category  Scale</span><br><span class="line"> </span><br><span class="line"> @abstract  UIImage的Category,添加图片压缩的相关功能</span><br><span class="line"> </span><br><span class="line"> */</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><code>@category</code> 与Category名称一致</li>
+</ul>
+<p><strong>Protocol注释</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">/*!</span><br><span class="line"></span><br><span class="line">@protocol HTModelCallBack</span><br><span class="line"></span><br><span class="line">@abstract Model的回调接口。</span><br><span class="line"></span><br><span class="line">@discussion 想接收Model回调的类，申明并实现此接口，即可获取从HTBaseModel中回调的信息。注意：接收回调的前提，是使用DESIGNATED_INITIALIZER来初始化HTBaseModel(或其子类).</span><br><span class="line"></span><br><span class="line">*/</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><code>@Protocol</code> 与Protocol名称一致</li>
+</ul>
+<p>常用的注释基本上就是这些，如果还需要了解更多注释的关键字请查阅<a href="https://developer.apple.com/library/mac/documentation/DeveloperTools/Conceptual/HeaderDoc/usage/usage.html" target="_blank" rel="noopener">官方文档</a>。</p>
+<h3 id="自动生成标准注释"><a href="#自动生成标准注释" class="headerlink" title="自动生成标准注释"></a>自动生成标准注释</h3><p>以上的注释格式如此繁琐，手工输入绝对不是我等懒鬼的作风。自动生成注释有以下几种方法</p>
+<ol>
+<li>修改Xcode模版文件，一劳永逸。</li>
+<li>利用Xode的code snapshot，快速编写注释。</li>
+<li>fork一份<a href="https://github.com/onevcat/VVDocumenter-Xcode" target="_blank" rel="noopener">VV-Documentor-Xcode</a>然后修改里面的注释风格。（VV-Documentor-Xcode原来的注释风格不支持导出文档）。</li>
+</ol>
+<p>后两种不多做介绍，在此介绍一下修改Xcode模版文件的方法。</p>
+<p><strong>打开finder，前往如下路径</strong></p>
+<p><code>/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/Library/Xcode/Templates/File Templates/Source/Cocoa Touch Class.xctemplate</code></p>
+<p>我们会看到这样一个目录</p>
+<p><img src="/content/images/2016/01/-----2016-01-24-13-53-50.png" alt=""></p>
+<p>每个文件夹下面的文件，就是各种系统类(包括你继承下来的子类)的模版文件。修改哪个文件夹下的模版文件，创建对应类(和继承自其子类的类)时，就会自动生成模版里预定的注释。</p>
+<p>文件夹内包含了.h和.m两份文件，分别对应.h和.m文件的模版</p>
+<p><img src="/content/images/2016/01/5.png" alt=""></p>
+<p>我们打开.h模版文件，可以看到如下信息</p>
+<p><img src="/content/images/2016/01/-----2016-01-24-13-55-14.png" alt=""></p>
+<p>此处有几个系统的宏</p>
+<ul>
+<li><code>FILENAME</code>：文件名</li>
+<li><code>PROJECTNAME</code>：项目名</li>
+<li><code>FULLUSERNAME</code>：当前mac用户全称</li>
+<li><code>DATE</code>：日期</li>
+<li><code>COPYRIGHT</code>：版权声明</li>
+</ul>
+<p>我们将头文件修改为如下格式，在创建类的时候就可以自动生成我们需要的注释格式了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">/*! </span><br><span class="line"></span><br><span class="line">  @header ___FILENAME___</span><br><span class="line"></span><br><span class="line">  @abstract &lt;#abstract#&gt;</span><br><span class="line"></span><br><span class="line">  @author Created by ___FULLUSERNAME___ on ___DATE___.</span><br><span class="line"></span><br><span class="line">  @version &lt;#version#&gt; ___DATE___ Creation</span><br><span class="line"></span><br><span class="line">___COPYRIGHT___</span><br><span class="line"></span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line">___IMPORTHEADER_cocoaTouchSubclass___</span><br><span class="line"></span><br><span class="line">/*!</span><br><span class="line"> </span><br><span class="line">  @class ___FILEBASENAMEASIDENTIFIER___</span><br><span class="line"> </span><br><span class="line">  @abstract &lt;#description#&gt;</span><br><span class="line"> </span><br><span class="line"> */</span><br><span class="line">@interface ___FILEBASENAMEASIDENTIFIER___ : ___VARIABLE_cocoaTouchSubclass___</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p>其他文件如法炮制即可。</p>
+<p>==*<em>注意:</em>== 记得逐一修改<code>Cocoa Touch Class.xctemplate</code>文件夹内每一个类的模版文件。只有修改过的类和其子类会起作用。</p>
+<h3 id="自动导出文档。"><a href="#自动导出文档。" class="headerlink" title="自动导出文档。"></a>自动导出文档。</h3><p>规范的注释标好后，导出文档就很方便了。有两种方法可以导出文档。</p>
+<h4 id="用命令行导出文档"><a href="#用命令行导出文档" class="headerlink" title="用命令行导出文档"></a>用命令行导出文档</h4><p>首先输出文档</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">headerdoc2html -o DESTINATION_PATH PROJECT_PATH</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>DESTINATION_PATH</code>：文档输出目标文件夹。如<code>~/Desktop/documentation</code></li>
+<li><code>PROJECT_PATH</code> ：项目目录。如<code>~/Desktop/project</code></li>
+</ul>
+<p>然后创建一个文档索引</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gatherheaderdoc DESTINATION_PATH INDEX_PAGE_NAME</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>DESTINATION_PATH</code>：文档输出目标文件夹。如<code>~/Desktop/documentation</code></li>
+<li><code>INDEX_PAGE_NAME</code>：索引页的名字。如<code>index.html</code></li>
+</ul>
+<h4 id="用Xcode-Build一份文档"><a href="#用Xcode-Build一份文档" class="headerlink" title="用Xcode Build一份文档"></a>用Xcode Build一份文档</h4><p>这个方法本质上也是用命令行导出文档。无非是可以不再需要手动管理文档路径，每个项目可以对应一个文档路径。用流行的话来说，就是一次配置，到处留情。哦不，是一次配置，自动运行。</p>
+<p>首先在你的项目中新建一个target。类型选择为Other-Aggregate。</p>
+<p><img src="/content/images/2016/01/-----2016-01-24-14-28-23.png" alt=""></p>
+<p>在Target的Build-Phases中，点击加号，选择New Run Phases Script。</p>
+<p><img src="/content/images/2016/01/-----2016-01-24-14-26-41-1.png" alt=""></p>
+<p>粘贴如下脚本（注意修改你自己的工程目录和导出目录）</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># shell script goes here</span></span><br><span class="line"></span><br><span class="line">headerdoc2html -o ~<span class="regexp">/Desktop/doc</span> /Users/pan/DEV/iOS/ios-standardization/Example/Pods/Headers/Public/HTStandard</span><br><span class="line"></span><br><span class="line">gatherheaderdoc ~<span class="regexp">/Desktop/doc</span> index.html</span><br><span class="line"></span><br><span class="line">exit <span class="number">0</span></span><br></pre></td></tr></table></figure>
+<p>最后，选择这个target，并Run。然后就等待奇迹的发生吧。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://shengpan.net/2016/01/24/headerdoc/" data-id="cjpgo3o9l0005fzo0g9e2k4lf" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="../app-store-review-guidelines/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          App Store审核指南-中文版
+        
+      </div>
+    </a>
+  
+  
+    <a href="../../../../2015/11/12/pscarouselview/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">谈谈组件封装的思路和实现--PSCarouselView</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/10/">十月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/09/">九月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/07/">七月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/06/">六月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/05/">五月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/04/">四月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/02/">二月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/01/">一月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2015/11/">十一月 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2015/10/">十月 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2015/09/">九月 2015</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="../../../10/07/https/">全站 HTTPS 边做边记</a>
+          </li>
+        
+          <li>
+            <a href="../../../09/14/auto-code-review/">iOS 持续集成系列 - 自动化 Code Review</a>
+          </li>
+        
+          <li>
+            <a href="../../../09/06/string-comparable/">深挖 Swift 中的字符串可比性</a>
+          </li>
+        
+          <li>
+            <a href="../../../09/05/swift-max/">从 Swift 中的 max(_:_:) 看设计哲学</a>
+          </li>
+        
+          <li>
+            <a href="../../../09/04/ios-ci-index/">iOS 持续集成系列 - 开篇</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 PPPan<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="../../../../index.html" class="mobile-nav-link">Home</a>
+  
+    <a href="../../../../archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="../../../../fancybox/jquery.fancybox.css">
+  <script src="../../../../fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="../../../../js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

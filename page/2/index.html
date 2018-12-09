@@ -1,0 +1,1462 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>PPPan&#39;s 平凡之路</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="PPPan&apos;s 平凡之路 一个技术博客覆盖范围包括 iOS Objecticve-C Swift Xcode 等">
+<meta property="og:type" content="website">
+<meta property="og:title" content="PPPan&#39;s 平凡之路">
+<meta property="og:url" content="https://shengpan.net/page/2/index.html">
+<meta property="og:site_name" content="PPPan&#39;s 平凡之路">
+<meta property="og:description" content="PPPan&apos;s 平凡之路 一个技术博客覆盖范围包括 iOS Objecticve-C Swift Xcode 等">
+<meta property="og:locale" content="zh-cn">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PPPan&#39;s 平凡之路">
+<meta name="twitter:description" content="PPPan&apos;s 平凡之路 一个技术博客覆盖范围包括 iOS Objecticve-C Swift Xcode 等">
+  
+    <link rel="alternate" href="../../atom.xml" title="PPPan&#39;s 平凡之路" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="../../css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="../../index.html" id="logo">PPPan&#39;s 平凡之路</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="../../index.html" id="subtitle">做一个互联网内容的贡献者</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="../../index.html">Home</a>
+        
+          <a class="main-nav-link" href="../../archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="../../atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://shengpan.net"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-storyboard2" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="../../2016/02/22/storyboard2/" class="article-date">
+  <time datetime="2016-02-21T23:53:04.000Z" itemprop="datePublished">2016-02-22</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="../../2016/02/22/storyboard2/">Storyboard的爱与恨（下）</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Scene的转场"><a href="#Scene的转场" class="headerlink" title="Scene的转场"></a>Scene的转场</h3><p>如我们所料，Storyboard也可以通过可视化的操作来实现Scene的转场。</p>
+<p>故事板的转场有两种，可以分为手动触发和自动触发。自动触发完全由Storyboard实现，而手动触发则需要配合代码。前者简单易用，后者适用于配合业务逻辑，进行不同转场的触发。自动触发的转场非常简单，我们只需选择一个UIControl(比如UIButton),按住Control+左键，拖线至目标Scene,选择<code>Action</code>类型，即可在触发UIControl的某些事件的时候，自动执行转场。<br><img src="/content/images/2016/02/ooooo-1.gif" alt=""></p>
+<p>例如利用UIButton转场，实际上是在触发<code>TouchUpInside</code>事件时执行。这一简单的操作实际上相当于如下代码:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">- (void)viewDidLoad</span><br><span class="line">&#123;</span><br><span class="line">    [self.button addTarget:self</span><br><span class="line">                    action:@selector(showPSViewControllerB)</span><br><span class="line">          forControlEvents:UIControlEventTouchUpInside];</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)showPSViewControllerB</span><br><span class="line">&#123;</span><br><span class="line">    PSViewControllerB *viewController = [[PSViewControllerB alloc]init];</span><br><span class="line">    //配置..传值...</span><br><span class="line">    [self.navigationController pushViewController:viewController animated:YES];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Storyboard将Scene转场变成了可视化的操作又引入了一个新的问题，需要如何传递参数给目标ViewController？</p>
+<p>解决方法就是，我们需要在Storyboard中给Segue一个Identifier，然后在源ViewController中重写如下方法即可:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender</span><br><span class="line">&#123;</span><br><span class="line">    if ([segue.identifier isEqualToString:[PSViewControllerB description]])</span><br><span class="line">    &#123;</span><br><span class="line">        PSViewControllerB *vc = segue.destinationViewController;</span><br><span class="line">        //配置..传值..</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>手动触发则需要代码配合。不同的是，拖线的对象从UIControl变成了UIViewController(不要忘了在Storyboard中填写Segue Identifier)。</p>
+<p><img src="/content/images/2016/02/aaa.gif" alt=""></p>
+<p>然后在代码中需要转场的地方，加上<code>performSegueWithIdentifier:sender:</code>即可。例子如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//self:PSViewControllerA</span><br><span class="line">    if (isBizSuccess)&#123;</span><br><span class="line">        [self performSegueWithIdentifier:[PSViewControllerB description] sender:parameter];</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        [self showTips:@&quot;some failure reason&quot;];</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>你可以利用<code>performSegueWithIdentifier:sender:</code>来进行任何形式的转场。Segue为我们的转场提供了不同的Action，囊括了常见的UINavigationViewController的push，或者所有ViewController都可以执行的Modelly Presentation。</p>
+<blockquote>
+<p>事实上，在iOS 8以后，我们就可以利用Storyboard结合代码实现自定义的转场，无论是在哪一种上下文环境中。</p>
+</blockquote>
+<p>采用Storyboard进行Scene转场的好处在于，一个ViewController的所有转场代码，都集中到了<code>prepareForSegue:sender:</code>方法中，debug或者添加新功能时，可以很容易顺藤摸瓜。但缺点同样明显。每次转场的修改/删除需要同时修改Storyboard和代码文件。同时，随着项目的进行，越来越多的Scene和业务逻辑，导致Storyboard中Segue的数量剧增，难以维护。</p>
+<p><em>巨量的Segue(仅仅是部分截图)</em></p>
+<p><img src="/content/images/2016/02/-----2016-02-22-17-04-05.png" alt="难以维护的Segue"></p>
+<h4 id="多Storyboard协作"><a href="#多Storyboard协作" class="headerlink" title="多Storyboard协作"></a>多Storyboard协作</h4><p>解决如上问题的方法就是，尽量将项目的界面分割在多个Storyboard文件中。一个最佳实践是，按照项目功能模块来区分故事板，例如<code>Login.Storyboard</code>,<code>Chat.Storyboard</code>,<code>Person.Storyboard</code>等。尽量把每个Storyboard的Scene数量控制在20个以内。</p>
+<p>同时，Scene间的转场我们依然可以采用Segue,并且使用起来和单个Storyboard无异。这要多亏Apple在iOS 9新推出的<br><a href="http://shengpan.net/top-tips-for-ios9/#StoryboardReference">UIStoryboard Reference</a>。</p>
+<h3 id="代码可视化"><a href="#代码可视化" class="headerlink" title="代码可视化"></a>代码可视化</h3><p>还有什么能比代码可视化更加炫酷的呢？作为前端工程师，最享受的时候，就是枯燥的代码和算法变成了优美的动画。但这一切都只在按下command+R之后。</p>
+<p>现在，通过Storyboard,我们也可以在编译时实时预览我们的代码所产生的效果。</p>
+<h4 id="IB-DESIGNABLE"><a href="#IB-DESIGNABLE" class="headerlink" title="IB_DESIGNABLE"></a>IB_DESIGNABLE</h4><p><img src="/content/images/2016/02/IB_DESIGNABLE.gif" alt=""></p>
+<p>通过为自定义的View添加<code>IB_DESIGNABLE</code>关键字（注意图中关键字的位置）,我们让Storyboard为我们自定义的视图进行实时渲染。有的人可能会担心实时渲染造成的性能问题。这点大可放心，Xcode有一套非常优秀的缓存机制(优秀到有些时候必须要clean一下，某些小改动才会在真机上生效),只需要编译一次，视图就会被缓存，不会造成每次在Storyboard、代码文件中切换时多次渲染的问题。</p>
+<blockquote>
+<p>在swift中则为@IBDesignable，放在class关键字之前</p>
+</blockquote>
+<p>到这里令人惊叹的类似Playground的事实渲染功能，已经可以动态地应用在项目中了。我们可以利用IB_DESIGNABLE和IBInspectable来制作图表等高度自定义的、独特的视图。</p>
+<p>当然，故事板狂魔对故事板的使用不会就此罢手的，本着一切能用Storyboard配置就不写代码的原则，我们也希望可以在故事板中配置自定义控件的属性。幸运的是，Apple再次为我们的想法提供了可能。</p>
+<h4 id="IBInspectable"><a href="#IBInspectable" class="headerlink" title="IBInspectable"></a>IBInspectable</h4><p><img src="/content/images/2016/02/IBInspectable.gif" alt=""></p>
+<p>通过为自定义View的属性添加<code>IBInspectable</code>关键字（注意图中关键字的位置），我们可以将原本需要代码配置的属性，放到故事板中。IBInspectable支持以下类型的属性：</p>
+<ul>
+<li>BOOL </li>
+<li> NSString</li>
+<li>NSNumber </li>
+<li>CGPoint</li>
+<li>CGSize</li>
+<li>CGRect</li>
+<li>UIColor</li>
+<li>NSRange</li>
+<li>UIImage</li>
+</ul>
+<blockquote>
+<p>在swift中则为@IBInspectable，放在var关键字之前</p>
+</blockquote>
+<h4 id="为系统控件添加IBInspectable"><a href="#为系统控件添加IBInspectable" class="headerlink" title="为系统控件添加IBInspectable"></a>为系统控件添加IBInspectable</h4><p>不少设计设都喜欢设计圆角。通常我们需要写如下代码:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">view.layer.cornerRadius = 5;</span><br><span class="line">view.layer.masksToBounds = YES;</span><br></pre></td></tr></table></figure>
+<p>为了解决这些重复代码的问题，有的人喜欢为View写Category，一行代码实现圆角。然而这需要在不同的ViewController中不断引入这个Category,不够优雅。当然，这种小事情我们也肯定不会愿意采用继承的。</p>
+<p>实际上，我们只需要为项目添加一个View的Category，在其中声明一个@property并加上IBInspectable关键字,然后在实现文件中的getter&amp;&amp;setter方法中实现具体的逻辑。<strong>不用import头文件，也不需要运行</strong>,Storyboard中将自动出现这个属性以供配置。这不正是我们梦寐以求的完全解耦吗！？</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//UIView+CornerRadius.h</span><br><span class="line">@interface UIView (CornerRadius)</span><br><span class="line"></span><br><span class="line">@property (nonatomic, assign) IBInspectable CGFloat cornerRadius;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">//UIView+CornerRadius.m</span><br><span class="line">@implementation UIView (CornerRadius)</span><br><span class="line"></span><br><span class="line">- (void)setCornerRadius:(CGFloat)cornerRadius</span><br><span class="line">&#123;</span><br><span class="line">    self.layer.cornerRadius = cornerRadius;</span><br><span class="line">    self.layer.masksToBounds = cornerRadius &gt; 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (CGFloat)cornerRadius</span><br><span class="line">&#123;</span><br><span class="line">    return self.layer.cornerRadius;</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p><img src="/content/images/2016/02/CornerRadius.gif" alt=""></p>
+<blockquote>
+<p>实际上，IBInspectable是对运行时属性进行的一种拓展，你在Attributed Inspector中进行的自定义属性配置，都会在Identity Inspector的运行时属性中得到体现。</p>
+</blockquote>
+<h3 id="Storyboard的弊端"><a href="#Storyboard的弊端" class="headerlink" title="Storyboard的弊端"></a>Storyboard的弊端</h3><p>Storyboard也并非十全十美的。它依然有许多的问题亟待解决，有些致命的问题，更是成为导致许多开发者放弃Storyboard的原因。在iOS9普及率已经达到<a href="https://developer.apple.com/support/app-store/" target="_blank" rel="noopener">77%</a>的今天，Storyboard仍然有很多问题需要完善。</p>
+<h4 id="难以维护"><a href="#难以维护" class="headerlink" title="难以维护"></a>难以维护</h4><p>Storyboard在某些角度上，是难以维护的。我所遇到过的实际情况是，公司一个项目的2.0版本，设计师希望替换原有字体。然而原来项目的每一个Label都是采用Storyboard来定义字体的，因此替换新字体需要在Storyboard中更改每一个Label。</p>
+<p>幸亏我们知道Storyboard的源文件是XML，最终写了一个读取-解析-替换脚本来搞定这件事。</p>
+<h4 id="性能瓶颈"><a href="#性能瓶颈" class="headerlink" title="性能瓶颈"></a>性能瓶颈</h4><p>当项目达到一定的规模，即使是高性能的MacBook Pro,在打开Storyboard是也会有3-5秒的读取时间。无论是只有几个Scene的小东西，还是几十个Scene的庞然大物，都无法避免。Scene越多的文件，打开速度越慢(从另一个方面说明了分割大故事板的重要性)。</p>
+<p>让人沮丧的是，这个造成卡顿的项目规模并不是太难达到。</p>
+<p>我猜想是由于每一次打开都需要进行I/O操作造成的，Apple对这一块的缓存优化没有做到位。可能是由于Storyboard占用了太多内存，难以在内存中进行缓存。Whatever,这个问题总是让人困扰的。</p>
+<p>然而需要指出的是，采用Storyboard开发或采用纯代码开发的App，在真机的运行效率上，并没有太大的区别。</p>
+<h4 id="错误定位困难"><a href="#错误定位困难" class="headerlink" title="错误定位困难"></a>错误定位困难</h4><p>Storyboard的初学者应该对此深有体会。排除BAD_EXCUSE错误不说，单单是有提示的错误，就足以让人在代码和Storyboard之间来回摸索，却无法找到解决方案。</p>
+<p>一个典型的例子是，在代码中删除了IBOUTLET属性或者IBAction方法，但是却忘了在Storyboard中删除对应的连接，运行后crash。然而控制台只会输出一些模糊其词的错误描述。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">*** Terminating app due to uncaught exception &apos;NSUnknownKeyException&apos;, </span><br><span class="line">reason: &apos;[&lt;DrawViewController 0x7fe9f6a11240&gt; setValue:forUndefinedKey:]: </span><br><span class="line">this class is not key value coding-compliant for the key drawButton.&apos;</span><br></pre></td></tr></table></figure>
+<p>有经验的开发者可以从drawButton这个关键字中找到突破口，但大部分刚接触Storyboard的开发者，会被困在其中。</p>
+<h3 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h3><p>综合其利弊，毅然选择了站在Storyboard这边。一方面是其提供的便利，另一方面是Apple对Storyboard的大力支持。这一点宏观上看，可以在以往对Storyboard的改进和增强上看出，微观上看，几乎所有iOS 8之后的simple code都或多或少采用了Storyboard作为界面开发工具。有理由相信，Storyboard的未来是光明的。</p>
+<p>愿大家在Storyboard的路(keng)上，越走越远。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://shengpan.net/2016/02/22/storyboard2/" data-id="cjpgo3oa4000hfzo08zsxxk3y" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-storyboard" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="../../2016/02/02/storyboard/" class="article-date">
+  <time datetime="2016-02-01T22:30:53.000Z" itemprop="datePublished">2016-02-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="../../2016/02/02/storyboard/">Storyboard的爱与恨（上）</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>尽管现在已经是Apple将Storyboard整合进Xcode中的第四个年头，大家对于Storyboard的评价仍然褒贬不一。<a href="http://onevcat.com/2013/12/code-vs-xib-vs-storyboard/" target="_blank" rel="noopener">有早期就选择转向Storyboard</a>用于UI开发的国内业界领头人物，也有<a href="http://martinnormark.com/the-story-of-no-storyboard-in-ios-development/" target="_blank" rel="noopener">创建项目就立马删除Storyboard</a>的大牛。我经历过纯代码布局，同时也在多个多人合作项目中使用Storyboard开发界面。在初期绕过各种坑后，Storyboard将会是快速构建UI界面的好帮手，特别是在现如今设备分辨率与尺寸日益增加的情况下，它可以帮助工程师们节约大量的界面代码书写时间。Storyboard存在的一大意义在于为UI提供了可视化开发方式，另一方面提供了一种更好的MVC的View层实现方式，让你的ViewController代码更简洁。当然，Storyboard的不足仍然不可忽视，错误的难以定位经常让刚上手的开发者们手足无措，相比于代码更不容易阅读的XML源文件所导致多人合作中的冲突不易解决等问题仍然有待完善。本文从各个方面介绍一下Storyboard，分享一下Storyboard的一些使用心得。</p>
+<h3 id="历史"><a href="#历史" class="headerlink" title="历史"></a>历史</h3><p>1986年Jean-Marie Hullot发明了IB(Interface Build–Storyboard的前身),并且和Macintosh的工具箱无缝融合，这一工具被Denison Bollay发现了。第二年， Denison Bollay带着Hullot和他的IB到NeXT,将IB演示给Steve Jobs看。老乔立意识到了IB的价值，并将其纳入到了NeXTSTEP中。之后Steve 带着NeXT的技术结晶(当然也包括IB)重新回归Apple，并将之整合到了Apple的体系中。2008年第一代iPhone SDK发布的时候，IB就已经捆绑在其中。到了Xcode4,Apple更是直接将其集成进IDE里。随后随着不断地改进，更新，演变，最终变成了我们今天所看到的Storyboard。从某种角度来说，Storyboard也是老乔留给我们的众多礼物之一。</p>
+<h3 id="故事板能做什么"><a href="#故事板能做什么" class="headerlink" title="故事板能做什么"></a>故事板能做什么</h3><p>故事板主要为我们提供了以下的功能：(这些功能都是<strong>可视化</strong>的)</p>
+<ul>
+<li>Auto Layout</li>
+<li>Size Classes</li>
+<li>Secnce的跳转 </li>
+<li>代码可视化</li>
+</ul>
+<h4 id="Auto-Layout"><a href="#Auto-Layout" class="headerlink" title="Auto Layout"></a>Auto Layout</h4><p>自动布局颠覆了之前直接操作Frame的布局方式，从思考<strong>View应该在哪个位置</strong>,变成了考虑<strong>在特定条件下，View的所处的位置需要满足哪些条件</strong>。通过这些条件来确定View的Frame。自动布局在实际应用中大体上可以将分为三组:</p>
+<p><strong>View与Super View的约束</strong></p>
+<p><img src="/content/images/2016/02/-----2016-02-19-15-27-33.png" alt=""></p>
+<p><strong>View自身的约束</strong></p>
+<p><img src="/content/images/2016/02/-----2016-02-19-15-27-47-2.png" alt=""></p>
+<p><strong>View与Other View的约束</strong></p>
+<p><img src="/content/images/2016/02/-----2016-02-19-15-27-58-2-1.png" alt=""></p>
+<p>假如我们需要在代码中使用自动布局可以使用<br><a href="https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/AutolayoutPG/VisualFormatLanguage.html" target="_blank" rel="noopener">Visual Format Language</a>或者<code>NSLayoutConstraint</code>的简单工厂方法来生成约束，然后添加到View上。我们来看一个例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">//用代码来实现上图中View与Super View的约束</span><br><span class="line">    UIView *superView = self.view;</span><br><span class="line">    UIView *subView = [[UIView alloc] init];</span><br><span class="line">    NSLayoutConstraint *leadingConstraint = [NSLayoutConstraint constraintWithItem:superView</span><br><span class="line">                                                           attribute:NSLayoutAttributeLeading</span><br><span class="line">                                                           relatedBy:NSLayoutRelationEqual</span><br><span class="line">                                                              toItem:subView</span><br><span class="line">                                                           attribute:NSLayoutAttributeLeading</span><br><span class="line">                                                          multiplier:1</span><br><span class="line">                                                            constant:15];</span><br><span class="line">    NSLayoutConstraint *TrailingConstraint = [NSLayoutConstraint constraintWithItem:superView</span><br><span class="line">                                                                         attribute:NSLayoutAttributeTrailing</span><br><span class="line">                                                                         relatedBy:NSLayoutRelationEqual</span><br><span class="line">                                                                            toItem:subView</span><br><span class="line">                                                                         attribute:NSLayoutAttributeTrailing</span><br><span class="line">                                                                        multiplier:1</span><br><span class="line">                                                                          constant:15];</span><br><span class="line"></span><br><span class="line">//topConstraint init...</span><br><span class="line">//bottomConstraint init...</span><br><span class="line">    [superView addConstraint:leadingConstraint];</span><br><span class="line">    [superView addConstraint:TrailingConstraint];</span><br><span class="line">    [superView addConstraint:topConstraint];</span><br><span class="line">    [superView addConstraint:bottomConstraint];</span><br><span class="line">    </span><br><span class="line">    // 如果是iOS8+ 则使用下面的方式来激活Constraint</span><br><span class="line">    // leadingConstraint.active = YES;</span><br><span class="line">    // leadingConstraint.active = YES;</span><br><span class="line">    // leadingConstraint.active = YES;</span><br><span class="line">    // leadingConstraint.active = YES;</span><br></pre></td></tr></table></figure>
+<p>是不是一大团乱糟糟的代码?Visual Format Language用起来更加令人崩溃。好在业界已经有比较好的代码自动布局的<a href="https://github.com/SnapKit/Masonry" target="_blank" rel="noopener">第三方解决方案</a>。但是仍然会有大堆的简单界面布局代码残留在你的代码中。</p>
+<p>为了让你的生活更轻松(也为了让代码更清爽)，Storyboard就包含了非常优雅的可视化自动布局解决方案。以上一切，在Storyboard中都被浓缩成了两个按钮（下图红圈中的椭圆按钮）。</p>
+<p><img src="/content/images/2016/02/1111.png" alt=""></p>
+<ul>
+<li>红框1:为被选中View和离他最近的View(可能是SuperView,也可能是另一个同层级的View,看哪个离它更近)添加Leading、Training、Top、Bottom四个属性约束。</li>
+<li>红框2:为View添加自身宽和高约束</li>
+<li>红色椭圆左侧按钮:当选中多个View时，为多个View添加约束</li>
+</ul>
+<p>只需要点击几下鼠标，Storyboard就可以帮你轻松完成视图布局。</p>
+<h4 id="Auto-Layout-Debug"><a href="#Auto-Layout-Debug" class="headerlink" title="Auto Layout Debug"></a>Auto Layout Debug</h4><p>使用代码来对Auto Layout布局的另一个缺点在于debug的困难。当添加了多余的约束，往往只能在运行时才能发现错误。同时，要寻找出是哪一行代码添加了错误的约束也比较费力(往往连控制台都没有错误输出)。</p>
+<p>而Storyboard却为此提供了非常友好的静态检查。主要针对View的约束、布局提供警告和Error,甚至是解决方案。</p>
+<p><img src="/content/images/2016/02/-----2016-02-19-16-30-51.png" alt=""></p>
+<p>上图的例子是：我们为Label添加了多余的约束，Storyboard用红色标记出冲突的约束，并给出修改建议:<em>删除其中一个约束以保证约束的正确性。</em>是不是很友好？ ：）</p>
+<h4 id="Size-Classes"><a href="#Size-Classes" class="headerlink" title="Size Classes"></a>Size Classes</h4><p>Apple 与iOS 8推出了Size Classes的概念。意在解决因设备尺寸造成的适配问题。Size Classes通过将界面的宽度和高度抽象为<code>正常</code>和<code>紧凑</code>两种概念，通过合理的组合，可以将现有设备(以及未来将要出现的设备)划分到不同的Size中。因此，无论是代码还是界面布局，只需要针对Size进行，而不用再拘泥于分辨是iPhone还是iPad,是横屏还是竖屏的问题了。Size Classes的推出是具有前瞻性的，无论是Apple Watch还是iOS 9推出的的iPad 分屏模式，都可以用Size Classes完美解决适配的问题。</p>
+<p>Size Classes和现有设备的对照表如下：</p>
+<p><img src="/content/images/2016/02/-----2016-02-19-16-50-33.png" alt=""></p>
+<p>在之前，我们要对横屏竖屏的界面进行区分，代码一般是这样的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">if (IPAD_PORTRAIT)</span><br><span class="line">&#123;</span><br><span class="line">    //TODO:modify something portrait</span><br><span class="line">&#125;</span><br><span class="line">else</span><br><span class="line">&#123;</span><br><span class="line">    //TODO:modify something landscape</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在Size Classes时代，Apple引入了一个新的类<code>UITraitCollection</code>来封装水平和垂直方向的Size信息。现在我们通过代码来改变界面是这样的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">- (void)willTransitionToTraitCollection:(UITraitCollection *)newCollection </span><br><span class="line">              withTransitionCoordinator:(id &lt;UIViewControllerTransitionCoordinator&gt;)coordinator</span><br><span class="line">&#123;</span><br><span class="line">    [super willTransitionToTraitCollection:newCollection </span><br><span class="line">                 withTransitionCoordinator:coordinator];</span><br><span class="line">    [coordinator animateAlongsideTransition:^(id &lt;UIViewControllerTransitionCoordinatorContext&gt; context) </span><br><span class="line">    &#123;</span><br><span class="line">        if (newCollection.verticalSizeClass == UIUserInterfaceSizeClassCompact) &#123;</span><br><span class="line">            //To Do: modify something for compact vertical size</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            //To Do: modify something for other vertical size</span><br><span class="line">        &#125;</span><br><span class="line">        [self.view setNeedsLayout];</span><br><span class="line">    &#125; completion:nil];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在TODO中做相对应Size的事。</p>
+<p>可以想见的是，仍然会有非常多的布局代码占据着你的源文件。但在Storyboard中，一切变得异常简单。</p>
+<p>使用Size Classes，我们只需要选择相对应的size，在那个Size下进行布局。运行时，就会根据设备的尺寸，自动地展示相对应Size的布局。比如iPhone竖屏就展示<code>width Compact height Regular</code>Size下的信息。当手机横屏，系统会自动添加一个过渡动画(虽然有点生硬),并转到<code>width Regular height Compact</code>的Size。这一切不需要一行代码。</p>
+<blockquote>
+<p>能不能再给力点?</p>
+</blockquote>
+<p>Sure.有这么一种情景:<em>iPhone横屏下，拥有一个<code>avatarView</code>,竖屏下拥有一个相同的<code>avatar View</code></em>。这种情况下我们只需要在一个Size中完成这个View,然后在Storyboard的<code>attributed inspector</code>中做一些勾选，将其”install”进相对应的Size中，就可以达到复用的目的。如果有差异，则在对应的Size中定制即可。（如下图）</p>
+<p><img src="/content/images/2016/02/-----2016-02-19-17-07-12-1.png" alt=""></p>
+<blockquote>
+<p>能不能再给力点儿？</p>
+</blockquote>
+<p>Of Course！除了View,约束也可以不同Size配置不同。最厉害的是，图片文件也可以根据Size来区分。我们只需要对<code>.xcassets</code>文件勾选Size Classes,就可以为不同Size配置不同图片.这意味着，在同一个安装包下，通过Size Classes，我们甚至可以为横屏iPhone和竖屏iPhone做出完全不同的App!</p>
+<p><img src="/content/images/2016/02/-----2016-02-19-17-29-01.png" alt=""></p>
+<p><a href="http://shengpan.net/storyboard2">Storyboard的爱与恨(下)</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://shengpan.net/2016/02/02/storyboard/" data-id="cjpgo3oa3000gfzo0ub41lxpj" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-app-store-review-guidelines" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="../../2016/01/24/app-store-review-guidelines/" class="article-date">
+  <time datetime="2016-01-23T23:26:37.000Z" itemprop="datePublished">2016-01-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="../../2016/01/24/app-store-review-guidelines/">App Store审核指南-中文版</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="出处"><a href="#出处" class="headerlink" title="出处"></a>出处</h2><p>本文原文来自<a href="http://www.cocoachina.com/appstore/20160125/15089.html" target="_blank" rel="noopener">Cocoachina</a>.本文对其整理归纳，重点标注出开发者们不熟悉且容易触碰的雷区，并做了页内跳转的制作和格式的美化，以方便阅读和查询。</p>
+<p>英文版文档原文为<a href="https://developer.apple.com/app-store/review/guidelines/" target="_blank" rel="noopener">App Store Review Guidelines</a></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>感谢您付出宝贵的才华与时间来开发iOS应用程程序。从职业与报酬的角度而言，这对于成千上万的开发员来说一直都是一项值得投入的事业，我们希望帮助您加入这个成功的组织。我们发布了《App Store审核指南》（App Store Review Guidelines），希望通过它帮您避开开发应用程序过程中的一些问题，并帮你在提交应用时加快审核流程。</p>
+<p>我们将应用程序（Apps）视为与书籍或歌曲不同的产品，我们并不存储它们。如果您意欲批评宗教，那就去写本书。如果您想要描述性，那就写本书或写首歌，或者可以创建一个医疗程序。这么做可能会比较复杂，但是我们不允许在应用程序商店（App Store）出现某种禁止内容。这会让您认识到我们秉持的更为深远的目的：</p>
+<p>我们有很多可供儿童可以下载的应用程序。家长的监护可以很好地保护孩子，但是您需要做您应该做的那一部分。因此，您要了解我们时刻在留心着您的孩子。</p>
+<p>App Store中有数百万的应用。如果您的应用程序没有什么有益的用途，不是独一无二的或者不能提供持续性的娱乐功能，那它可能不会被我方接受。</p>
+<p>如果您的应用程序看上去像是那种只花了几天功夫简单拼凑出来的产品，或者只是想在我们的商店中抓住朋友的眼球，请提前做好被拒的准备。我们有很多态度严谨的开发者，不希望他们的高品质应用程序充斥在一些业余作品之中。</p>
+<p>我们将拒绝任何包含越界内容或行为的应用程序。您可能会问道，具体限制是什么？最高法院的法官曾有言：”它出现时我自然心中有数。”当您越过这一范围时，我们认为您也会有自知之明。</p>
+<p>如果您的应用程序被拒，我们设立了一个审查委员会供您上诉。如果您去媒体抨击我们，肯定对您于事无补。</p>
+<p>如果您试着作弊（比如在审核流程中作假，窃取用户数据，抄袭其他开发者作品，或者操作应用评分），我们将会移除您的应用程序，并且将您从开发者计划中除名。</p>
+<p>这是一个动态文档，新提交的应用程序会导致新的问题产生，并可能随时产生新的规则。或许您的应用程序会触及到这一点。 </p>
+<p>最后要说明的是，我们非常珍惜这个平台，并且向您的作品表示敬意。我们确实在尝试尽力创建全球最佳平台，以便让您展示才华，同时获得相应的报酬。如果这读上去让您感觉我们的控制欲过强，那是因为我们曾向用户承诺保证，我们将利用我们的产品让他们获得高品质体验。</p>
+<p>目录</p>
+<ol>
+<li><a href="#1">条款与条件</a></li>
+<li><a href="#2">功能</a></li>
+<li><a href="#3">元数据</a></li>
+<li><a href="#4">位置</a></li>
+<li><a href="#5">推送通知</a></li>
+<li><a href="#6">游戏中心</a></li>
+<li><a href="#7">广告</a></li>
+<li><a href="#8">内容和知识产权</a></li>
+<li><a href="#9">媒体内容</a></li>
+<li><a href="#10">用户界面</a></li>
+<li><a href="#11">购买与货币</a></li>
+<li><a href="#12">抓取与聚合</a></li>
+<li><a href="#13">设备损害</a></li>
+<li><a href="#14">人身攻击</a></li>
+<li><a href="#15">暴力</a></li>
+<li><a href="#16">令人反感的内容</a></li>
+<li><a href="#17">隐私</a></li>
+<li><a href="#18">色情</a></li>
+<li><a href="#19">宗教、文化与种族</a></li>
+<li><a href="#20">竞赛、赌博、彩票和抽奖</a></li>
+<li><a href="#21">慈善与援助</a></li>
+<li><a href="#22">法律要件</a></li>
+<li><a href="#23">Wallet</a></li>
+<li><a href="#24">儿童类别</a></li>
+<li><a href="#25">扩展</a></li>
+<li><a href="#26">HomeKit</a></li>
+<li><a href="#27">HealthKit</a></li>
+<li><a href="#28">TestFlight</a></li>
+<li><a href="#29">Apple Pay</a></li>
+</ol>
+<h3 id="1">1. 条款和条件</h3><br>1.1 为App Store开发程序，开发者必须遵守<a href="https://idmsa.apple.com/IDMSWebAuth/login?&amp;appIdKey=891bd3417a7776362562d2197f89480a8547b108fd934911bcbea0110d07f757&amp;path=%2F%2Fmembercenter%2Findex.action#agreements" target="_blank" rel="noopener">Program License Agreement(PLA)</a>、<a href="https://developer.apple.com/library/ios/documentation/UserExperience/conceptual/mobilehig/" target="_blank" rel="noopener">人机交互指南（HIG）</a>以及开发者和苹果签订的任何其他协议和合同。以下规则和例证旨在帮助开发者的程序能获得App Store的认可，而不是修改或删除任何其他协议中的条款。<br><br><h3 id="2">2. 功能</h3>
+
+<p>2.1 崩溃的程序将会被拒绝。</p>
+<p>2.2 存在错误的程序将会被拒绝。</p>
+<p>2.3 跟开发者宣传不符的程序将会被拒绝。</p>
+<p>2.4 无应用文档或隐藏功能与描述不符的程序将会被拒绝。</p>
+<p>2.5 使用非公开API的程序将会被拒绝。</p>
+<p>==2.6 在指定容器范围外读写数据的程序将会被拒绝。==</p>
+<p>2.7 以任何方式或形式下载代码的程序将会被拒绝。</p>
+<p>2.8 安装或运行其他可执行代码的程序将会被拒绝。</p>
+<p>2.9 Demo版、trial版和test版的程序将会被拒绝。 Beta版应用程序仅能通过TestFlight提交，并且必须遵守相关指南。</p>
+<p>==2.10 iPhone程序必须不经修改就能以iPhone分辨率和2倍 iPhone 3GS的分辨率在iPad上运行。==</p>
+<p>2.11 与App Store已有程序重复的应用可能会被拒绝，特别是数量很多的情况下，比如手电筒应用和爱经应用。</p>
+<p>2.12 没有显著用途、不独特的应用程序或者与网站简单捆绑的应用有可能被拒；不提供任何持久娱乐价值的程序可能会被拒绝。</p>
+<p>2.13 内容主要是营销材料或广告的程序将会被拒绝。</p>
+<p>2.14 包含欺骗或虚假功能，却有没有标明的应用程序将会被拒绝。</p>
+<p>2.15 大于100MB无法通过蜂窝网络下载的应用（App Store会自动禁止）。</p>
+<p>2.16 多任务程序使用后台服务仅限于几种目的：VoIP、音频播放、地理位置、完成任务以及本地提醒等。</p>
+<p>==2.17 应用程序只允许使用iOS WebKit框架和WebKit Javascript浏览web内容。==</p>
+<p>2.18 鼓励酗酒或使用违禁药物，或引诱青少年饮酒或吸烟的程序将会被拒绝。</p>
+<p>2.19 提供错误的系统诊断或不精确的设备数据的应用将会被拒绝。</p>
+<p>==2.20 向App Store上传大量相似版本程序的开发者将会从iOS开发者计划中除名。==</p>
+<p>2.21 简单一首歌曲或者一部影片应用要提交到iTunes store，书籍类应用应该提交到iBookstore。</p>
+<p>==2.22 武断地根据环境（如定位或者运营商）限制用户使用的应用会被拒。==</p>
+<p>2.23 应用必须遵守iOS数据储存指导方针<a href="https://developer.apple.com/icloud/documentation/data-storage/index.html" target="_blank" rel="noopener">（iOS Data Storage Guidelines）</a>，否则应用将被拒。</p>
+<p>2.24 存放在Newsstand的应用必须遵守开发者项目许可协议<a href="https://developer.apple.com/membercenter/index.action#agreements" target="_blank" rel="noopener">（Program License Agreement）</a>的表1、表2以及表3，否则应用将会被拒。</p>
+<p>==2.25 使用户将其与App Store混淆，或者基于购买或者促销的目的而展示其他应用的应用将会被拒绝==</p>
+<p>2.26 只有当app是出于特殊审核需要（比如健康管理、航空以及无障碍需求等）或为特殊群体用户提供具有重大意义的附加值时，才可以展示和推荐自身以外的其他应用程序，否则应用程序将会被拒绝。</p>
+<p>2.27 如果App的核心功能不能使用Siri遥控器，那么App将会被拒绝。不过应用程序可以提供与游戏控制器或者其他周边设备相连接的增强功能。（2015.10 新增）</p>
+<h3 id="3">3. 元数据（名称、描述、评级、排名等）</h3>
+
+<p>==3.1 应用或者元数据中提到其他任何移动平台将会被拒。==<br>案例：AppStore上架描述中提到”Android同步上架”。</p>
+<p>3.2 带有占位符文本的程序将会被拒绝。</p>
+<p>3.3 应用程序的名称、描述、截图或者预览与应用的内容和功能不相关将会被拒绝。（旧版：3.3 描述中有与程序内容和功能不相关的信息的应用将会被拒绝。）</p>
+<p>==3.4 为了不混淆用户，iTunes Connect中的应用名称应该和展示在设备上的应用名称一致。==</p>
+<p>3.5 不同尺寸的app icon要一致，否则会造成混淆。</p>
+<p>3.6 应用程序的icon、截图、预览以及位于Apple TV主屏幕顶部展区的Apple TV app的图片展示不符合4+年龄评级的程序将会被拒绝。 （2015.10 修正）</p>
+<p>（旧版：应用程序的icon、截图以及预览不符合4+年龄评级的程序将会被拒绝。）</p>
+<p>3.7 目录与类型不适合于程序内容的程序将会被拒绝。</p>
+<p>3.8 开发者有责任为其程序指定适合的评级。不相称的评级可能会由苹果公司修改。</p>
+<p>3.9 开发者有责任为其程序指定恰当的关键字。不恰当的关键词可能会被苹果公司修改/删除。</p>
+<p>3.10试图通过伪造评论或者付费评论的方式在AppStore中操纵或者其欺骗用户评论（或者采用其他不正当方式）以提升排名的开发者将会被苹果从iOS开发者计划中除名。</p>
+<p>3.11 在安装或打开应用之前，推荐用户重启iOS设备的应用将会被拒。</p>
+<p>3.12 提交审核的应用程序应包含能正常运行的URL，比如支持服务URL和隐私政策URL。</p>
+<p>3.13 应用程序的截图、预览或者营销文本没有清晰地指出附加内容或项目需要额外单独购买（比如使用IAP）将会被拒绝。</p>
+<p>3.14 App预览仅能使用从应用程序捕获的视频屏幕、旁白、文本以及design overlays，否则应用程序将会被拒绝。</p>
+<p>==3.15 添加App预览的应用程序，未经许可展示真人个人信息将会被拒绝。==</p>
+<p>3.16 App预览仅能使用在所有选定地区内经过授权许可、用于此目的的音乐。</p>
+<p>3.17 App预览和截图包含未经授权的通过App（如音乐、视频以及以及相关封面艺术设计）播放的内容或流媒体将会被拒绝。（2015.10 修正）</p>
+<p>（旧版：App预览包含未经授权的通过app播放的内容（比如iTunes playlist和YouTube流媒体）的应用将会被拒绝。）</p>
+<h3 id="4">4. 位置</h3>
+
+<p>4.1 在收集、传输或使用位置数据之前未通知并获得用户同意的程序将会被拒绝。</p>
+<p>4.2 将基于位置的API用于车辆、飞机或其他设备的自动控制或自主控制的应用程序将会被拒绝。</p>
+<p>4.3 将基于位置的API用于应急服务的应用程序将会被拒绝。（旧版：4.3 将基于位置的API用于调度、车队管理或应急服务的程序将会被拒绝。）</p>
+<p>4.4 当与提供的功能或服务密切相关，或者为支持经过授权的广告时，应用程序才可以使用位置数据。</p>
+<h3 id="5">5. 推送通知</h3>
+
+<p>5.1 不使用苹果推送通知 (APN)应用接口提供推送通知的程序将会被拒绝。</p>
+<p>5.2 未从苹果获得Push Application ID便擅自使用APN服务的程序将会被拒绝。</p>
+<p>5.3 在首次推送消息或者要求运行推送通知之前未获得用户许可的应用将会被拒绝。</p>
+<p>==5.4 使用推送通知发送敏感个人信息或机密信息的程序将会被拒绝。==</p>
+<p>5.5 使用推送通知发送非请求消息，或用于钓鱼或群发垃圾信息用途的程序将会被拒绝。</p>
+<p>5.6 应用程序不可使用推送通知发送广告、促销或任何类型的直销信息。</p>
+<p>5.7 应用程序不能向使用推送通知服务的用户收取费用。</p>
+<p>5.8 使用推送通知会过多利用APN服务的网络流量或带宽或给设备带来过度负担的程序将会被拒绝。</p>
+<p>5.9 如果应用程序传送病毒、文件、计算机代码或程序，并且对APN服务的正常运行造成损害或中断，那么该程序将会被拒绝。</p>
+<h3 id="6">6. 游戏中心</h3>
+
+<p>6.1 向终端用户或任意第三方显示玩家ID的程序将会被拒绝。</p>
+<p>6.2 将玩家ID用于任何未经游戏中心条款批准用途的程序将会被拒绝。</p>
+<p>6.3 试图进行反向搜索、跟踪、关联、挖掘、获得或利用玩家ID、别名或通过游戏中心获得其他信息的开发者将会iOS开发者计划除名。</p>
+<p>6.4 游戏中心信息（例如排行榜分数），只能用于游戏中心批准的应用程序中。</p>
+<p>6.5 利用游戏中心服务发送非请求信息，或用于钓鱼或群发垃圾邮件的程序将会被拒绝。</p>
+<p>6.6 过多使用游戏中心网络流量或带宽的应用程序将会被拒绝。</p>
+<p>6.7 如果程序能够传送病毒、文件、计算机代码或程序，并且对游戏中心服务的正常运行造成损害或中断，该程序将会被拒绝。</p>
+<h3 id="7">7. 广告</h3>
+
+<p>7.1 人工刷广告浏览量或者广告点击率的应用程序将会被拒绝。</p>
+<p>==7.2 包含空iAd广告的应用程序将会被拒绝。==<br>例子:使用了广告标识符但是没有展示广告。（审核信息正确填写可以绕过这一案例）</p>
+<p>7.3 主要设计目的在于显示广告的应用程序将会被拒绝。</p>
+<h3 id="8">8. 内容与知识产权</h3>
+
+<p>8.1 应用程序必须遵守”Guidelines for Using Apple Trademarks and Copyrights”和”Apple Trademark List”中说明的所有条款与条件。</p>
+<p>8.2 任何误导和暗示苹果公司是该应用程序来源或提供商，或者苹果公司以任何形式表示认可其质量或功能的应用程序将会被拒绝。</p>
+<p>8.3 与目前已有苹果产品或者广告主题外观相似或混淆的应用程序将会被拒绝。</p>
+<p>==8.4 在应用程序名称中将苹果产品名拼错的应用程序（例如，GPS for Iphone，iTunz）将会被拒绝。==<strong>注</strong>，拼写注意大小写:iPhone,iPad,iOS…</p>
+<p>8.5 应用程序不得使用受保护的第三方材料（比如商标、版权以及专利），不能违反第三方使用条款。必须提供使用这些材料的授权许可。</p>
+<p>8.6 若无明确授权许可，从第三方来源处（比如YouTube、SoundCloud以及Vimeo等）下载音乐或者视频内容的应用程序将会被拒绝。（2015.3 新增）</p>
+<h3 id="9">9. 媒体内容</h3>
+
+<p>9.1 不使用媒体播放器框架（MediaPlayer Framework）获取音乐库中媒体内容的应用程序将会被拒绝。</p>
+<p>9.2 用户界面模仿任何iPod或者iTunes界面的应用程序将会被拒绝。</p>
+<p>==9.3 通过蜂窝网络传输的音频流内容每5分钟不得超过5MB。==<br><strong>注</strong>:做音乐播放器的开发者们需要特别关注</p>
+<p>9.4通过蜂窝网络传输超过10分钟的视频流内容必须使用HTTP Live Streaming协议，并且要包含一个基线为192kbps或者更低的HTTP实时流。（2015.3 修正）</p>
+<h3 id="10">10. 用户界面</h3>
+
+<p>10.1 应用程序必须遵守苹果人机界面设计指南中所有的条款和条件，包括：</p>
+<ul>
+<li><a href="https://developer.apple.com/library/ios/documentation/UserExperience/conceptual/mobilehig/" target="_blank" rel="noopener">iOS Human Interface Guidelines</a></li>
+<li><a href="https://developer.apple.com/library/mac/documentation/UserExperience/Conceptual/OSXHIGuidelines/" target="_blank" rel="noopener">OS X Human Interface Guidelines</a></li>
+<li><a href="https://developer.apple.com/tvos/human-interface-guidelines/" target="_blank" rel="noopener">Apple TV Human Interface Guidelines</a></li>
+<li><a href="https://developer.apple.com/watch/human-interface-guidelines/" target="_blank" rel="noopener">Apple Watch Human Interface Guidelines</a>.（2015.10 修正）</li>
+</ul>
+<p>（旧版：应用程序必须遵守苹果的《iOS Human Interface Guidelines》中所有的条款和条件。）</p>
+<p>10.2 外观与iOS或Watch OS设备自带应用（比如App Store、iTunes Store和iBookstore）相似的应用程序将会被拒绝。（2015.4 修正）</p>
+<p>10.3 未能按苹果《iOS Human Interface Guidelines》描述正确使用系统提供的项目（比如按钮、图标）的应用将会被拒绝。</p>
+<p>10.4 创建桌面/主屏幕环境或者模拟multi-App插件体验的应用程序将会被拒绝。</p>
+<p>10.5 修改音量大小和铃声/静音等标准开关功能的应用程序将会被拒绝。</p>
+<p>10.6 苹果和我们的客户高度推崇简单、精致、富有创造性以及经过精心设计的界面。虽然需要付出更多，但却非常值得。苹果设立了很高的门槛。如果你的用户界面太过复杂或者水准不高，可能会被拒绝。</p>
+<p>10.7 主要功能为报时的Watch app将会被拒。（2015.4 新增）</p>
+<h3 id="11">11. 购买与货币流通</h3>
+
+<p>11.1 使用App Store以外的渠道解锁或开启附加属性和功能的应用程序将会被拒绝。</p>
+<p>11.2 使用应用内支付系统（IAP）以外的系统购买内容、功能或服务的应用软件将会被拒绝。</p>
+<p>11.3 使用IAP购买实物商品或者用于该软件之外的商品和服务的应用软件将会被拒绝。</p>
+<p>11.4 使用IAP购买积分（信用点）或者其他货币必须在本应用中消费。</p>
+<p>11.5 使用IAP购买已过期积分或其他货币的应用软件将会被拒绝。</p>
+<p>11.6 使用IAP订阅的内容至少要持续7天，而且允许在用户的其他iOS设备间共享。</p>
+<p>11.7 使用IAP购买项目的应用程序必须指派正确的购买类型。</p>
+<p>11.8 使用IAP购买使用iOS、watchOS以及tvOS内置功能（如照相机，陀螺仪）或者苹果品牌周边产品（比如苹果键盘、苹果电容笔）的应用程序将会被拒绝。（2015.10 修正）</p>
+<p>旧版：使用IAP购买iOS内置功能（如照相机，陀螺仪）的应用程序将会被拒绝。</p>
+<p>11.9 含有超过限定时间的内容或服务的应用程序将会被拒绝，除经特定批准的内容（比如电影、电视节目音乐以及书籍）。</p>
+<p>11.10 保险类应用程序必须免费，要遵守发布地区的法律，并且不能使用IAP。</p>
+<p>11.11 一般而言，你的应用程序越贵，我们的评审会越深入。</p>
+<p>11.12 提供订阅功能的应用必须使用IAP，苹果将会按照 Developer Program License Agreement 中的约定与开发者按30/70比例分成。</p>
+<p>==11.13 在应用内使用跳转至外部购买或订阅链接的应用将会被拒，比如”buy”按钮跳转至一个购买电子书的web页面。==</p>
+<p>11.14 只要应用内没有跳转至外部购买、订阅的按钮或链接，苹果允许这些应用读取或展示经批准的、在应用外购买或订阅内容(特别是杂志、报纸、书籍、音频、音乐、视频以及云存储内容)。苹果只能通过应用程序内的购买获得一部分收益。</p>
+<p>11.15 应用程序可以只使用自动更新订阅期刊(报纸、杂志)、商业应用程序(企业类、效率类、专业创意类以及云存储类)和媒体类应用程序(视频、音频、声音)，否则应用程序将被拒绝。</p>
+<p>11.16 当与特定的经过审核的实体产品（比如玩具）结合使用时，应用程序可以使用获得批准的附加特性和功能，只要附加功能完全依赖于该硬件产品（比如一款用于控制望远镜的应用程序）或者也可以在不使用实物产品的情况下使用应用程序，比如成就奖励或者使用IAP。</p>
+<p>11.17 如果应用功能遵照各州和联邦法律，那么应用可以用来促进被认可的虚拟货币的流通。</p>
+<h3 id="12">12. 抓取和聚合</h3>
+
+<p>==12.1 从苹果网站（例如apple.com、iTunes Store、App Store、iTunes Connect以及Apple Developer Programs等）抓取任何信息或者使用苹果网站内容和服务进行排名的应用程序将会被拒绝。 ==<br><strong>例子:</strong>检查版本更新</p>
+<p>12.2 应用软件可以使用获得批准的苹果RSS feeds，例如iTunes Store RSS feeds。</p>
+<p>12.3 只是简单的网页剪切、内容整合或者收集链接的应用程序可能会被拒绝。</p>
+<h3 id="13">13. 损害设备</h3>
+
+<p>13.1 怂恿用户以可能造成损害的方式使用苹果设备的应用软件将会被拒绝。</p>
+<p>13.2 快速耗光设备电量或产生过多热量的应用软件将会被拒绝。</p>
+<p>13.3 能导致用户人身伤害的app将会被拒绝。</p>
+<h3 id="14">14. 人身攻击</h3>
+
+<p>14.1 涉及诽谤、人身攻击性质以及内容狭隘卑鄙的应用软件或者打击特定个人或组织的应用软件将会被拒绝。</p>
+<p>14.2 职业政治讽刺家和幽默作家不受这一条款约束。</p>
+<p>==14.3 展示用户创作内容（UGC）的应用程序必须提供一个过滤不良资讯的方法，一个用户可以标记侵犯性内容的机制，以及可以阻止辱骂用户的能力。==<br><strong>注:</strong>社交类软件需要提供举报和反黄反暴力的机制。</p>
+<h3 id="15">15. 暴力</h3>
+
+<p>15.1 应用程序中出现人或动物被杀、致残以及枪击、刺伤、拷打等受伤情形的真实画面将会被拒绝。</p>
+<p>15.2 出现描绘暴力或虐待儿童等内容的应用程序将会被拒绝。</p>
+<p>15.3 游戏中出现的”敌人”不可指向一个特定种族、文化、一个真实存在的政府、企业或者其他任何现实中的实体。</p>
+<p>15.4 对武器进行真实描述以怂恿非法使用或滥用这些武器的应用程序将会被拒绝。</p>
+<p>15.5包含俄罗斯轮盘赌博内容的游戏将会被拒。</p>
+<h3 id="16">16.令人反感的内容</h3>
+
+<p>16.1 应用程序中出现过于令人反感或者低俗的内容将会被拒绝。</p>
+<p>16.2 在设计上激怒用户或令人感到厌恶的应用程序将会被拒绝。</p>
+<h3 id="17">17.隐私</h3>
+
+<p>17.1 在未经用户事先许可，或未告知用户如何使用信息以及在何处使用信息的情况下，应用程序不能传输用户数据。</p>
+<p>17.2 要求用户共享电子邮箱地址和出生日期等私人信息才可使用其功能的应用程序将会被拒绝。</p>
+<p>17.3 仅出于遵守适用的儿童隐私法规的目的，应用程序可以要求用户的出生日期（或者使用其他年龄评级机制），但是必须包括一些有用的功能或者娱乐价值，不管用户年龄大小。</p>
+<p>17.4 收集、传输以及分享未成年用户个人信息（比如名字、地址、邮件、位置、照片、视频、绘画、聊天信息以及其他个人数据，或者与以上所述相关的永久性标示符）的应用程序必须遵守应用儿童隐私法规，并且必须包含隐私条款。</p>
+<p>17.5 包含账号注册或者访问用户现有账号的应用程序必须包含隐私策略，否则将会被拒绝。</p>
+<h3 id="18">18. 色情</h3>
+
+<p>18.1 含有色情素材，也就是《韦氏词典》中定义的”旨在激发情欲，对性器官或性行为的明确描述或展示，而无关美学或情绪感受”的程序将会被拒绝。</p>
+<p>18.2 包含用户频繁提供的色情内容的应用程序（比如以前的“Chat Roulette”程序）将会被拒绝。</p>
+<h3 id="19">19.宗教，文化与种族</h3>
+
+<p>19.1 涉及宗教、文化或种族群体的引用或评论包含诽谤性、攻击性或狭隘内容，或会使特定群体遭受伤害或暴力的应用程序将会被拒绝。</p>
+<p>19.2 程序可以包含或引用宗教经文，程序所提供的引用或翻译必须准确且不会引起误导。评论应该有教育意义，可以令人开阔眼界，而不应有煽动性。</p>
+<h3 id="20">20. 竞赛、赌博、彩票以及抽奖</h3>
+
+<p>20.1 彩票抽奖和竞赛必须由应用程序的开发者或者app所属公司发起。</p>
+<p>20.2 应用程序必须展示彩票抽奖和竞赛的正式规则，并声明苹果不是发起者，也没有以任何方式参与活动。</p>
+<p>20.3 开发者运营一款具有抽奖性质的应用必须经过法律允许，并且抽奖应用必须具备以下特征：报酬、运气以及奖品。</p>
+<p>20.4 允许用户在应用中直接购买彩票或彩券的应用将会被拒。</p>
+<p>20.5 提供真钱游戏（比如体育博彩、扑克牌、赌场游戏、赛马以及彩票）的应用程序必须有应用程序适用地区当地必要的许可和允许，必须限制在这些区域，必须可以从App Store免费下载。</p>
+<p>20.6 使用IAP购买信誉或者货币，且结合真钱游戏的应用将会被拒绝。</p>
+<p>21.慈善与援助</p>
+<p>21.1 包含可以向已认证的慈善组织捐赠功能的应用程序必须是免费的。 </p>
+<p>21.2 捐赠款项的募集必须通过Safari浏览器访问web页面或是手机短消息完成。</p>
+<h3 id="22">22. 法律要件</h3>
+
+<p>22.1 应用程序必须遵守所有发布地区当地法律，开发者有义务了解并遵守所有当地法律。</p>
+<p>22.2 包含虚假，欺诈或误导性陈述的程序将会被拒绝。</p>
+<p>22.3 任何用于招徕、促进或鼓励犯罪或明显鲁莽行为的应用程序将会被拒绝。</p>
+<p>22.4 支持非法文件共享的程序将会被拒绝。</p>
+<p>22.5 被设计用以非法赌博工具的应用程序（包括点算牌）将会被拒绝。</p>
+<p>22.6 具有匿名或恶作剧拨打电话或发送类似短信/彩信功能的程序将会被拒绝。</p>
+<p>22.7 任何开发暗中收集用户密码或用户私人数据程序的开发者将会从iOS开发者计划中除名。</p>
+<p>22.8 包含非执法机构发布的DUI检查点信息，或者怂恿/协助酒后驾车的应用将会被拒绝。</p>
+<p>22.9 计算药剂用量的应用程序必须由药品制造商或者认可机构发布，比如医院、保险公司以及高校。</p>
+<p>22.10.在未授权的情况下使用iTunes音乐预览的应用程序将会被拒绝。</p>
+<h3 id="23">23. Wallet</h3>
+
+<p>23.1 Wallet Passes可被用来支付或者接收支付，传递商业信息或者提供验证（比如电影票、飞机票、优惠券以及其他），但把Wallet Passes用于其他用途的应用程序可能会遭到拒绝，并且会被撤销Wallet证书。（2015.9 修正）</p>
+<p>（旧版：Passbook Passes可被用来支付或者接收支付，传递商业信息或者提供验证（比如电影票、飞机票、优惠券以及其他），但把Passbook Passes用于其他用途的应用程序可能会遭到拒绝，并且会被撤销Passbook证书。）</p>
+<p>23.2 Passes必须包含有效的pass发行人有效的联系资料，否则app将会被拒绝，并且Wallet证书也会被取消。（2015.9 修正）</p>
+<p>（旧版：Passes必须包含有效的pass发行人有效的联系资料，否则app将会被拒绝，并且Passbook证书也会被取消。）</p>
+<p>23.3 Passes必须经过实体签名，并基于其名字、商标或者品牌进行分发，否则应用程序将会被拒绝，而Wallet证书也可能会被撤销。（2015.9 修正）</p>
+<p>（旧版：Passes必须经过实体签名，并基于其名字、商标或者品牌进行分发，否则应用程序将会被拒绝，而Passbook证书也可能会被撤销。）</p>
+<h3 id="24">24.儿童类别</h3>
+
+<p>24.1 儿童类别中的应用程序必须包含隐私政策，必须遵守适用的儿童隐私法规。</p>
+<p>24.2 儿童类别中的应用程序不允许包括行为广告（比如app内部基于用户行动的服务广告），任何在应用程序中展示的上下文广告必须适合儿童。</p>
+<p>24.3 儿童类别中的应用程序必须得到家长许可或使用parental gate才能链接至应用程序外部或进行交易。</p>
+<p>24.4 儿童类别中的应用程序必须标明”5岁以下，6-8岁或者9-11岁”。</p>
+<h3 id="25">25.扩展</h3>
+
+<p>25.1 包含扩展的应用程序必须遵照 App Extension Programming Guide要求。</p>
+<p>25.2 包含扩展的应用程序必须提供某些功能（辅助屏幕，附加设置），否则将会被拒绝。</p>
+<p>25.3 如果扩展的视图中包含营销推广、广告或者IAP内容，那么包含该扩展的应用将会被拒绝。</p>
+<p>25.4 键盘扩展必须提供一个切换至下个键盘的方法。</p>
+<p>25.5 键盘扩展必须具有离线访问功能，否则将会被拒绝。</p>
+<p>25.6 键盘扩展必须提供和 App Extension Programming Guide 描述一致的数字和十进键盘类型，否则将会被拒绝。</p>
+<p>25.7 提供键盘扩展的应用必须拥有基本的功能分类和隐私政策，否则将会被拒绝。</p>
+<p>25.8 提供键盘扩展的应用程序只允许收集用户活动以增强键盘扩展在iOS设备上的功能，否则将会被拒绝。</p>
+<h3 id="26">26.HomeKit</h3>
+
+<p>26.1使用HomeKit框架的应用程序必须有提供家庭自动化服务的主要目的。</p>
+<p>26.2 使用HomeKit框架的应用程序必须在营销文本中说明用途，同时必须提供隐私政策，否则将会被拒绝。</p>
+<p>26.3应用程序不允许将从HomeKit API收集的数据用于广告宣传或者其他基于使用的数据挖掘。</p>
+<p>26.4 出于其他目的使用从HomeKit API收集的数据，而不是用于提高用户体验或者家庭自动化功能中硬件/软件性能，这类应用将会被拒绝。</p>
+<h3 id="27">27.HealthKit和人体生物学研究</h3>
+
+<p>27.1 使用HealthKit或者ResearchKit框架（出于健康目的用于进行人体生物学研究的框架）的应用程序，必须遵守其所有适用区域的法律，以及iOS Developer Program License Agreement中的3.3.28和3.39条款。（2015.3 新增）</p>
+<p><strong>27.2 将虚假或者错误的数据写入HealthKit的应用程序将会被拒绝。</strong></p>
+<p>27.3 使用HealthKit框架的应用程序在iCloud中储存用户健康信息将会被拒绝。</p>
+<p>27.4 应用程序不允许使用通过HealthKit API或者进行人体生物学研究收集的用户数据，或者将其泄露给第三方用作广告宣传或者基于使用的数据挖掘目的，除了改善健康、医疗、健康管理以及医学研究。（2015.3 修正）</p>
+<p>27.5 未经用户许可与第三方分享通过HealthKit API获得的用户数据的应用程序将会被拒绝。</p>
+<p>== 27.6 使用HealthKit框架的应用程序必须在营销文本中说明集成了Health app，同时必须在app用户界面清楚阐释HealthKit的功能。==</p>
+<p>例如: 在 itunes connect 的 app description 中，写明：</p>
+<blockquote>
+<p>*XXX 会在您的授权允许下获取苹果自带应用“健康”中的运动步数用于XXX</p>
+</blockquote>
+<p>并在提交给审核员的Note中，注明App内的何处写明了需使用”健康”软件。</p>
+<p>27.7 使用HealthKit框架或者进行人体生物学研究的应用程序必须提供隐私政策，否则将会被拒绝。（2015.3 修正）</p>
+<p>27.8 提供诊断、治疗建议，或者控制诊断疾病的硬件，或者治疗疾病的应用程序，若没有根据要求提供书面的监管审批，将会被拒绝。</p>
+<p>27.9 收集人体生物学研究相关数据的应用程序必须要获得参与者的许可，对于未成年人，应用程序要得到其父母或者监护人的许可。许可内容必须包括：(a)研究的性质、目的以及持续性；(b)参与流程、风险以及受益（福利）；(c)信息的机密性和数据处理（包括与任何与第三方的共享）；(d)参与者问题切入点；(e) 取消方法（2015.3 新增）</p>
+<p>27.10 进行健康相关的人体生物学研究的应用程序必须得到独立伦理审查委员会的批准。并根据要求提供证明。（2015.4 新增）</p>
+<h3 id="28">28.TestFlight</h3>
+
+<p>28.1应用程序仅能使用TestFlight对以公开发布为目的的应用进行beta版测试，且必须遵守完整的App Review Guidelines。</p>
+<p>28.2 当版本中包含的内容或功能有重大变化时，使用TestFlight的应用程序必须提交审核。</p>
+<p>28.3 使用TestFlight的应用程序不允许分发给测试者，以作为任何形式的补偿。</p>
+<h3 id="29">29. Apple Pay</h3>
+
+<p>29.1使用Apple Pay的应用程序必须在出售任何商品或者服务之前为用户提供所有材料的购买信息，否则将会被拒绝。使用Apple Pay进行重复付款（译者注：定期付款）的应用程序必须提供最低限度续费期限，付费将持续直至被取消，每个阶段所付款额，费用付款方为客户，以及如何取消等。（2015.3 修正）</p>
+<p>29.2 使用Apple Pay的应用程序必须正确使用<a href="https://developer.apple.com/apple-pay/Apple-Pay-Identity-Guidelines.pdf" target="_blank" rel="noopener">Apple Pay Identity Guidelines</a>中的Apple Pay标识和用户界面元素，否则将会被拒绝。（2015.3 修正）</p>
+<p>29.3 使用Apple Pay作为购买机制的应用程序所提供的商品或服务不能触犯任何交付地范围内的法律，也不能用作任何非法目的。</p>
+<p>29.4 使用Apple Pay的应用程序必须提供隐私政策，否则将会被拒绝。</p>
+<p>29.5 只有为了促进或提高商品和服务的交付，或者依照法律要件，使用Apple Pay的应用程序才能与第三方分享通过Apple Pay获得的数据。</p>
+<p>动态文档</p>
+<p>这份文档展现了我们在竭尽所能向您分享我们对提交到App Store的程序的审查方式，我们希望您在开发和提交程序时，这份指南能对您有所帮助。这是一份动态文档，随着新程序和新情况的发生会有所变化。我们会定期更新，以反映这些变化。</p>
+<p>感谢您参与到iOS的开发中来。虽然此文档是一份”不该做事宜”的列表，但也请将那份短得多的”必做事宜”列表牢记在心。最重要的是，与我们一道 共同努力让用户感到惊奇和欣喜。用创新方式向他们展示世界，让他们用前所未有的方式与之交流。根据我们的经验，无论是在功能和用户界面上，用户确实会对完善的程序有所响应。更进一步，给他们期望之外的东西，带他们去从未去过的地方。我们愿意提供帮助。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://shengpan.net/2016/01/24/app-store-review-guidelines/" data-id="cjpgo3oa9000kfzo0xc7ndr6n" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-headerdoc" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="../../2016/01/24/headerdoc/" class="article-date">
+  <time datetime="2016-01-23T20:23:57.000Z" itemprop="datePublished">2016-01-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="../../2016/01/24/headerdoc/">利用HeaderDoc自动生成API文档</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近在为公司写框架和组件库。大家都建议在文档上需要更加完善一些。于是在思考如何规范地完善文档？<br>面向非技术型的boss们的说明性文档，手工写即可。面向组件使用者的文档呢？一方面，要保证注释的完整性，以保证其他同事在使用的时候只看注释即可。另一方面又需要要一份文本文档，以便随时查阅。如何同时做到这两点？</p>
+<p>关于文档，业界有一些成熟的解决方案。例如评价颇高的<a href="https://github.com/tomaz/appledoc" target="_blank" rel="noopener">AppleDoc</a>，还有从Xcode 5,iOS7开始集成在Xcode中的<a href="https://developer.apple.com/library/mac/documentation/DeveloperTools/Conceptual/HeaderDoc/usage/usage.html" target="_blank" rel="noopener">HeaderDoc</a>。本着一切以官方为准的原则，选择了HeaderDoc来完成这项工作。</p>
+<h3 id="用HeaderDoc有什么好处？"><a href="#用HeaderDoc有什么好处？" class="headerlink" title="用HeaderDoc有什么好处？"></a>用HeaderDoc有什么好处？</h3><p><strong>与Xocde兼容</strong></p>
+<p>将鼠标移动到某一行方法上，按option+鼠标左键试试？</p>
+<p><img src="/content/images/2016/01/-----2016-01-24-13-32-04-2.png" alt=""></p>
+<p><strong>可以自动导出文档</strong></p>
+<p><img src="/content/images/2016/01/-----2016-01-24-13-34-03-1.png" alt=""><br><img src="/content/images/2016/01/-----2016-01-24-13-36-47-1.png" alt=""></p>
+<p>居然如此炫酷，还不赶紧跟我一起用起HeaderDoc,走(tiao)上(jin)人(wen)生(dang)巅(da)峰(keng)？</p>
+<h3 id="HeaderDoc-的注释标准"><a href="#HeaderDoc-的注释标准" class="headerlink" title="HeaderDoc 的注释标准"></a>HeaderDoc 的注释标准</h3><p>HeaderDoc的注释，一般我们会用到以下几种：</p>
+<p><strong>头文件注释</strong></p>
+<p>头文件基本信息。这个用在每个源代码文件的头文件的最开头。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">/*!</span><br><span class="line"> </span><br><span class="line"> @header UIImage+Scale.h</span><br><span class="line"> </span><br><span class="line"> @abstract 图片压缩的Category</span><br><span class="line"> </span><br><span class="line"> @author Created by Pan on 16/1/24.</span><br><span class="line"> </span><br><span class="line"> @version 1.2.0 16/1/24 Creation</span><br><span class="line">  </span><br><span class="line"> */</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>@header</code> 与该源代码文件的名字一致</li>
+<li><code>@abstract</code> 关于这个源代码文件的一些基本描述</li>
+<li><code>@author</code> Sheng Pan (作者信息)</li>
+<li><code>@version</code> 1.2.0 2012/01/20 Creation (此文档的版本信息)</li>
+</ul>
+<p><strong>类注释</strong></p>
+<p>关于此类的一些信息。此注释用在类声明的开头。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">/*!</span><br><span class="line"></span><br><span class="line">@class PSCarouselView</span><br><span class="line"></span><br><span class="line">@abstract 轮播控件，实现了常见的图片轮播功能。</span><br><span class="line"></span><br><span class="line">*/</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>@class</code> 与该类名一致</li>
+</ul>
+<p><strong>属性注释</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">/*!</span><br><span class="line"></span><br><span class="line">@property nameLabel</span><br><span class="line"></span><br><span class="line">@abstract 用于显示用户名的Label</span><br><span class="line"></span><br><span class="line">*/</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>@property</code> 与该属性名一致</li>
+</ul>
+<p><strong>方法注释</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">/*!</span><br><span class="line"> </span><br><span class="line"> @abstract 将图片等比缩小</span><br><span class="line"> </span><br><span class="line"> @discussion 将图片等比缩小,注意:此方法在主线程运行，处理大量图片请使用scaleImageOnBackgroud:</span><br><span class="line"> </span><br><span class="line"> @param ratio 缩小的倍数。例如，如想缩小为原图的1/2 ratio = 2.0</span><br><span class="line"> </span><br><span class="line"> @result UIImage</span><br><span class="line"> </span><br><span class="line"> */</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>@discussion</code> 该方法的详细描述，包括方法的一些注意事项，适用情况条件等等。</li>
+</ul>
+<p><strong>枚举注释</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">/*!</span><br><span class="line"> </span><br><span class="line"> @enum Gender</span><br><span class="line"> </span><br><span class="line"> @abstract 性别枚举</span><br><span class="line"> </span><br><span class="line"> @constant GenderUnknow 性别未知</span><br><span class="line"> </span><br><span class="line"> @constant GenderMale 男</span><br><span class="line"></span><br><span class="line"> @constant GenderFemale 女</span><br><span class="line"></span><br><span class="line"> */</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>@enum</code> 与枚举名称一致</li>
+<li><code>@constant</code> 与枚举值一致，后面添加描述</li>
+</ul>
+<p><strong>Category注释</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">/*!</span><br><span class="line"> </span><br><span class="line"> @category  Scale</span><br><span class="line"> </span><br><span class="line"> @abstract  UIImage的Category,添加图片压缩的相关功能</span><br><span class="line"> </span><br><span class="line"> */</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><code>@category</code> 与Category名称一致</li>
+</ul>
+<p><strong>Protocol注释</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">/*!</span><br><span class="line"></span><br><span class="line">@protocol HTModelCallBack</span><br><span class="line"></span><br><span class="line">@abstract Model的回调接口。</span><br><span class="line"></span><br><span class="line">@discussion 想接收Model回调的类，申明并实现此接口，即可获取从HTBaseModel中回调的信息。注意：接收回调的前提，是使用DESIGNATED_INITIALIZER来初始化HTBaseModel(或其子类).</span><br><span class="line"></span><br><span class="line">*/</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><code>@Protocol</code> 与Protocol名称一致</li>
+</ul>
+<p>常用的注释基本上就是这些，如果还需要了解更多注释的关键字请查阅<a href="https://developer.apple.com/library/mac/documentation/DeveloperTools/Conceptual/HeaderDoc/usage/usage.html" target="_blank" rel="noopener">官方文档</a>。</p>
+<h3 id="自动生成标准注释"><a href="#自动生成标准注释" class="headerlink" title="自动生成标准注释"></a>自动生成标准注释</h3><p>以上的注释格式如此繁琐，手工输入绝对不是我等懒鬼的作风。自动生成注释有以下几种方法</p>
+<ol>
+<li>修改Xcode模版文件，一劳永逸。</li>
+<li>利用Xode的code snapshot，快速编写注释。</li>
+<li>fork一份<a href="https://github.com/onevcat/VVDocumenter-Xcode" target="_blank" rel="noopener">VV-Documentor-Xcode</a>然后修改里面的注释风格。（VV-Documentor-Xcode原来的注释风格不支持导出文档）。</li>
+</ol>
+<p>后两种不多做介绍，在此介绍一下修改Xcode模版文件的方法。</p>
+<p><strong>打开finder，前往如下路径</strong></p>
+<p><code>/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/Library/Xcode/Templates/File Templates/Source/Cocoa Touch Class.xctemplate</code></p>
+<p>我们会看到这样一个目录</p>
+<p><img src="/content/images/2016/01/-----2016-01-24-13-53-50.png" alt=""></p>
+<p>每个文件夹下面的文件，就是各种系统类(包括你继承下来的子类)的模版文件。修改哪个文件夹下的模版文件，创建对应类(和继承自其子类的类)时，就会自动生成模版里预定的注释。</p>
+<p>文件夹内包含了.h和.m两份文件，分别对应.h和.m文件的模版</p>
+<p><img src="/content/images/2016/01/5.png" alt=""></p>
+<p>我们打开.h模版文件，可以看到如下信息</p>
+<p><img src="/content/images/2016/01/-----2016-01-24-13-55-14.png" alt=""></p>
+<p>此处有几个系统的宏</p>
+<ul>
+<li><code>FILENAME</code>：文件名</li>
+<li><code>PROJECTNAME</code>：项目名</li>
+<li><code>FULLUSERNAME</code>：当前mac用户全称</li>
+<li><code>DATE</code>：日期</li>
+<li><code>COPYRIGHT</code>：版权声明</li>
+</ul>
+<p>我们将头文件修改为如下格式，在创建类的时候就可以自动生成我们需要的注释格式了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">/*! </span><br><span class="line"></span><br><span class="line">  @header ___FILENAME___</span><br><span class="line"></span><br><span class="line">  @abstract &lt;#abstract#&gt;</span><br><span class="line"></span><br><span class="line">  @author Created by ___FULLUSERNAME___ on ___DATE___.</span><br><span class="line"></span><br><span class="line">  @version &lt;#version#&gt; ___DATE___ Creation</span><br><span class="line"></span><br><span class="line">___COPYRIGHT___</span><br><span class="line"></span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line">___IMPORTHEADER_cocoaTouchSubclass___</span><br><span class="line"></span><br><span class="line">/*!</span><br><span class="line"> </span><br><span class="line">  @class ___FILEBASENAMEASIDENTIFIER___</span><br><span class="line"> </span><br><span class="line">  @abstract &lt;#description#&gt;</span><br><span class="line"> </span><br><span class="line"> */</span><br><span class="line">@interface ___FILEBASENAMEASIDENTIFIER___ : ___VARIABLE_cocoaTouchSubclass___</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p>其他文件如法炮制即可。</p>
+<p>==*<em>注意:</em>== 记得逐一修改<code>Cocoa Touch Class.xctemplate</code>文件夹内每一个类的模版文件。只有修改过的类和其子类会起作用。</p>
+<h3 id="自动导出文档。"><a href="#自动导出文档。" class="headerlink" title="自动导出文档。"></a>自动导出文档。</h3><p>规范的注释标好后，导出文档就很方便了。有两种方法可以导出文档。</p>
+<h4 id="用命令行导出文档"><a href="#用命令行导出文档" class="headerlink" title="用命令行导出文档"></a>用命令行导出文档</h4><p>首先输出文档</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">headerdoc2html -o DESTINATION_PATH PROJECT_PATH</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>DESTINATION_PATH</code>：文档输出目标文件夹。如<code>~/Desktop/documentation</code></li>
+<li><code>PROJECT_PATH</code> ：项目目录。如<code>~/Desktop/project</code></li>
+</ul>
+<p>然后创建一个文档索引</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gatherheaderdoc DESTINATION_PATH INDEX_PAGE_NAME</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>DESTINATION_PATH</code>：文档输出目标文件夹。如<code>~/Desktop/documentation</code></li>
+<li><code>INDEX_PAGE_NAME</code>：索引页的名字。如<code>index.html</code></li>
+</ul>
+<h4 id="用Xcode-Build一份文档"><a href="#用Xcode-Build一份文档" class="headerlink" title="用Xcode Build一份文档"></a>用Xcode Build一份文档</h4><p>这个方法本质上也是用命令行导出文档。无非是可以不再需要手动管理文档路径，每个项目可以对应一个文档路径。用流行的话来说，就是一次配置，到处留情。哦不，是一次配置，自动运行。</p>
+<p>首先在你的项目中新建一个target。类型选择为Other-Aggregate。</p>
+<p><img src="/content/images/2016/01/-----2016-01-24-14-28-23.png" alt=""></p>
+<p>在Target的Build-Phases中，点击加号，选择New Run Phases Script。</p>
+<p><img src="/content/images/2016/01/-----2016-01-24-14-26-41-1.png" alt=""></p>
+<p>粘贴如下脚本（注意修改你自己的工程目录和导出目录）</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># shell script goes here</span></span><br><span class="line"></span><br><span class="line">headerdoc2html -o ~<span class="regexp">/Desktop/doc</span> /Users/pan/DEV/iOS/ios-standardization/Example/Pods/Headers/Public/HTStandard</span><br><span class="line"></span><br><span class="line">gatherheaderdoc ~<span class="regexp">/Desktop/doc</span> index.html</span><br><span class="line"></span><br><span class="line">exit <span class="number">0</span></span><br></pre></td></tr></table></figure>
+<p>最后，选择这个target，并Run。然后就等待奇迹的发生吧。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://shengpan.net/2016/01/24/headerdoc/" data-id="cjpgo3o9l0005fzo0g9e2k4lf" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-pscarouselview" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="../../2015/11/12/pscarouselview/" class="article-date">
+  <time datetime="2015-11-12T01:08:29.000Z" itemprop="datePublished">2015-11-12</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="../../2015/11/12/pscarouselview/">谈谈组件封装的思路和实现--PSCarouselView</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>前两天面试了一个应聘者，他的演示项目里有广告轮播功能。恰好之前我封装过一个实现了此功能的控件，于是就顺着他广告轮播的实现一直往下聊，从需求的抽象一直聊到各种实现的细节和需要考虑的问题等等。组件的封装是开发中比较有趣的一件事。今天我们就拿轮播控件举例，聊聊组件的封装。</p>
+<p>授人予渔先要授人予鱼。<a href="https://github.com/DeveloperPans/PSCarouselView" target="_blank" rel="noopener">先给出鱼(PSCarouselView)</a>，再慢慢讲渔。</p>
+<p>##分析需求<br>一般来说，我们在封装组件的时候，会先思考以下几点</p>
+<ul>
+<li>这个组件要做什么</li>
+<li>这个组件<strong>至少</strong>需要知道哪些信息</li>
+<li>这个组件会反馈哪些信息</li>
+</ul>
+<p>这个阶段，我们还不会考虑组件的具体实现，仅仅对其做抽象。我们要做的东西不仅仅是适用于单个项目的，而应该是通用的，可以适应大部分同种类需求的。</p>
+<p>####Scene I<br>BA说，客户要在首页加个轮播。于是半天后设计师出了张图，看起来大概像这样：</p>
+<p><img src="/content/images/2015/11/-----1.jpg" alt=""> </p>
+<p>我们按照上面的思路，拆分一下这个需求。</p>
+<p>###这个组件要做什么<br>显而易见的：</p>
+<blockquote>
+<p>1.展示多张图片</p>
+</blockquote>
+<blockquote>
+<p>2.可以向左向右翻页</p>
+</blockquote>
+<blockquote>
+<p>3.PageControl的状态会根据图片的滚动而相应改变</p>
+</blockquote>
+<p>隐含可能要做的：</p>
+<blockquote>
+<p>1.支持左右两侧无限循环滚动</p>
+</blockquote>
+<blockquote>
+<p>2.自动轮播</p>
+</blockquote>
+<blockquote>
+<p>3.支持手动滑动</p>
+</blockquote>
+<blockquote>
+<p>4.支持点击并进行相关的响应</p>
+</blockquote>
+<blockquote>
+<p>5.图片的缓存</p>
+</blockquote>
+<p>###这个组件<strong>至少</strong>需要知道哪些信息<br>一个封装得优秀的复杂度不高组件就像一个魔法盒子，只需要触发启动开关，就可以达到你期待的效果。极简的触发参数和条件是组件封装的精髓。在内容型App中，轮播图一般会用作推荐内容展示区域。在O2O类App中，轮播图一般会用作广告位。因此轮播区域图片的内容绝大多数都是动态的。在一般的C/S开发中，客户端要获取存储在服务器上的图片会获取它的URL,然后在需要的时候根据URL异步地加载这些图片。因此，我们找出了的轮播空间第一个必备条件：</p>
+<p><strong>一个图片URL地址数组。</strong></p>
+<pre><code>@property (nonatomic, strong) NSArray *imageURLs;/**&lt; 必须赋值。只要给这个imageURL赋值，会自动获取图片*/
+</code></pre><p>这个时候我们已经可以根据数组内的URL,数组内URL的数量，完成轮播效果了。但还不够完善。试想，当数组为空的时候，我们的轮播控件是一个什么状态？网络比较慢，图片还在加载中的时候，我们的轮播控件是什么状态？就目前来说—-空白一片。</p>
+<p>每个App都有每个App的设计，但无论如何谁也不会容忍首页最醒目的部分出现一大片空白，因此占位图是必须的。我们告诉我们的控件，“没有图片的时候别傻愣着，显示这张图”。必备条件二：</p>
+<p><strong>占位图</strong></p>
+<pre><code>@property (nonatomic, strong) UIImage *placeholder;/**&lt; 没有轮播图时的占位图*/
+</code></pre><p>有了以上信息我们的轮播控件已经可以在运行得比较好了。但是缺少了一定的定制性，能满足的需求面还不够广。比如说，让控件在需要自动轮播的地方自动轮播，在不需要自动轮播的地方保留无限滚动的特性，可以手动拨动？（之前有个产品提过这样的需求）比如说,这个控件是否应该提供可选的PageControl实现？依据设计师给的图不同，我们可能需要实现不同的PageControl，不管是颜色，布局，还是其可见隐藏都可能会有不同。这一部分复杂度不应该归到轮播控件中。但考虑到一些快速开发的需求,控件还是提供了一个默认选项。这些都是让控件变得更加可配置和灵活（同时也变得复杂）的可选信息。综上我们大概可以整理出以下属性：</p>
+<pre><code>@property (nonatomic,getter=isAutoMoving)      BOOL autoMoving;/**&lt; 是否自动轮播,默认为NO*/
+@property (nonatomic,getter=isShowPageControl) BOOL showPageControl;/**&lt; 是否展示默认的PageControl，默认为YES*/
+</code></pre><p>###这个组件会反馈哪些信息<br>上一点中，如果使用者需要自己实现PageControl，那么当前控件滚动到哪一页了，应该给出反馈。</p>
+<p>不论在O2O的App中，还是资讯类App中，用户点击轮播必定会有相对应的响应，例如之乎日报点击跳转到对应的文章，淘宝点击查看大图等。因此用户点击的信息也必须反馈出来，以让控制器根据用户的操作进行不同的响应。</p>
+<p>View层对Controller层的反馈一般有两种，一种是Target-Action，一种是Delegate。此处我们类似UITableView,给出一定的代理方法。遵循苹果的设计规范，让使用的开发者容易上手。</p>
+<pre><code>@protocol PSCarouselDelegate &lt;NSObject&gt;
+@optional
+/**
+ *  告诉代理滚动到哪一页了
+ *
+ *  @param carousel self
+ *  @param page     已经计算好，直接使用即可
+ */
+- (void)carousel:(PSCarouselView *)carousel didMoveToPage:(NSUInteger)page;
+
+/**
+ *   告诉代理用户点击了某一页
+ *
+ *  @param carousel
+ *  @param index  imageURL的index  
+ */
+- (void)carousel:(PSCarouselView *)carousel didTouchPage:(NSUInteger)page;
+@end
+</code></pre><p>至此，轮播组件的架子已经明晰，剩下的就是如何实现，以及实现的时候需要考虑的一些细节。</p>
+<p>##实现过程</p>
+<p>###选择基类<br>苹果的UIKit提供了非常多优秀的类，可以作为我们轮播视图的基类。根据以上的分析，我们根据直觉，立马可以联想到以下三个类：<br><code>UIPageViewController</code>、<code>UIScrollView</code>、<code>UICollectionView</code>。</p>
+<p><code>UIPageViewController</code>提供了非常好的翻页封装，仅需要指定翻页的方向，和子ViewController的数组，就可以提供类似轮播的功能。并且<code>UIPageViewController</code>提供了供翻页的接口和必要的反馈信息，定义在<code>UIPageViewControllerDelegate</code>协议中。用UIPageViewController,我们只需要将每个轮播页封装成一个仅包含一个UIImageView的ViewController，并将其设为UIPageViewController的ViewControllers，并实现它的代理方法就很容易实现我们的轮播图。</p>
+<p><code>UIScrollView</code>提供了最基本的滚动封装。采用UIScrollView作为基类，需要自己根据图片的数量计算ContentSize,并在ScrollView相对应的代理方法中，根据Frame相关信息来计算页码，会比UIPageViewController稍微复杂。但好在，它是一个<code>View</code>。</p>
+<p><code>UICollectionView</code>做为UIScrollView的子类提供了比UIScrollView更好的封装，也提供了”翻页”的接口，并提供了一系列定位CollectionView的状态信息。相比UIScrollView,他提供了更深层的封装。同UIPageViewController一样，非常适合本作为本组件的基类。同时，当UICollectionView的一些代理方法不足以提供相关信息时，还可以通过UIScrollView的代理方法来解决。</p>
+<p>采用<code>UIPageViewController</code>作为子类，考虑到使用者需要将其作为subViewController添加到它们的项目中，没有将一个View添加到ViewController中来得直观，综合考虑，PSCarouselView选择了UICollectionView作为其基类。</p>
+<p>###实现功能<br>如何利用UICollectionView在有限的图片数量下实现无限轮播？只需在原有图片数组头尾各新增一张图片就可以实现。如图</p>
+<p><img src="/content/images/2015/11/----001.jpeg" alt=""></p>
+<p>将imageURL数组中的URL,扩充为N+2。同时，将imageURLs的最后一个URL作为新数组的第一个URL,将imageURLs的第一个URL作为新数组的最后一个URL。然后在我们的CollectionView滚动到最后一个Cell时，跳转到第二个URL表示的IndexPath即可。自动轮播采用计时器来完成。在实现的时候，我们需要注意一下的几点</p>
+<p>1.计时器的开启与暂停</p>
+<p>自动轮播，通常我们会使用到计时器NSTimer。当我们在页面切换的过程中，需要注意计时器的开启与暂停，不然可能会出现一些不可预料的BUG。PSCarouselView 作为一个 <code>View</code> 是不可能也不应该知道一个 <code>ViewController</code> 的生命周期的。因此我们需要提供两个接口，供使用者开启/暂停计时器。</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)startMoving;</span><br><span class="line">- (<span class="keyword">void</span>)stopMoving;</span><br></pre></td></tr></table></figure>
+<p>另外，我们还需要注意App的生命周期，当App进入不活动的状态时，我们也需要将计时器暂停，并在回到活动状态时相应地启动。</p>
+<pre><code>#pragma mark - Notification
+//程序被暂停的时候，应该停止计时器
+- (void)applicationWillResignActive
+{
+    [self stopMoving];
+}
+
+//程序从暂停状态回归的时候，重新启动计时器
+- (void)applicationDidBecomeActive
+{
+    if (self.isAutoMoving)
+    {
+        [self startMoving];
+    }
+}
+</code></pre><p>2.用户操作与自动轮播的冲突<br>用户操作时如果轮播还是继续滚动，会导致用户产生不可控的错觉。《iOS Human Interface Guide》中强调过App需要给于用户控制感。因此，在用户手动”翻页”的时候，我们需要暂时暂停一下自动轮播，并在用户手动”翻页”完成后，重新进行轮播。</p>
+<pre><code>//用户手动拖拽，暂停一下自动轮播
+- (void)scrollViewWillBeginDragging:(UIScrollView     *)scrollView
+{
+    [self removeTimer];
+}
+
+//用户拖拽完成，恢复自动轮播（如果需要的话）
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    if (self.isAutoMoving)
+    {
+        [self addTimer];
+    }
+}
+</code></pre><p>3.图片的缓存与展示<br>如何通过图片的URL来获得相对应的图片，并做好图片的缓存，以实现最大限度地节省流量？这个模块其实应该单独做一个有关图片缓存的库，而不应该包含到View层中来。本作采用了SDWebImage来实现这一功能。有兴趣的朋友可以尝试着实现一个图片缓存库。</p>
+<p>以上，一个轮播组件的封装基本上完成了。更多实现上的细节请参看GitHub上的<a href="https://github.com/DeveloperPans/PSCarouselView" target="_blank" rel="noopener">Demo</a>。</p>
+<p>That’s all.Hope you enjoy it :)</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://shengpan.net/2015/11/12/pscarouselview/" data-id="cjpgo3oa0000efzo0602vbthf" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-man-tan-ioszhong-de-mvc" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="../../2015/10/14/man-tan-ioszhong-de-mvc/" class="article-date">
+  <time datetime="2015-10-14T06:58:31.000Z" itemprop="datePublished">2015-10-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="../../2015/10/14/man-tan-ioszhong-de-mvc/">漫谈iOS中的MVC</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>###前言</p>
+<p>做过一段iOS开发的开发者们对MVC肯定不陌生。这是<a href="https://developer.apple.com/library/ios/documentation/General/Conceptual/DevPedia-CocoaCore/MVC.html" target="_blank" rel="noopener">Apple推荐</a>的开发iOS应用程序的标准设计模式。</p>
+<p>我们从一张图开始，谈谈MVC。</p>
+<p>###MVC<br><img src="/content/images/2015/10/MVC.png" alt=""><br>传统的MVC如上图。将不同的对象划分到三个阵营<code>Model</code>、<code>View</code>、<code>Controller</code>。View负责绘图、接收用户的交互，并将交互以<em>Blind</em>的方式传达到Controller。Controller则负责处理相对应的业务逻辑，并告诉Model更新数据。Model则负责更新数据，并将数据以Blind的方式交给View或者Controller。在传统的MVC中C同时知晓V和M两者的状态和所有信息。<strong>View也知晓Model的信息</strong>，但Model是不知道其他两者的任何信息的。</p>
+<p>这种设计在JavaWeb的开发中被广泛使用。因为View层的页面布局，响应，由js和css完成，jsp此时可以直接拿Model解析数据。。在这种情况下，View和Controller的任务最重，Model更像是一个有数据查询功能的Entity。</p>
+<p>###iOS中的MVC</p>
+<p><img src="/content/images/2015/10/StandfordMVC.png" alt=""><br>iOS中的MVC和传统的MVC大同小异，小异的地方是对传统MVC的改进。</p>
+<p>首先是<strong>View</strong>层。View依然负责着接收用户交互和图像的绘制，但是，<strong>View不再直接处理数据了</strong>。而是将数据相关的实现逻辑用协议的形式，交给其他对象（一般是ViewContorller），由这个对象告诉View，View应该如何展现。苹果的TableView、PickerView等View的设计很好地印证了这一点。此时View变成了纯粹的”View”，一个”Data Independent”的View，复用性无疑是非常高的。</p>
+<p><strong>Model</strong>在iOS中也扮演着与Web开发中相同的角色。常常被开发者们误当成Entity使用。它负责持有数据，并且有少量的逻辑。在这样的设计下，Model其实是非常瘦的。</p>
+<p>在iOS中，Model和View是相互分离的，既不相互拥有，也相互不交互，即时是以Blind的模式。当Model有所变化时，常常通过KVO或者Notification的方式通知Controller，而不是View。因此，即时有的时候View中会有Notification的监听者，但也绝对不会是Model发出的Notification的监听者。更何况是，我们在实际开发中，Controller有各种方式来告诉View，你应该显示什么，所以View与Model是可以绝对隔离开的。</p>
+<p>最后是<strong>Controller</strong>。Controller在iOS中被命名为ViewController。从命名就可以看出Controller和View的关系非常密切，它直接拥有View，负责着View的创建，显示，隐藏等等。View的代理，数据源，用户交互的响应，也都由Controller负责。</p>
+<p><code>Controller</code><strong>拥有</strong><code>View和Model</code>。知晓他们二者的一切情况，负责将Model的数据解释给View，负责根据View中的用户交互让Model处理数据并让View做出相对应的反馈。并且Controller也负责接收Model发出的Notification，在Model状态改变时，及时让View做出相对应的变化。</p>
+<p>Controller在iOS开发中扮演了重量级的角色。的在实际的开发过程中，有80%的时间是在ViewController上面做文章。这也直接导致了一些问题…</p>
+<p>###臃肿的Controller</p>
+<p>在以上的MVC中，Model其实大多和业务相关，所以Apple的API设计并没有对这一层有所体现。Apple将诸如<code>didReceiveMemoryWarning</code>的方法都放在了ViewController里面，这让我们有种ViewController什么都可以干的直觉。<br>生命周期管理、依照View的需求将数据格式化，View的初始化及组织,各种Delegate，界面的跳转等等都在Controller中完成。</p>
+<p>正是由于Controller扮演了太过重要的角色。导致Controller在编程过程中变得越来越臃肿。其中的代码动辄上千行。有些其他模块也需要的可以复用的代码只能通过复制黏贴的方式。一旦业务和需求有所修改，就得在混合了各种逻辑的Controller的一堆代码中上下翻找。这对像我一样喜欢偷懒的开发者来说就是噩梦。</p>
+<p>###网络请求放哪儿<br>在以上的MVC分类中，并没有涉及到网络请求。而网络请求几乎是每一个App必须的。那么，网络请求应该归类到哪边？稍微思考一下，觉得放在Model里会不错。但是网络请求是异步的，如果网络请求还没返回，Model的生命周期却结束了，那可不是一件好事。当然，肯定不会把请求放在View里…所以，最后网络请求还是放到了Controller中。在与我共事的许多有经验的iOS开发者都是这么选择的。但是，这又加剧了Controller的臃肿。</p>
+<p>###为Contrller瘦身<br>So，怎么样优化这一结构呢。首先想到的是，把网络请求先移出来。如果解决了Model的生命周期和网络请求的生命周期问题，网络请求相关的代码就可以放在Model里。前面把网络请求放在ViewController里，那么只要保持Model和ViewController的生命周期一致，就可以将网络请求移动到Model里了。</p>
+<p><strong>Bingo，让Model成为ViewController的一个Strong属性。</strong></p>
+<pre><code>@interface ShopListController ()
+@property (strong, nonatomic) ShopListModel *model;
+@end
+</code></pre><p>这个时候Model里可以尽情访问网络请求了。因为Model和ViewController生命周期一直，也不必再担心网络请求着陆点丢失的问题。</p>
+<pre><code>@interface ShopListModel : BaseModel
+- (void)fetchShopListData;
+@end
+</code></pre><p>那么数据的存储和格式化也自然而然地在Model中处理了。同时我们还可以把数据持久化，一些类似于验证用户输入等等与UI不相关的数据处理和计算，都可以放在Model里。</p>
+<pre><code>@interface ShopListModel : BaseModel
+@property (strong, nonatomic) NSMutableArray *dataSource;
+- (void)fetchShopListData;
+@end
+</code></pre><p>最后我们在model中网络请求完成的回调里，处理好相关数据整理成包含UI直接可用对象的DataSource，并发送相对应的Notification来通知ViewController对View进行更新。</p>
+<p>Model实现：</p>
+<pre><code>@implementation ShopListModel
+- (void)fetchShopListData
+{
+    ...
+    ...
+    [[NSNotificationCenter defaultCenter] postNotificationName:FETCH_SHOP_LIST_DATA_NOTIFICATION object:nil];
+    ...
+    ...
+}
+</code></pre><p>ViewController实现：</p>
+<pre><code>- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didReceiveModelNotification:)
+                                                 name:FETCH_SHOP_LIST_DATA_NOTIFICATION
+                                               object:nil];
+
+}
+
+- (void)didReceiveModelNotification:(NSNotification *)notification
+{
+    if ([notification.name isEqualToString:FETCH_SHOP_LIST_DATA_NOTIFICATION])
+    {
+        [self.tableView reloadData];
+        return;
+    }
+}
+</code></pre><p>此时我们得到了一个功能丰富的且易于复用的Model。如果别的界面也需要相同的数据，我们只需要将这个Model给另一个Controller使用，并注册相对应的Notification监听即可。</p>
+<p>###MVC进化版——MVCE<br>其实我们做的这一系列事情，无非是不断地将代码分离。力求做到一种”原子性”。最终最求的目标就是更高的可维护性、可拓展性和复用性。以这种思维反观上面的MVC，Controller已经变得相对较瘦，但随之而来的是Model又胖了起来。</p>
+<p>于是就有人提出了<strong>MVCS</strong>的模式。<strong>S</strong>即<strong>Store</strong>。将网络请求与数据持久化相关的操作，分到Store模块中去。</p>
+<p>借鉴微软的<strong>MVVM</strong>，应用到iOS中的<strong>ReactiveCocoa</strong>，考虑到View与Controller的紧密联系，将View和ViewController直接划分为View。开辟出一个ViewModel来解决上述问题。在MVVM里，你可以把输入验证，网络请求，数据持久化都放在ViewModel里，Model仍然是Model，不与View直接交互。</p>
+<p>其实以上的设计模式，都脱不开MVC的影子，只是在实践中不断借鉴，不断优化。包括我想到的这些解决方案。在了解过MVVM设计模式后，这套解决方案还真颇有点MVVM的味道。在我的解决方案里，Model差不多等于MVVM中的ViewModel，而MVVM中的Model在这边等同于Entity。嗯。。于是我打算给它取个名字叫——MVCE。哈哈。。开个玩笑。（为了下文方便，暂且称为MVCE）。</p>
+<p>###留下的思考<br>设计模式这么多，该如何选择？</p>
+<p>在实战中，不一定非要抓住某个模式不放，更重要的是理解模式背后的意义，并且灵活运用。比如说在MVCE中，ViewController中还剩下什么呢？生命周期，Delegate，界面跳转，Notification响应。有这么一种情况：</p>
+<pre><code>有时候有几个TableView高度相似，想要复用之前ViewController中的代理。
+一般来说，我们复制黏贴相关代理方法到另一个ViewController中，并稍微修改一下不同的地方。
+</code></pre><p>以上情况其实可以抽象出一个Adapter，专门放TableView的代理，这样在ViewController中，只需要Import这个Adapter，稍微修改Adapter的一些属性，而不需要一遍遍地复制黏贴代理代码。</p>
+<p>当然，这样做的后果，牺牲了少部分原有代理的灵活性——我们可以在ViewController中任意定义TableView，切我们的代码中又多出了一个Adapter类。但好处是，封装性更好了，复用性更好了。</p>
+<p>##最后<br>返璞归真，所有的设计模式，都是为了更好地解决问题存在的。每个系统有每个系统固有的复杂度，当设计模式将其细分到一定程度，所做的事情只不过是将复杂度的位置挪了挪。所以，我们要了解设计模式，更要在合理的地方，合理地利用设计模式。诸如App中的关于页面，信息量少，逻辑少。所有逻辑直接放在ViewController里，也不会超过100行代码，那就放吧。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://shengpan.net/2015/10/14/man-tan-ioszhong-de-mvc/" data-id="cjpgo3oa1000ffzo0g0wonb8x" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-basevc" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="../../2015/10/14/basevc/" class="article-date">
+  <time datetime="2015-10-14T06:55:43.000Z" itemprop="datePublished">2015-10-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="../../2015/10/14/basevc/">iOS项目架构 - 统一行为</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>“我们虽然在构造软件，但软件也会重新塑造我们”。在写<a href="http://shengpan.coding.io/architecture-module/" target="_blank" rel="noopener">iOS项目架构-模块化</a>的时候，我仍然觉得我所构建的统一行为方式还算不错，可以写出来与大家探讨探讨。昨日将应用发布的闲暇之余阅读了<a href="http://objccn.io/issue-13-4/" target="_blank" rel="noopener">objc中国的这篇文章</a>，令我明白尚有更优的解决方案。本文从实际的例子出发，发表一下我的拙见，用以和上文做对照，权当抛砖引玉。</p>
+<p>###BaseViewController</p>
+<p>####例子1<br>我们在构建一个App的时候，会有许多相同的行为。例如，任何需要网络请求的界面，总会需要一个indicator来告诉用户，“噢，我正在操作，请等我一下”。或者某个时候我们需要给用户一点小提示，来对他们的操作进行反馈等等。每一个ViewController都会有这样的行为。这是我们很直接地想到<strong>我们需要一个父类</strong>。</p>
+<p>于是我们新建一个基类，<code>BaseViewController</code>继承于<code>UIViewController</code></p>
+<pre><code>@interface BaseViewController : UIViewController
+/**
+ *  a little pop window used to replace laertView
+ *
+ *  @param tips tips will show to user
+ */
+- (void)showTips:(NSString *)tips;
+
+/**
+ *  When some operation need user waiting,use this method to show a HDU.
+ *
+ *  @param title will show to user
+ */
+- (void)showIndicatorWithTitle:(NSString *)title;
+
+- (void)hideIndicator;
+@end
+</code></pre><p>好了，现在我们所有的业务相关ViewController都继承自BaseViewController，并且在调用网络请求前轻松地写一句<code>[self showIndicatorWithTitle:@&quot;加载中...&quot;]</code>，并且在网络请求完成后的回调里写下<code>[self hideIndicator]</code>就可以轻松地完成指示器的显示隐藏了。感谢我们的继承！</p>
+<p>####例子2<br>再举个例子。在我的项目里访问服务器的时候需要Token，Token在某些情况下有可能过期。Token过期的时候会返回一个Token过期的状态码，此时需要用户重新登录。这个情况我们可以总结成：</p>
+<ul>
+<li>绝大多数ViewController都会发送网络请求</li>
+<li>每一个网络请求都会返回Token过期</li>
+<li>每个ViewController都需要处理Token过期的情况</li>
+</ul>
+<p>因此我们可以将这一行为抽取出来，写在BaseViewController中。这样只需要在各个业务模块的的Model层收到Token过期消息的时候，用Notification转发给BaseViewController就可以了。其他诸如网络请求失败等情况都是如此。</p>
+<p>每个项目有不同的统一行为，我们需要根据不同的行为抽取不同的基类。</p>
+<p>###使用协议<br>但是有一种情况。例如<code>LoginViewController</code>需要和<code>BaseViewController</code>一样的显示/隐藏Indicator的接口，但却没有其他相同的行为。这时继承就显得不太合适了。</p>
+<p>想象一下<code>BaseViewController</code>因为Token过期Present了<code>LoginViewController</code>,而<code>LoginViewController</code>因为继承了<code>BaseViewController</code>又不停地Present另一个<code>LoginViewController</code>…这时候如果使用继承的话，就不得不写一些脏代码来避免这样的情况。</p>
+<p>正如那篇文章所说，此时我们可以用协议<code>@protocol</code>来替代继承。</p>
+<pre><code>@protocol PSIndicator &lt;NSObject&gt;
+
+- (void)showTips:(NSString *)tips;
+- (void)showIndicatorWithTitle:(NSString *)title;
+- (void)hideIndicator;
+
+@end
+</code></pre><p>然后在<code>LoginViewController</code>中：</p>
+<pre><code>@interface LoginViewController : UIViewController&lt;PSIndicator&gt;
+
+@end
+</code></pre><p>###最后<br>如果你在读这篇文章的时候想到，网络请求相关的内容为什么不直接封装在网络操作相关的模块，由它来负责指示器的显示和隐藏。这样还能省去手动调用的麻烦。关于这一点，在<a href="http://shengpan.coding.io/architecture-module/" target="_blank" rel="noopener">这篇文章</a>里已经做了讨论。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://shengpan.net/2015/10/14/basevc/" data-id="cjpgo3o960001fzo0ywzmyl01" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-standard" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="../../2015/10/14/standard/" class="article-date">
+  <time datetime="2015-10-14T06:51:46.000Z" itemprop="datePublished">2015-10-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="../../2015/10/14/standard/">iOS项目架构 - 规范</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>记得刚工作的时候，我的Mentor带我参加某银行业务系统研发成果交流分享会。会议让我印象很深的一点，是关于规范。发言人在说规范的时候，举了他见过的这么一个例子：</p>
+<pre><code>&lt;div class=&quot;div1&quot; ...&gt;
+  &lt;div class=&quot;div2&quot; ...&gt;
+    &lt;div class=&quot;div3&quot; ...&gt;
+     ...
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre><p>“只有鬼才知道他的div1是什么！”</p>
+<p>没有规范的代码，增加了代码的阅读成本，也因此大大降低了团队合作的效率。当产品上线后，出了BUG需要修复，而负责维护的却不是当初的开发团队，这是看混乱的代码成了一个噩梦。我们不只一次地听别的程序猿哀嚎过：“嗷，又要看别人的代码”。不规范的代码也是一方面的成因。</p>
+<p>为了提高生产效率，同时也是本着对自己产出的代码，以及对他人负责的理念，在公司内部（如果客观条件做不到，至少在团队内部）需要践行代码的规范。一般来说，各司有各司的代码规范，基本的代码规范在此就不赘述了。然而，有一些<strong>原则</strong>是通用的，在此略作梳理：</p>
+<p><strong>1. 首先是为人编写程序，其次才是计算机。</strong><br>软件的生命周期贯穿产品的开发，测试，生产，用户使用，版本升级和后期维护等过程，只有易读，易维护的软件代码才具有生命力。</p>
+<p><strong>2. 保持代码的简明清晰，避免过分的编程技巧。</strong><br>简单是最美。不要过分追求技巧，否则会降低程序的可读性。</p>
+<p><strong>3. 编程时首先达到正确性，其次考虑效率。</strong><br>编程首先考虑的是满足正确性，健壮性，可维护性，可移植性等质量因素。</p>
+<p><strong>4. 编写代码时需要考虑到代码的可测试性。</strong><br>不可以测试的代码是无法保障质量的。实现设计功能的同时，要提供可以测试、验证的方法。</p>
+<p><strong>5. 函数（方法）是为一特定功能而编写，不是万能工具箱。</strong><br>方法是一个处理单元，是由特定功能的，所以应该很好地规划方法，不能是所有东西都放在一个方法里实现</p>
+<p><strong>6. 鼓励多注释。</strong></p>
+<p>###一些较为实用的iOS规范小Tips<br>在项目实战中，我总结出了一些比较实用的小点，在此分享一下，希望对大家有所帮助。</p>
+<p><strong>1.所创建项目的文件夹目录结构和Xcode中的虚拟Group文件夹的结构须一致，便于代码文件的维护。</strong></p>
+<p>规范的文件目录结构如下：</p>
+<p><img src="/content/images/2015/10/standard-floder.jpg" alt="文件夹结构"></p>
+<p>推荐划分文件夹的时候按功能模块划分，便于修改BUG的时候寻找。</p>
+<p>不规范的文件夹目录结构如下：</p>
+<p><img src="/content/images/2015/10/floder.jpg" alt="不规范的文件夹结构"></p>
+<p>资源文件、源码文件、第三方库全部混合放置，每个文件引用次数未知，稍微移动便会造成引用错误编译失败，都是因为文件夹目录结构不规范T T。</p>
+<p><strong>2. 胖Model瘦Controller。</strong></p>
+<p>大部分业务逻辑放在Model中做，Controller只负责Model和View的调配。Model和View不可直接沟通。Model-&gt;Controller，使用NSNotification传递消息。View-&gt;Controller采用Targt-action或者Delegate传递消息。<em>ViewController终于从上千行代码的困境中解放出来了！</em> </p>
+<p><strong>这条规范</strong>的<strong>为什么</strong>我们会在MVC的文章中详细讨论。</p>
+<p><strong>3.标注方法块</strong></p>
+<p>同类方法写在一起，并用<code>#pragma mark</code>做标注。一个.m文件的方法至上而下应该是这样的：</p>
+<pre><code>#pragma mark - Life cycle
+
+- (void)viewDidLoad {...}
+- (void)viewWillAppear:(BOOL)animated {...}
+
+#pragma mark - Private Method
+
+-(void)setContentofScrollView {...}
+
+#pragma mark - Notification
+
+- (void)userDidLogin:(NSNotification *)notification {...}
+- (void)mainViewPicsDownloaded:(NSNotification *)notification {...}
+
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {...}
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {...}
+
+#pragma mark - Navigation
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {...}
+
+#pragma mark - Getter and Setter
+
+- (MainViewModel *)model{...}
+</code></pre><p>在标注<code>Delegate</code>的时候，把Delegate名称直接做作为标注，比如<code>UITableViewDelegate</code>,<code>UITableViewDataSource</code>。这样的好处是，当这个Delegate是自定义的时候，别人在看代码的时候可以直接<em>command+左键</em>点击跳转到Delegate，便于他人阅读和寻找自定的Delegate。</p>
+<p>Getter 和 Setter放在最后。</p>
+<p>另外，尽可能地减少Controller中的私有方法。私有方法大多可以在Model中实现。</p>
+<p><strong>4.所有属性都使用Getter and Setter</strong></p>
+<p>不要在<code>viewDidLoad</code>里面初始化view然后再add，这样代码就很难看。在<code>viewDidload</code>里面只做<code>addSubview</code>的事情，然后在<code>viewWillAppear</code>里面做布局的事情，<del>最后在<code>viewDidAppear</code>里面做<code>Notification</code>的监听之类的事情</del><em>监听也同时放在<code>ViewWillAppear</code>中，在某些特殊的情况下，在<code>ViewDidAppear</code>中注册的监听会导致无法<code>removeObserver</code></em>。至于属性的初始化，则交给getter去做。</p>
+<p>不要：</p>
+<pre><code>- (void)viewDidLoad
+{
+   [super viewDidLoad];
+   self.textLabel = [[UILabel alloc] init];
+   self.textLabel.textColor = [UIColor blackColor];
+   self.textLabel ... ...
+   self.textLabel ... ...
+   self.textLabel ... ...
+   [self.view addSubview:self.textLabel];
+}
+</code></pre><p>而是：</p>
+<pre><code>- (UILabel *)textLabel
+{
+    if (!_textLabel)
+    {
+        _textLabel = [[UILabel alloc] init];
+        _textLabel.textColor = [UIColor blackColor];
+        _textLabel ... ...
+        _textLabel ... ...
+        _textLabel ... ...
+    }
+    return _textLabel;
+}
+</code></pre><p><strong>5.注释你的公有方法</strong></p>
+<p>使用<a href="https://github.com/onevcat/VVDocumenter-Xcode/archive/master.zip" target="_blank" rel="noopener">这个工具</a>规范注释.h头文件中的属性和方法。十分直白的方法和属性可以不注释。</p>
+<p>That’s all.Hope u enjoy it. : )</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://shengpan.net/2015/10/14/standard/" data-id="cjpgo3o9o0007fzo0dlqji3xg" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-module" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="../../2015/10/14/module/" class="article-date">
+  <time datetime="2015-10-14T06:49:30.000Z" itemprop="datePublished">2015-10-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="../../2015/10/14/module/">iOS项目架构 - 模块化</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>###当我们谈论iOS架构的时候我们在谈论什么</p>
+<ol>
+<li>模块化</li>
+<li>规范化</li>
+<li>统一行为</li>
+</ol>
+<p>本文主要就以上模块化，以网络请求模块的抽取为例稍作讨论。</p>
+<p>###模块化<br>模块化的目的是实现解耦，提升模块、组件的复用性。一个很简单的例子，App需要与服务器交换数据，最差的做法，是把网络请求、回调、业务处理、界面操作全部写在<code>ViewController</code>里。如果把网络请求抽取出来，建一个<code>Webservice</code>类，仅负责最基本的RESTful请求，并在回调中处理好类似404，无网络等各种网络状况。那么，这个类就变成了通用的网络服务处理模块，便于维护和复用。</p>
+<p>###遇到的问题<br>在划分模块的一个前提是，模块不要对其他层有依赖性。最好的情况是，这个模块拿到任意一个项目都可以直接使用。在这一点上，我遇到了一个值得思考的问题。</p>
+<p>在iOS客户端里，网络请求可以分为两种，一种是<strong>静默请求</strong>,也就是在用户不知情的情况下默默地进行网络请求处理。典型的例子有微信朋友圈点赞。用户在点赞时，UI直接进行点赞成功的反馈，同时网络请求在静默进行，不阻碍用户的正常操作。另一种是<strong>显示请求</strong>，用户需等待操作完成后才能进行下一步操作。典型的例子一种是下拉刷新，另一种是支付宝付款。付款的请求中，UI暂时显示一个Loading图标，用以提示用户程序正在处理，而非卡死（设计思想：<strong>反馈</strong> ——<a href="http://zhuanlan.zhihu.com/langqixu/19675089" target="_blank" rel="noopener">《iOS Human Interface Guidelines》</a>）。</p>
+<p>遇到的选择，是在第二种<strong>显示请求</strong>的情况下如何更好地封装。我所负责的这个项目，除网络请求外，并没有耗时很长的I/O等情况需要处理。因此，有两个方案。</p>
+<p>将UI的Loading封装在WebService中，仅暴露<code>isShowIndicator</code>和<code>toView</code>两个参数在网络请求的接口中</p>
+<pre><code>- (void)requestWithPath:(NSString *)path
+             parameters:(id)parameters
+        isShowIndicator:(BOOL) isShowIndicator
+                  toView:(UIView *)toView
+               labelText:(NSString *)labelText
+                 success:(SuccessBlock)success
+                 failure:(FailureBlock)failure;
+</code></pre><p>或者，将UI的Loading封装在BaseViewController中，作为一个ViewController的基础行为，相应的业务模块需要显示请求时，调用显示指示器方法。</p>
+<pre><code>@interface BaseViewController : UIViewController
+
+- (void)showTips:(NSString *)tips;
+- (void)showIndicatorWithTitle:(NSString *)title;
+- (void)hideIndicator;
+
+@end
+</code></pre><p>前一种方式在写具体的业务逻辑时非常方便。只需要在调用前考虑一下这个请求是否为静默请求，然后将<code>BOOL</code>和<code>View</code>参数传入此方法中即可。这样封装的==好处==是，可以在网络层的回调中，处理好指示器的隐藏，以免出现忘记调用Hide方法的情况，并且<code>ViewController</code>不必因为需要这两个方法，就继承<code>BaseViewController</code> 。==缺点==是不够灵活，如果有不同的业务需要处理不同的显示，隐藏方式，还是需要在<code>ViewController</code>中重新写一下。</p>
+<p>后一种方式在写具体的业务时==缺点==是略微麻烦一些，需要考虑好相对应业务具体情况，具体调用显示隐藏指示器，优点是灵活，<strong>并且做到了网络层的去UI依赖</strong>。</p>
+<p>就MVC模式来说，<code>UI</code>响应数据的处理，应当由<code>Controller</code>负责调度。苹果自己在设计的时候，也都遵循了这一设计模式。<code>WebService</code>层，可以算作<code>Model</code>层的一个工具。而<code>Model</code>层与<code>View</code>层，在iOS的设计上是<strong>绝对不允许直接交互</strong>的。引用一张斯坦福大学iOS7公开课上的图来形象地展示一下。<br><img src="/content/images/2015/10/stanford.png" alt=""></p>
+<p>Model和View之间是双黄线，就像开车一样，绝对不能压过双黄线 ：）至于为什么，我们以后讨论到MVC设计模式再详细讨论。</p>
+<p>因此，在WebService中封装了View，实际上是在Model层操作View。多了这么一个View，多出来的事可就多了。我们不仅需要Import进UIKit，还需要Import通用的Indicator。这一依赖就产生了模块之间的依赖，原本为了解耦合而提取的WebService层反而耦合了Indicator。同时，也造成Webservice的粒度增大。需要处理的事情变得更多。</p>
+<p>反观第二种方法，需要所有ViewController继承BaseViewController。继承本身是紧耦合的。然而纵向的紧耦合有时候减少了重复工作，将一些相同的行为，做统一化的处理，并且没有造成横向跨层的依赖。类似于无网络时的处理，网络请求出错时的处理，Token过期的处理，都应该放在BaseViewController里面。因为这是所有Controller都需要面对的问题。因此，继承BaseViewController是必要的。在统一行为之余，把这几个方法封装在BaseViewController中，又让WebService层实现了细颗粒的模块化组件化。同时，Controller本身就需要控制View，不会因此Import进许多不相关的模块。所需要付出的仅仅是在网络请求结束的时候别忘记调用Hide方法，不然测试小妹的“界面失去响应”BUG就会指派到我们头上 ：（</p>
+<p>最终，我们的Webservice是封装成这样的：</p>
+<pre><code>/**
+ *  post a request to server
+ *
+ *  @param path       the request path append at BASEURL
+ *  @param parameters parameters
+ *  @param token      Authorization token
+ *  @param success    when success goto this block
+ *  @param failure    when failure goto this block
+ */    
+- (void)postWithPath:(NSString *)path
+     parameters:(NSDictionary *)parameters
+          token:(NSString *)token
+        success:(void (^)(id JSON))success
+        failure:(void (^)(NSError *error, id JSON))failure;
+</code></pre><p>综上所述，模块化所需要遵循的思想就是：轻，少，专。其实思想和我们写方法的时候考虑的“一个方法只做一件事”有类似的地方。</p>
+<p>That’s all，hope you enjoy it ：）</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://shengpan.net/2015/10/14/module/" data-id="cjpgo3o9m0006fzo02otyaa9v" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-iosmultitarget" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="../../2015/09/16/iosmultitarget/" class="article-date">
+  <time datetime="2015-09-16T00:29:49.000Z" itemprop="datePublished">2015-09-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="../../2015/09/16/iosmultitarget/">iOS的多Target应用</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近刚完成了一个多Target的项目，做了许多思考与选择，现写下心得总结，权当抛砖引玉。</p>
+<p>####项目背景<br>本项目是一个适用于正在学车人群的预约学车平台。分为学生端和教练端。学生端主功能为预约学车，教练端主功能为排课。</p>
+<h3 id="什么时候选用多Target"><a href="#什么时候选用多Target" class="headerlink" title="什么时候选用多Target"></a>什么时候选用多Target</h3><p>多target的选用，意在实现最大化重用代码。其经典情景是有多个类似的App，界面设计与业务逻辑有许多相似之处，仅仅有少数不同的业务逻辑，只需要在打包时将不同的配置文件打包好，就可以形成一个个不同的客户端。</p>
+<p>我负责两个客户端有以下共同点：</p>
+<ol>
+<li>近乎相同的登陆注册界面与逻辑</li>
+<li>近乎相同的主页布局与逻辑</li>
+<li>近乎相同的个人中心主界面</li>
+<li>近乎相同的课表界面</li>
+<li>近乎相同的选课/排课界面</li>
+</ol>
+<p>不同点有：</p>
+<ol>
+<li>不同的应用主题色</li>
+<li>排课与选课的逻辑不同</li>
+<li>一些图标资源和其他细节的不同</li>
+</ol>
+<p>本项目选择多Target方案是十分合适的。</p>
+<p>###为多Target打基础</p>
+<ol>
+<li>编写共用的层（<code>WebService</code>，<code>Common</code>等）</li>
+<li>抽取基类(<code>BaseViewController</code>,<code>BaseModel</code>,<code>BaseView</code>)</li>
+<li>编写子模块，利用MVC模式保持单个子模块的独立性，并预留相对应的差异化枚举和接口。</li>
+</ol>
+<p>项目的结构是这样的</p>
+<p><img src="https://coding.net/u/Shengpan/p/Ghost-On-Coding-Paas/git/raw/master/images/filestruct.png" alt="文件结构"> </p>
+<p>网络层不使用单例，而是采用了<code>Category</code>的模式。<strong>只将最基本的<code>RESTful</code>请求封装好放在<code>WebService</code>中。</strong>而具体的实现采用<code>Category</code>拓展方法。这样的好处是<strong>各自的WebService有各自的生命周期，每个Webservice可以只负责自己模块的网络层服务。</strong>比如说在这个项目中我分了Account，Teacher，Student等Category，分别负责登陆注册，教练端和学生端的网络请求服务。</p>
+<p>View中是通用的View，比如全项目通用的定制<code>AlertView</code>，一模一样的Login界面。</p>
+<p>Category放通用的拓展类，比如说<code>NSCalendar</code>在iOS8.0之后新增了很多日期计算和比较的Api，但是基于目前的项目大多数都需要最低支持iOS7.0，因此可以为<code>NSCalaner</code>或者<code>NSDate</code>写一些拓展方法，可以作为不同项目公用的工具。</p>
+<p>其他例如UserInfo还有Validation则是项目业务需求抽取，在此就不赘述了。</p>
+<p>###实战<br>做好以上准备后，就可以进行业务开发了。多Target项目的开发和普通项目的开发并没有什么不同，只是在新建文件时，注意选择Target即可。<br><img src="https://coding.net/u/Shengpan/p/Ghost-On-Coding-Paas/git/raw/master/images/%E5%A4%9ATarget%E5%BA%94%E7%94%A8%E6%9E%84%E6%9E%B6%E5%B0%8F%E7%BB%93/choose.png" alt="选择Target"></p>
+<p>另外，如果想调整文件的Target归属，只需要选择文件，在右边的工具窗口里的File Inspector选项下面，就可以找到与之前新建文件夹时相同的勾选项。勾选你想要的Target吧！</p>
+<p><img src="https://coding.net/u/Shengpan/p/Ghost-On-Coding-Paas/git/raw/master/images/%E5%A4%9ATarget%E5%BA%94%E7%94%A8%E6%9E%84%E6%9E%B6%E5%B0%8F%E7%BB%93/File_inspector.png" alt="勾选Target"> </p>
+<p>最后，在Debug和打包的时候，注意选择Target即可。</p>
+<p><img src="https://coding.net/u/Shengpan/p/Ghost-On-Coding-Paas/git/raw/master/images/%E5%A4%9ATarget%E5%BA%94%E7%94%A8%E6%9E%84%E6%9E%B6%E5%B0%8F%E7%BB%93/change.png" alt="选择target"> </p>
+<p>###一些应该避免的坑</p>
+<ul>
+<li>除了公用的模块，其他各自不同的类都加上前缀</li>
+</ul>
+<p>由于OC并没有像Java命名空间一样的东西，因此在引入头文件时，如果文件名相同，编译器有时候会错误地引入头文件，这一就会导致找不到对应的方法，进而导致编译不通过。解决这个问题最直接了当的方法就是在新建每一个类的时候加上前缀。</p>
+<ul>
+<li>统一单独的常量或者宏定义文件</li>
+</ul>
+<p>.h文件没有Target选项。因此，如果你有Define或者Constant一类的.h文件，要么为各自target用加前缀的方法创建不同的.h文件，要么将.h文件统一在Common中。不然会触发上面那个坑。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://shengpan.net/2015/09/16/iosmultitarget/" data-id="cjpgo3o9j0004fzo0fpue6fk3" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <a class="extend prev" rel="prev" href="../../">&laquo; Prev</a><a class="page-number" href="../../">1</a><span class="page-number current">2</span>
+  </nav>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2016/10/">十月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2016/09/">九月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2016/07/">七月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2016/06/">六月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2016/05/">五月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2016/04/">四月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2016/02/">二月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2016/01/">一月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2015/11/">十一月 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2015/10/">十月 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2015/09/">九月 2015</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="../../2016/10/07/https/">全站 HTTPS 边做边记</a>
+          </li>
+        
+          <li>
+            <a href="../../2016/09/14/auto-code-review/">iOS 持续集成系列 - 自动化 Code Review</a>
+          </li>
+        
+          <li>
+            <a href="../../2016/09/06/string-comparable/">深挖 Swift 中的字符串可比性</a>
+          </li>
+        
+          <li>
+            <a href="../../2016/09/05/swift-max/">从 Swift 中的 max(_:_:) 看设计哲学</a>
+          </li>
+        
+          <li>
+            <a href="../../2016/09/04/ios-ci-index/">iOS 持续集成系列 - 开篇</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 PPPan<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="../../index.html" class="mobile-nav-link">Home</a>
+  
+    <a href="../../archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="../../fancybox/jquery.fancybox.css">
+  <script src="../../fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="../../js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

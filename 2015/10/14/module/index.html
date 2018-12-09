@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>iOS项目架构 - 模块化 | PPPan&#39;s 平凡之路</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="###当我们谈论iOS架构的时候我们在谈论什么  模块化 规范化 统一行为  本文主要就以上模块化，以网络请求模块的抽取为例稍作讨论。 ###模块化模块化的目的是实现解耦，提升模块、组件的复用性。一个很简单的例子，App需要与服务器交换数据，最差的做法，是把网络请求、回调、业务处理、界面操作全部写在ViewController里。如果把网络请求抽取出来，建一个Webservice类，仅负责最基本的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS项目架构 - 模块化">
+<meta property="og:url" content="https://shengpan.net/2015/10/14/module/index.html">
+<meta property="og:site_name" content="PPPan&#39;s 平凡之路">
+<meta property="og:description" content="###当我们谈论iOS架构的时候我们在谈论什么  模块化 规范化 统一行为  本文主要就以上模块化，以网络请求模块的抽取为例稍作讨论。 ###模块化模块化的目的是实现解耦，提升模块、组件的复用性。一个很简单的例子，App需要与服务器交换数据，最差的做法，是把网络请求、回调、业务处理、界面操作全部写在ViewController里。如果把网络请求抽取出来，建一个Webservice类，仅负责最基本的">
+<meta property="og:locale" content="zh-cn">
+<meta property="og:image" content="https://shengpan.net/content/images/2015/10/stanford.png">
+<meta property="og:updated_time" content="2015-10-14T06:51:18.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS项目架构 - 模块化">
+<meta name="twitter:description" content="###当我们谈论iOS架构的时候我们在谈论什么  模块化 规范化 统一行为  本文主要就以上模块化，以网络请求模块的抽取为例稍作讨论。 ###模块化模块化的目的是实现解耦，提升模块、组件的复用性。一个很简单的例子，App需要与服务器交换数据，最差的做法，是把网络请求、回调、业务处理、界面操作全部写在ViewController里。如果把网络请求抽取出来，建一个Webservice类，仅负责最基本的">
+<meta name="twitter:image" content="https://shengpan.net/content/images/2015/10/stanford.png">
+  
+    <link rel="alternate" href="../../../../atom.xml" title="PPPan&#39;s 平凡之路" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="../../../../css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="../../../../index.html" id="logo">PPPan&#39;s 平凡之路</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="../../../../index.html" id="subtitle">做一个互联网内容的贡献者</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="../../../../index.html">Home</a>
+        
+          <a class="main-nav-link" href="../../../../archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="../../../../atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://shengpan.net"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-module" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="" class="article-date">
+  <time datetime="2015-10-14T06:49:30.000Z" itemprop="datePublished">2015-10-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      iOS项目架构 - 模块化
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>###当我们谈论iOS架构的时候我们在谈论什么</p>
+<ol>
+<li>模块化</li>
+<li>规范化</li>
+<li>统一行为</li>
+</ol>
+<p>本文主要就以上模块化，以网络请求模块的抽取为例稍作讨论。</p>
+<p>###模块化<br>模块化的目的是实现解耦，提升模块、组件的复用性。一个很简单的例子，App需要与服务器交换数据，最差的做法，是把网络请求、回调、业务处理、界面操作全部写在<code>ViewController</code>里。如果把网络请求抽取出来，建一个<code>Webservice</code>类，仅负责最基本的RESTful请求，并在回调中处理好类似404，无网络等各种网络状况。那么，这个类就变成了通用的网络服务处理模块，便于维护和复用。</p>
+<p>###遇到的问题<br>在划分模块的一个前提是，模块不要对其他层有依赖性。最好的情况是，这个模块拿到任意一个项目都可以直接使用。在这一点上，我遇到了一个值得思考的问题。</p>
+<p>在iOS客户端里，网络请求可以分为两种，一种是<strong>静默请求</strong>,也就是在用户不知情的情况下默默地进行网络请求处理。典型的例子有微信朋友圈点赞。用户在点赞时，UI直接进行点赞成功的反馈，同时网络请求在静默进行，不阻碍用户的正常操作。另一种是<strong>显示请求</strong>，用户需等待操作完成后才能进行下一步操作。典型的例子一种是下拉刷新，另一种是支付宝付款。付款的请求中，UI暂时显示一个Loading图标，用以提示用户程序正在处理，而非卡死（设计思想：<strong>反馈</strong> ——<a href="http://zhuanlan.zhihu.com/langqixu/19675089" target="_blank" rel="noopener">《iOS Human Interface Guidelines》</a>）。</p>
+<p>遇到的选择，是在第二种<strong>显示请求</strong>的情况下如何更好地封装。我所负责的这个项目，除网络请求外，并没有耗时很长的I/O等情况需要处理。因此，有两个方案。</p>
+<p>将UI的Loading封装在WebService中，仅暴露<code>isShowIndicator</code>和<code>toView</code>两个参数在网络请求的接口中</p>
+<pre><code>- (void)requestWithPath:(NSString *)path
+             parameters:(id)parameters
+        isShowIndicator:(BOOL) isShowIndicator
+                  toView:(UIView *)toView
+               labelText:(NSString *)labelText
+                 success:(SuccessBlock)success
+                 failure:(FailureBlock)failure;
+</code></pre><p>或者，将UI的Loading封装在BaseViewController中，作为一个ViewController的基础行为，相应的业务模块需要显示请求时，调用显示指示器方法。</p>
+<pre><code>@interface BaseViewController : UIViewController
+
+- (void)showTips:(NSString *)tips;
+- (void)showIndicatorWithTitle:(NSString *)title;
+- (void)hideIndicator;
+
+@end
+</code></pre><p>前一种方式在写具体的业务逻辑时非常方便。只需要在调用前考虑一下这个请求是否为静默请求，然后将<code>BOOL</code>和<code>View</code>参数传入此方法中即可。这样封装的==好处==是，可以在网络层的回调中，处理好指示器的隐藏，以免出现忘记调用Hide方法的情况，并且<code>ViewController</code>不必因为需要这两个方法，就继承<code>BaseViewController</code> 。==缺点==是不够灵活，如果有不同的业务需要处理不同的显示，隐藏方式，还是需要在<code>ViewController</code>中重新写一下。</p>
+<p>后一种方式在写具体的业务时==缺点==是略微麻烦一些，需要考虑好相对应业务具体情况，具体调用显示隐藏指示器，优点是灵活，<strong>并且做到了网络层的去UI依赖</strong>。</p>
+<p>就MVC模式来说，<code>UI</code>响应数据的处理，应当由<code>Controller</code>负责调度。苹果自己在设计的时候，也都遵循了这一设计模式。<code>WebService</code>层，可以算作<code>Model</code>层的一个工具。而<code>Model</code>层与<code>View</code>层，在iOS的设计上是<strong>绝对不允许直接交互</strong>的。引用一张斯坦福大学iOS7公开课上的图来形象地展示一下。<br><img src="/content/images/2015/10/stanford.png" alt=""></p>
+<p>Model和View之间是双黄线，就像开车一样，绝对不能压过双黄线 ：）至于为什么，我们以后讨论到MVC设计模式再详细讨论。</p>
+<p>因此，在WebService中封装了View，实际上是在Model层操作View。多了这么一个View，多出来的事可就多了。我们不仅需要Import进UIKit，还需要Import通用的Indicator。这一依赖就产生了模块之间的依赖，原本为了解耦合而提取的WebService层反而耦合了Indicator。同时，也造成Webservice的粒度增大。需要处理的事情变得更多。</p>
+<p>反观第二种方法，需要所有ViewController继承BaseViewController。继承本身是紧耦合的。然而纵向的紧耦合有时候减少了重复工作，将一些相同的行为，做统一化的处理，并且没有造成横向跨层的依赖。类似于无网络时的处理，网络请求出错时的处理，Token过期的处理，都应该放在BaseViewController里面。因为这是所有Controller都需要面对的问题。因此，继承BaseViewController是必要的。在统一行为之余，把这几个方法封装在BaseViewController中，又让WebService层实现了细颗粒的模块化组件化。同时，Controller本身就需要控制View，不会因此Import进许多不相关的模块。所需要付出的仅仅是在网络请求结束的时候别忘记调用Hide方法，不然测试小妹的“界面失去响应”BUG就会指派到我们头上 ：（</p>
+<p>最终，我们的Webservice是封装成这样的：</p>
+<pre><code>/**
+ *  post a request to server
+ *
+ *  @param path       the request path append at BASEURL
+ *  @param parameters parameters
+ *  @param token      Authorization token
+ *  @param success    when success goto this block
+ *  @param failure    when failure goto this block
+ */    
+- (void)postWithPath:(NSString *)path
+     parameters:(NSDictionary *)parameters
+          token:(NSString *)token
+        success:(void (^)(id JSON))success
+        failure:(void (^)(NSError *error, id JSON))failure;
+</code></pre><p>综上所述，模块化所需要遵循的思想就是：轻，少，专。其实思想和我们写方法的时候考虑的“一个方法只做一件事”有类似的地方。</p>
+<p>That’s all，hope you enjoy it ：）</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://shengpan.net/2015/10/14/module/" data-id="cjpgo3o9m0006fzo02otyaa9v" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="../standard/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          iOS项目架构 - 规范
+        
+      </div>
+    </a>
+  
+  
+    <a href="../../../09/16/iosmultitarget/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">iOS的多Target应用</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/10/">十月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/09/">九月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/07/">七月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/06/">六月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/05/">五月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/04/">四月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/02/">二月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/01/">一月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2015/11/">十一月 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2015/10/">十月 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2015/09/">九月 2015</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="../../../../2016/10/07/https/">全站 HTTPS 边做边记</a>
+          </li>
+        
+          <li>
+            <a href="../../../../2016/09/14/auto-code-review/">iOS 持续集成系列 - 自动化 Code Review</a>
+          </li>
+        
+          <li>
+            <a href="../../../../2016/09/06/string-comparable/">深挖 Swift 中的字符串可比性</a>
+          </li>
+        
+          <li>
+            <a href="../../../../2016/09/05/swift-max/">从 Swift 中的 max(_:_:) 看设计哲学</a>
+          </li>
+        
+          <li>
+            <a href="../../../../2016/09/04/ios-ci-index/">iOS 持续集成系列 - 开篇</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 PPPan<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="../../../../index.html" class="mobile-nav-link">Home</a>
+  
+    <a href="../../../../archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="../../../../fancybox/jquery.fancybox.css">
+  <script src="../../../../fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="../../../../js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

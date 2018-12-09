@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>iOS 持续集成系列 - 开篇 | PPPan&#39;s 平凡之路</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="iOS 持续集成 - 开篇 iOS 持续集成 - 自动化 Code Review [iOS 持续集成 - 自动化单元测试] [iOS 持续集成 - 自动化打包与分发]  前言iOS 开发在经过这几年的野蛮生长之后，慢慢地趋于稳定。无论开发语言是 Objective-C 还是 Swift,工程类型是 Hybird 还是原生，开发思想是 OOP 还是函数式，随着项目逐渐变大都在面临相同的问题: 测试">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS 持续集成系列 - 开篇">
+<meta property="og:url" content="https://shengpan.net/2016/09/04/ios-ci-index/index.html">
+<meta property="og:site_name" content="PPPan&#39;s 平凡之路">
+<meta property="og:description" content="iOS 持续集成 - 开篇 iOS 持续集成 - 自动化 Code Review [iOS 持续集成 - 自动化单元测试] [iOS 持续集成 - 自动化打包与分发]  前言iOS 开发在经过这几年的野蛮生长之后，慢慢地趋于稳定。无论开发语言是 Objective-C 还是 Swift,工程类型是 Hybird 还是原生，开发思想是 OOP 还是函数式，随着项目逐渐变大都在面临相同的问题: 测试">
+<meta property="og:locale" content="zh-cn">
+<meta property="og:updated_time" content="2016-11-24T03:40:37.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS 持续集成系列 - 开篇">
+<meta name="twitter:description" content="iOS 持续集成 - 开篇 iOS 持续集成 - 自动化 Code Review [iOS 持续集成 - 自动化单元测试] [iOS 持续集成 - 自动化打包与分发]  前言iOS 开发在经过这几年的野蛮生长之后，慢慢地趋于稳定。无论开发语言是 Objective-C 还是 Swift,工程类型是 Hybird 还是原生，开发思想是 OOP 还是函数式，随着项目逐渐变大都在面临相同的问题: 测试">
+  
+    <link rel="alternate" href="../../../../atom.xml" title="PPPan&#39;s 平凡之路" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="../../../../css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="../../../../index.html" id="logo">PPPan&#39;s 平凡之路</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="../../../../index.html" id="subtitle">做一个互联网内容的贡献者</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="../../../../index.html">Home</a>
+        
+          <a class="main-nav-link" href="../../../../archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="../../../../atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://shengpan.net"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-ios-ci-index" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="" class="article-date">
+  <time datetime="2016-09-04T05:48:18.000Z" itemprop="datePublished">2016-09-04</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      iOS 持续集成系列 - 开篇
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li><a href="#">iOS 持续集成 - 开篇</a></li>
+<li><a href="/auto-code-review/">iOS 持续集成 - 自动化 Code Review</a></li>
+<li>[iOS 持续集成 - 自动化单元测试]</li>
+<li>[iOS 持续集成 - 自动化打包与分发]</li>
+</ul>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>iOS 开发在经过这几年的野蛮生长之后，慢慢地趋于稳定。无论开发语言是 Objective-C 还是 Swift,工程类型是 Hybird 还是原生，开发思想是 OOP 还是函数式，随着项目逐渐变大都在面临相同的问题: 测试、发布等重复性工作占了很大一部分时间，回归成本越来越高。持续集成不可避免地被提上了日程。</p>
+<p>本文主要阐述 iOS 下的持续集成，以目标、内容、流程、工具入手，希望可以为大家描绘一幅 iOS 持续集成的蓝图。这可能不是一篇可以让你 Step by Step 跟着做的文章，但愿可以在你脑海中建立相关概念，以便在实操时走对方向。</p>
+<p>我们会在后面几篇内容中，详细阐述 <strong>是什么</strong> 和 <strong>如何做</strong> 。</p>
+<h2 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h2><p>对于我们来说，减少重复工作、提升团队效率。<br>对于公司来说，省钱！</p>
+<p>狭义上持续集成指早集成早测试尽早早发现问题早修复，并辅以一些自动化的手段，其目标是减少修复的成本。通过其目的，我们可以发现，其实<strong>通过自动化减少重复工作</strong>和<strong>通过早发现问题降低成本</strong>是持续集成的核心理念。因此，我把自动化 Code Review 也放到这里讲。</p>
+<h2 id="内容"><a href="#内容" class="headerlink" title="内容"></a>内容</h2><p>iOS 下的持续集成内容包括自<strong>动化 Code Reivew、自动化单元测试、自动化打包和自动化分发</strong>。自动化 Code Review 保证团队遵守代码规范，在编码阶段减少 BUG 的产生。在人员流动较大的公司里，用同一套代码规范，也可以保证项目交接更流畅。自动化单元测试在集成阶段检测出 BUG ,以减少回归成本。自动化打包和自动化分发则是减少重复劳动，毕竟，工程师的时间就是金钱啊。</p>
+<h4 id="自动化-Code-Review"><a href="#自动化-Code-Review" class="headerlink" title="自动化 Code Review"></a>自动化 Code Review</h4><p>顾名思义，自动化 Code Review 既采用自动化的手段，对团队成员得代码进行 Review，以保证代码质量。从现实角度来说，自动化的 Code Review 更多地是对代码进行静态分析，通过扫描代码并对比制定的规则，产出所需要的结果。这个所需要的结果，可以是工程总体的量化的质量报告，也可以是显示在 Xcode 中的一条警告⚠️。这取决于用户是什么角色。</p>
+<p>在实际实践中，一般会有两种角色会关注这份结果 – <strong>工程师和管理层</strong>。工程师需要在开发的过程中及时了解代码错误，以便及时纠正。管理层需要了解工程的总体代码质量，以掌握项目的相关风险。同时，也可以作为工程师绩效的依据之一。</p>
+<p>要完成这一块内容，我们需要这些工具:</p>
+<ul>
+<li><a href="https://jenkins-ci.org" target="_blank" rel="noopener">Jenkins</a></li>
+<li><a href="http://www.sonarqube.org" target="_blank" rel="noopener">SonarQube</a></li>
+<li><a href="http://oclint.org" target="_blank" rel="noopener">OCLint</a> OR <a href="https://github.com/realm/SwiftLint" target="_blank" rel="noopener">SwiftLint</a></li>
+</ul>
+<p>通过这三者协作，我们可以实现以下流程:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">工程师通过 `Git Commit` 提交代码 → Web Hook 触发 `Jenkins` 构建 → `OCLint` 扫描代码生成PMD格式报告 → `Sonar-runner` 读取报告并展现到 `SonarQube`。</span><br></pre></td></tr></table></figure>
+<p>关于 Code Review 需要指出的是，自动化工具是有局限性的。其无法分析出较为”智能”的规则。比如说下面这条</p>
+<blockquote>
+<p>4.7 方法名以小写字母动词作为开头</p>
+</blockquote>
+<p>还有下面这种代码，尽管含有多个容易造成闪退的 BUG,也是可以顺利逃过分析器的眼睛的</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> result?.bindPhone == <span class="string">"true"</span> &#123;</span><br><span class="line">	<span class="keyword">let</span> range = (result?.loginId?.startIndex.advancedBy(<span class="number">3</span>))!...(result?.loginId?.endIndex.advancedBy(-<span class="number">5</span>))!</span><br><span class="line">	<span class="keyword">let</span> phoneNumber: <span class="type">String</span>? = result?.loginId?.stringByReplacingCharactersInRange(range, withString: <span class="string">"****"</span>)</span><br><span class="line">	<span class="keyword">self</span>.phoneNumLabel.text = phoneNumber!</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>因此，想要达到 “保证代码质量” 的目的，还需要人工 Review 和自动化 Review 相结合。</p>
+<h4 id="自动化单元测试"><a href="#自动化单元测试" class="headerlink" title="自动化单元测试"></a>自动化单元测试</h4><p>自动化地执行单元测试，在测试失败的情况下中断集成，并通知相关人员，就是这一块工作的内容。</p>
+<p>为此，我们需要如下的工具:</p>
+<ul>
+<li><a href="https://jenkins-ci.org" target="_blank" rel="noopener">Jenkins</a></li>
+<li><a href="https://github.com/facebook/xctool" target="_blank" rel="noopener">xctool</a></li>
+</ul>
+<p>我们可以实现以下的流程:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">`Git Merge`  → Web Hook 触发 `Jenkins` 构建 → xctool 执行单元测试 → 如果失败则发邮件给相关人员。</span><br></pre></td></tr></table></figure>
+<p>当然，如果你公司的项目托管在 GitHub 上，业界有两个非常优秀的 Jenkins 替代产品 <a href="https://travis-ci.org" target="_blank" rel="noopener">travis-ci</a> 和 <a href="https://circleci.com" target="_blank" rel="noopener">circle-ci</a>。他们对 GitHub 的支持完美，且对开源项目是免费的。私有项目则需要付费试用。</p>
+<p>在单元测试这一块，最高的成本还是写单元测试的时间成本。脑洞大开地说，如果能实现一款工具，可以自动地为业务代码生成测试代码，那才是生产力的大大提升。</p>
+<h4 id="自动化打包与分发"><a href="#自动化打包与分发" class="headerlink" title="自动化打包与分发"></a>自动化打包与分发</h4><p>一次完整的打包，需要经历配置证书、切换环境、调整参数(构建版本号等)、Archive、导出。<br>根据工程的复杂程度，以上过程快则五分钟，慢则半小时。当需要频繁发版的情况下，浪费了工程师非常多的时间。</p>
+<p>我们其实可以利用一些工具来实现这样的一个流程:</p>
+<p>Git Merge 到 Master（通常这意味着一个 Release）→ 触发 Jenkins 构建生成 ipa → <strong>自动化分发</strong>。</p>
+<p>自动分发包含以下工作：</p>
+<ul>
+<li>自动上传 App Store</li>
+<li>自动使用 TestFlight 分发</li>
+<li>自动上传到 蒲公英/Fir 等平台</li>
+<li>自动上传到企业 App Store</li>
+</ul>
+<p>我们可以分别配置相关的脚本，来实现测试的分发，和发布等。</p>
+<p>要实现这样的流程，我们需要这些工具:</p>
+<ul>
+<li><a href="https://jenkins-ci.org" target="_blank" rel="noopener">Jenkins</a></li>
+<li><a href="https://fastlane.tools" target="_blank" rel="noopener">Fastlane</a></li>
+</ul>
+<p>Fastlane 是由一个个小组件组成的工具，功能包括上传截图到 iTunes Connect,创建 provisioning file, 管理 TestFlight 的测试员，分发等。这个工具几乎可以用命令行来实现打包上传分发相关的所有功能，并且越来越有成为默认的业界持续集成标准工具的样子。就像 CocoaPods 在依赖管理方面一样。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>持续集成，可以看做是通过版本控制系统、CI平台(如Jenkins)和相关工具链来完成一套工作流，以减少团队重复性工作，并保证软件可以不停地迭代而不出太大的差错。iOS 下的持续集成大体就是上述几块内容，我们在实现的过程中遇到了不少坑，后面的文章分块详细讲。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://shengpan.net/2016/09/04/ios-ci-index/" data-id="cjpgo3o9h0003fzo0x6twu5qs" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="../../05/swift-max/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          从 Swift 中的 max(_:_:) 看设计哲学
+        
+      </div>
+    </a>
+  
+  
+    <a href="../../../07/12/wechat-url/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">微信 URL Schemes</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/10/">十月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/09/">九月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/07/">七月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/06/">六月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/05/">五月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/04/">四月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/02/">二月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/01/">一月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2015/11/">十一月 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2015/10/">十月 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2015/09/">九月 2015</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="../../../10/07/https/">全站 HTTPS 边做边记</a>
+          </li>
+        
+          <li>
+            <a href="../../14/auto-code-review/">iOS 持续集成系列 - 自动化 Code Review</a>
+          </li>
+        
+          <li>
+            <a href="../../06/string-comparable/">深挖 Swift 中的字符串可比性</a>
+          </li>
+        
+          <li>
+            <a href="../../05/swift-max/">从 Swift 中的 max(_:_:) 看设计哲学</a>
+          </li>
+        
+          <li>
+            <a href="">iOS 持续集成系列 - 开篇</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 PPPan<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="../../../../index.html" class="mobile-nav-link">Home</a>
+  
+    <a href="../../../../archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="../../../../fancybox/jquery.fancybox.css">
+  <script src="../../../../fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="../../../../js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>iOS的多Target应用 | PPPan&#39;s 平凡之路</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="最近刚完成了一个多Target的项目，做了许多思考与选择，现写下心得总结，权当抛砖引玉。 ####项目背景本项目是一个适用于正在学车人群的预约学车平台。分为学生端和教练端。学生端主功能为预约学车，教练端主功能为排课。 什么时候选用多Target多target的选用，意在实现最大化重用代码。其经典情景是有多个类似的App，界面设计与业务逻辑有许多相似之处，仅仅有少数不同的业务逻辑，只需要在打包时将不">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS的多Target应用">
+<meta property="og:url" content="https://shengpan.net/2015/09/16/iosmultitarget/index.html">
+<meta property="og:site_name" content="PPPan&#39;s 平凡之路">
+<meta property="og:description" content="最近刚完成了一个多Target的项目，做了许多思考与选择，现写下心得总结，权当抛砖引玉。 ####项目背景本项目是一个适用于正在学车人群的预约学车平台。分为学生端和教练端。学生端主功能为预约学车，教练端主功能为排课。 什么时候选用多Target多target的选用，意在实现最大化重用代码。其经典情景是有多个类似的App，界面设计与业务逻辑有许多相似之处，仅仅有少数不同的业务逻辑，只需要在打包时将不">
+<meta property="og:locale" content="zh-cn">
+<meta property="og:image" content="https://coding.net/u/Shengpan/p/Ghost-On-Coding-Paas/git/raw/master/images/filestruct.png">
+<meta property="og:image" content="https://coding.net/u/Shengpan/p/Ghost-On-Coding-Paas/git/raw/master/images/%E5%A4%9ATarget%E5%BA%94%E7%94%A8%E6%9E%84%E6%9E%B6%E5%B0%8F%E7%BB%93/choose.png">
+<meta property="og:image" content="https://coding.net/u/Shengpan/p/Ghost-On-Coding-Paas/git/raw/master/images/%E5%A4%9ATarget%E5%BA%94%E7%94%A8%E6%9E%84%E6%9E%B6%E5%B0%8F%E7%BB%93/File_inspector.png">
+<meta property="og:image" content="https://coding.net/u/Shengpan/p/Ghost-On-Coding-Paas/git/raw/master/images/%E5%A4%9ATarget%E5%BA%94%E7%94%A8%E6%9E%84%E6%9E%B6%E5%B0%8F%E7%BB%93/change.png">
+<meta property="og:updated_time" content="2015-10-14T06:47:08.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS的多Target应用">
+<meta name="twitter:description" content="最近刚完成了一个多Target的项目，做了许多思考与选择，现写下心得总结，权当抛砖引玉。 ####项目背景本项目是一个适用于正在学车人群的预约学车平台。分为学生端和教练端。学生端主功能为预约学车，教练端主功能为排课。 什么时候选用多Target多target的选用，意在实现最大化重用代码。其经典情景是有多个类似的App，界面设计与业务逻辑有许多相似之处，仅仅有少数不同的业务逻辑，只需要在打包时将不">
+<meta name="twitter:image" content="https://coding.net/u/Shengpan/p/Ghost-On-Coding-Paas/git/raw/master/images/filestruct.png">
+  
+    <link rel="alternate" href="../../../../atom.xml" title="PPPan&#39;s 平凡之路" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="../../../../css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="../../../../index.html" id="logo">PPPan&#39;s 平凡之路</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="../../../../index.html" id="subtitle">做一个互联网内容的贡献者</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="../../../../index.html">Home</a>
+        
+          <a class="main-nav-link" href="../../../../archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="../../../../atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://shengpan.net"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-iosmultitarget" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="" class="article-date">
+  <time datetime="2015-09-16T00:29:49.000Z" itemprop="datePublished">2015-09-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      iOS的多Target应用
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近刚完成了一个多Target的项目，做了许多思考与选择，现写下心得总结，权当抛砖引玉。</p>
+<p>####项目背景<br>本项目是一个适用于正在学车人群的预约学车平台。分为学生端和教练端。学生端主功能为预约学车，教练端主功能为排课。</p>
+<h3 id="什么时候选用多Target"><a href="#什么时候选用多Target" class="headerlink" title="什么时候选用多Target"></a>什么时候选用多Target</h3><p>多target的选用，意在实现最大化重用代码。其经典情景是有多个类似的App，界面设计与业务逻辑有许多相似之处，仅仅有少数不同的业务逻辑，只需要在打包时将不同的配置文件打包好，就可以形成一个个不同的客户端。</p>
+<p>我负责两个客户端有以下共同点：</p>
+<ol>
+<li>近乎相同的登陆注册界面与逻辑</li>
+<li>近乎相同的主页布局与逻辑</li>
+<li>近乎相同的个人中心主界面</li>
+<li>近乎相同的课表界面</li>
+<li>近乎相同的选课/排课界面</li>
+</ol>
+<p>不同点有：</p>
+<ol>
+<li>不同的应用主题色</li>
+<li>排课与选课的逻辑不同</li>
+<li>一些图标资源和其他细节的不同</li>
+</ol>
+<p>本项目选择多Target方案是十分合适的。</p>
+<p>###为多Target打基础</p>
+<ol>
+<li>编写共用的层（<code>WebService</code>，<code>Common</code>等）</li>
+<li>抽取基类(<code>BaseViewController</code>,<code>BaseModel</code>,<code>BaseView</code>)</li>
+<li>编写子模块，利用MVC模式保持单个子模块的独立性，并预留相对应的差异化枚举和接口。</li>
+</ol>
+<p>项目的结构是这样的</p>
+<p><img src="https://coding.net/u/Shengpan/p/Ghost-On-Coding-Paas/git/raw/master/images/filestruct.png" alt="文件结构"> </p>
+<p>网络层不使用单例，而是采用了<code>Category</code>的模式。<strong>只将最基本的<code>RESTful</code>请求封装好放在<code>WebService</code>中。</strong>而具体的实现采用<code>Category</code>拓展方法。这样的好处是<strong>各自的WebService有各自的生命周期，每个Webservice可以只负责自己模块的网络层服务。</strong>比如说在这个项目中我分了Account，Teacher，Student等Category，分别负责登陆注册，教练端和学生端的网络请求服务。</p>
+<p>View中是通用的View，比如全项目通用的定制<code>AlertView</code>，一模一样的Login界面。</p>
+<p>Category放通用的拓展类，比如说<code>NSCalendar</code>在iOS8.0之后新增了很多日期计算和比较的Api，但是基于目前的项目大多数都需要最低支持iOS7.0，因此可以为<code>NSCalaner</code>或者<code>NSDate</code>写一些拓展方法，可以作为不同项目公用的工具。</p>
+<p>其他例如UserInfo还有Validation则是项目业务需求抽取，在此就不赘述了。</p>
+<p>###实战<br>做好以上准备后，就可以进行业务开发了。多Target项目的开发和普通项目的开发并没有什么不同，只是在新建文件时，注意选择Target即可。<br><img src="https://coding.net/u/Shengpan/p/Ghost-On-Coding-Paas/git/raw/master/images/%E5%A4%9ATarget%E5%BA%94%E7%94%A8%E6%9E%84%E6%9E%B6%E5%B0%8F%E7%BB%93/choose.png" alt="选择Target"></p>
+<p>另外，如果想调整文件的Target归属，只需要选择文件，在右边的工具窗口里的File Inspector选项下面，就可以找到与之前新建文件夹时相同的勾选项。勾选你想要的Target吧！</p>
+<p><img src="https://coding.net/u/Shengpan/p/Ghost-On-Coding-Paas/git/raw/master/images/%E5%A4%9ATarget%E5%BA%94%E7%94%A8%E6%9E%84%E6%9E%B6%E5%B0%8F%E7%BB%93/File_inspector.png" alt="勾选Target"> </p>
+<p>最后，在Debug和打包的时候，注意选择Target即可。</p>
+<p><img src="https://coding.net/u/Shengpan/p/Ghost-On-Coding-Paas/git/raw/master/images/%E5%A4%9ATarget%E5%BA%94%E7%94%A8%E6%9E%84%E6%9E%B6%E5%B0%8F%E7%BB%93/change.png" alt="选择target"> </p>
+<p>###一些应该避免的坑</p>
+<ul>
+<li>除了公用的模块，其他各自不同的类都加上前缀</li>
+</ul>
+<p>由于OC并没有像Java命名空间一样的东西，因此在引入头文件时，如果文件名相同，编译器有时候会错误地引入头文件，这一就会导致找不到对应的方法，进而导致编译不通过。解决这个问题最直接了当的方法就是在新建每一个类的时候加上前缀。</p>
+<ul>
+<li>统一单独的常量或者宏定义文件</li>
+</ul>
+<p>.h文件没有Target选项。因此，如果你有Define或者Constant一类的.h文件，要么为各自target用加前缀的方法创建不同的.h文件，要么将.h文件统一在Common中。不然会触发上面那个坑。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://shengpan.net/2015/09/16/iosmultitarget/" data-id="cjpgo3o9j0004fzo0fpue6fk3" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="../../../10/14/module/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          iOS项目架构 - 模块化
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/10/">十月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/09/">九月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/07/">七月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/06/">六月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/05/">五月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/04/">四月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/02/">二月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/01/">一月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2015/11/">十一月 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2015/10/">十月 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2015/09/">九月 2015</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="../../../../2016/10/07/https/">全站 HTTPS 边做边记</a>
+          </li>
+        
+          <li>
+            <a href="../../../../2016/09/14/auto-code-review/">iOS 持续集成系列 - 自动化 Code Review</a>
+          </li>
+        
+          <li>
+            <a href="../../../../2016/09/06/string-comparable/">深挖 Swift 中的字符串可比性</a>
+          </li>
+        
+          <li>
+            <a href="../../../../2016/09/05/swift-max/">从 Swift 中的 max(_:_:) 看设计哲学</a>
+          </li>
+        
+          <li>
+            <a href="../../../../2016/09/04/ios-ci-index/">iOS 持续集成系列 - 开篇</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 PPPan<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="../../../../index.html" class="mobile-nav-link">Home</a>
+  
+    <a href="../../../../archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="../../../../fancybox/jquery.fancybox.css">
+  <script src="../../../../fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="../../../../js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

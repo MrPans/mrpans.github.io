@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>电池电量与低电量模式 | PPPan&#39;s 平凡之路</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="优步最近公布的数据显示，当电池快没电的时候，人们更愿意接受溢价。同时，优步也表明他们并没有利用电量相关的数据来设置溢价规则。换句话说，我们在开发App的时候，可以通过电池电量来”提升用户体验”。 电池状态与电量UIDevice 中有三个电池相关的属性: 123@property(nonatomic,getter=isBatteryMonitoringEnabled) BOOL batteryMon">
+<meta property="og:type" content="article">
+<meta property="og:title" content="电池电量与低电量模式">
+<meta property="og:url" content="https://shengpan.net/2016/05/31/battery/index.html">
+<meta property="og:site_name" content="PPPan&#39;s 平凡之路">
+<meta property="og:description" content="优步最近公布的数据显示，当电池快没电的时候，人们更愿意接受溢价。同时，优步也表明他们并没有利用电量相关的数据来设置溢价规则。换句话说，我们在开发App的时候，可以通过电池电量来”提升用户体验”。 电池状态与电量UIDevice 中有三个电池相关的属性: 123@property(nonatomic,getter=isBatteryMonitoringEnabled) BOOL batteryMon">
+<meta property="og:locale" content="zh-cn">
+<meta property="og:updated_time" content="2016-05-30T19:33:52.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="电池电量与低电量模式">
+<meta name="twitter:description" content="优步最近公布的数据显示，当电池快没电的时候，人们更愿意接受溢价。同时，优步也表明他们并没有利用电量相关的数据来设置溢价规则。换句话说，我们在开发App的时候，可以通过电池电量来”提升用户体验”。 电池状态与电量UIDevice 中有三个电池相关的属性: 123@property(nonatomic,getter=isBatteryMonitoringEnabled) BOOL batteryMon">
+  
+    <link rel="alternate" href="../../../../atom.xml" title="PPPan&#39;s 平凡之路" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="../../../../css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="../../../../index.html" id="logo">PPPan&#39;s 平凡之路</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="../../../../index.html" id="subtitle">做一个互联网内容的贡献者</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="../../../../index.html">Home</a>
+        
+          <a class="main-nav-link" href="../../../../archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="../../../../atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://shengpan.net"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-battery" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="" class="article-date">
+  <time datetime="2016-05-30T19:31:24.000Z" itemprop="datePublished">2016-05-31</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      电池电量与低电量模式
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>优步最近公布的数据显示，<a href="http://www.npr.org/2016/05/17/478266839/this-is-your-brain-on-uber" title="UberNews" target="_blank" rel="noopener">当电池快没电的时候，人们更愿意接受溢价</a>。同时，优步也表明他们并没有利用电量相关的数据来设置溢价规则。换句话说，我们在开发App的时候，可以通过电池电量来”提升用户体验”。</p>
+<h3 id="电池状态与电量"><a href="#电池状态与电量" class="headerlink" title="电池状态与电量"></a>电池状态与电量</h3><p><code>UIDevice</code> 中有三个电池相关的属性:</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>,<span class="keyword">getter</span>=isBatteryMonitoringEnabled) <span class="built_in">BOOL</span> batteryMonitoringEnabled <span class="built_in">NS_AVAILABLE_IOS</span>(<span class="number">3</span>_0) __TVOS_PROHIBITED;  <span class="comment">// default is NO</span></span><br><span class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>,<span class="keyword">readonly</span>) <span class="built_in">UIDeviceBatteryState</span>          batteryState <span class="built_in">NS_AVAILABLE_IOS</span>(<span class="number">3</span>_0) __TVOS_PROHIBITED;  <span class="comment">// UIDeviceBatteryStateUnknown if monitoring disabled</span></span><br><span class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>,<span class="keyword">readonly</span>) <span class="keyword">float</span>                         batteryLevel <span class="built_in">NS_AVAILABLE_IOS</span>(<span class="number">3</span>_0) __TVOS_PROHIBITED;  <span class="comment">// 0 .. 1.0. -1.0 if UIDeviceBatteryStateUnknown</span></span><br></pre></td></tr></table></figure>
+<p>我们可以通过 <code>batteryState</code> 来获取电池状态，通过 <code>batteryLevel</code>来获取电池电量信息。</p>
+<p>值得一提的是，在获取电池信息之前，需要手动设置 <code>batteryMonitoringEnabled</code> 为 <code>YES</code>，不然<code>batterystate</code> 会返回 <code>Unkonw</code>. </p>
+<p>如果想要订阅电池状态，可以注册为以下两个通知的观察者:</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">UIKIT_EXTERN</span> <span class="built_in">NSString</span> *<span class="keyword">const</span> <span class="built_in">UIDeviceBatteryStateDidChangeNotification</span>;</span><br><span class="line"><span class="built_in">UIKIT_EXTERN</span> <span class="built_in">NSString</span> *<span class="keyword">const</span> <span class="built_in">UIDeviceBatteryLevelDidChangeNotification</span>;</span><br></pre></td></tr></table></figure>
+<p><code>batteryLevel</code> 的值每改变 0.05（也就是电池电量的 <strong>5%</strong>）, 就会触发一次 <code>UIDeviceBatteryLevelDidChangeNotification</code>。</p>
+<h3 id="低电量模式"><a href="#低电量模式" class="headerlink" title="低电量模式"></a>低电量模式</h3><p>为了解决续航问题，Apple 在 iOS 9 中为 iPhone 添加了<a href="https://support.apple.com/en-gb/HT205234" title="低电量模式" target="_blank" rel="noopener">低电量模式</a> 。在此模式下，系统会通过禁用一些特性诸如电子邮件自动获取、后台刷新、Hey Siri等，来达到降低能耗的目的。</p>
+<p>低电量模式的设置藏得比较深，以至于从设置中找到它对大多数人来说是一件非常困难的事。换句话说，用户打开了低电量模式，才能真正说明用户所处的情景需要尽可能地节约电量。因此，相比较于直接获取电池电量来说，探测低电量模式是否开启，更能直观地反应产品情景和用户心理。</p>
+<h4 id="检测低电量模式"><a href="#检测低电量模式" class="headerlink" title="检测低电量模式"></a>检测低电量模式</h4><p>在 iOS 9 中，我们可以很容易地检测到用户是否开启了低电量模式，<code>NSProcessInfo</code> 提供了相对于的属性。</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ([[<span class="built_in">NSProcessInfo</span> processInfo] isLowPowerModeEnabled]) </span><br><span class="line">&#123;</span><br><span class="line">  <span class="comment">// 做低电量模式下该做的事</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>同时，如果想要对低电量模式的变化做出响应，可以注册为以下通知的观察者：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSString</span> * <span class="keyword">const</span> <span class="built_in">NSProcessInfoPowerStateDidChangeNotification</span>;</span><br></pre></td></tr></table></figure>
+<p>当我们检测低电量模式的时候，需要注意以下两点:</p>
+<ul>
+<li>低电量模式仅支持 iOS 9 。当 App 需要兼容更早的版本时，先检查api的可用性。</li>
+<li>低电量模式仅适用于 iPhone ,在 iPad 中，<code>isLowPowerModeEnabled</code> 的返回值始终为 <code>NO</code></li>
+</ul>
+<p>当我们检测到用户开启了低电量模式，可以为用户做一些小改变，来帮助用户延长电池续航。以下是 Apple 给出一些建议:</p>
+<ul>
+<li>停止使用定位服务</li>
+<li>减弱动画效果</li>
+<li>停止后台任务（比如网络请求）</li>
+<li>禁用运动追踪</li>
+</ul>
+<h4 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h4><ul>
+<li><a href="https://developer.apple.com/library/ios/documentation/Performance/Conceptual/EnergyGuide-iOS/index.html" target="_blank" rel="noopener">Energy Efficiency Guide for iOS Apps</a></li>
+<li><a href="https://developer.apple.com/videos/play/wwdc2015/707/" target="_blank" rel="noopener">WWDC 2015 Session 707 Achieving All-day Battery Life</a></li>
+<li><a href="http://useyourloaf.com/blog/detecting-low-power-mode/" target="_blank" rel="noopener">Detecting low power mode</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://shengpan.net/2016/05/31/battery/" data-id="cjpgo3o9f0002fzo079kctqih" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="../../../06/23/3dtouch/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          让你的应用更好地利用 3D Touch - WWDC 2016 Session 228 笔记
+        
+      </div>
+    </a>
+  
+  
+    <a href="../../30/hengtian-ios-code-style-2/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">HengTian iOS Code Style</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/10/">十月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/09/">九月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/07/">七月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/06/">六月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/05/">五月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/04/">四月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/02/">二月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/01/">一月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2015/11/">十一月 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2015/10/">十月 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2015/09/">九月 2015</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="../../../10/07/https/">全站 HTTPS 边做边记</a>
+          </li>
+        
+          <li>
+            <a href="../../../09/14/auto-code-review/">iOS 持续集成系列 - 自动化 Code Review</a>
+          </li>
+        
+          <li>
+            <a href="../../../09/06/string-comparable/">深挖 Swift 中的字符串可比性</a>
+          </li>
+        
+          <li>
+            <a href="../../../09/05/swift-max/">从 Swift 中的 max(_:_:) 看设计哲学</a>
+          </li>
+        
+          <li>
+            <a href="../../../09/04/ios-ci-index/">iOS 持续集成系列 - 开篇</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 PPPan<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="../../../../index.html" class="mobile-nav-link">Home</a>
+  
+    <a href="../../../../archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="../../../../fancybox/jquery.fancybox.css">
+  <script src="../../../../fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="../../../../js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

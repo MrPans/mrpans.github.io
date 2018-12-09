@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>微信 URL Schemes | PPPan&#39;s 平凡之路</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="DEPRECATED2016年09月18日更新： 在 微信 6.3.25 版本中，所有外部唤起 URL 的方式均无法打开对应页面。未来这些 url 都只能在微信内部的浏览器使用了。  年初的动态化分享热潮里，基本上都提到了 URL 跳转，天猫称为统跳协议，蘑菇街称为 URL 路由。其实很多大厂都默默地做了一套 URL 跳转机制，比如说 – 微信。 本文整理了部分微信 URL Schemes，经过本">
+<meta property="og:type" content="article">
+<meta property="og:title" content="微信 URL Schemes">
+<meta property="og:url" content="https://shengpan.net/2016/07/12/wechat-url/index.html">
+<meta property="og:site_name" content="PPPan&#39;s 平凡之路">
+<meta property="og:description" content="DEPRECATED2016年09月18日更新： 在 微信 6.3.25 版本中，所有外部唤起 URL 的方式均无法打开对应页面。未来这些 url 都只能在微信内部的浏览器使用了。  年初的动态化分享热潮里，基本上都提到了 URL 跳转，天猫称为统跳协议，蘑菇街称为 URL 路由。其实很多大厂都默默地做了一套 URL 跳转机制，比如说 – 微信。 本文整理了部分微信 URL Schemes，经过本">
+<meta property="og:locale" content="zh-cn">
+<meta property="og:updated_time" content="2016-09-17T22:21:32.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="微信 URL Schemes">
+<meta name="twitter:description" content="DEPRECATED2016年09月18日更新： 在 微信 6.3.25 版本中，所有外部唤起 URL 的方式均无法打开对应页面。未来这些 url 都只能在微信内部的浏览器使用了。  年初的动态化分享热潮里，基本上都提到了 URL 跳转，天猫称为统跳协议，蘑菇街称为 URL 路由。其实很多大厂都默默地做了一套 URL 跳转机制，比如说 – 微信。 本文整理了部分微信 URL Schemes，经过本">
+  
+    <link rel="alternate" href="../../../../atom.xml" title="PPPan&#39;s 平凡之路" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="../../../../css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="../../../../index.html" id="logo">PPPan&#39;s 平凡之路</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="../../../../index.html" id="subtitle">做一个互联网内容的贡献者</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="../../../../index.html">Home</a>
+        
+          <a class="main-nav-link" href="../../../../archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="../../../../atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://shengpan.net"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-wechat-url" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="" class="article-date">
+  <time datetime="2016-07-11T18:29:05.000Z" itemprop="datePublished">2016-07-12</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      微信 URL Schemes
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="DEPRECATED"><a href="#DEPRECATED" class="headerlink" title="DEPRECATED"></a>DEPRECATED</h3><p>2016年09月18日更新：</p>
+<p><strong>在 微信 6.3.25 版本中，所有外部唤起 URL 的方式均无法打开对应页面。</strong><br>未来这些 url 都只能在微信内部的浏览器使用了。</p>
+<hr>
+<p>年初的动态化分享热潮里，基本上都提到了 URL 跳转，天猫称为<a href="http://pingguohe.net/2015/11/24/Navigator-and-Rewrite.html" target="_blank" rel="noopener">统跳协议</a>，蘑菇街称为 <a href="http://limboy.me/tech/2016/03/10/mgj-components.html" target="_blank" rel="noopener">URL 路由</a>。其实很多大厂都默默地做了一套 URL 跳转机制，比如说 – 微信。</p>
+<p>本文整理了部分微信 URL Schemes，经过本人测试，所有url在微信 6.3.22 版本下都可正常工作。大家可以在 Safari 中打开链接进行尝试。(部分链接仅允许在微信内部浏览器中打开，已用<code>!</code>标注。）</p>
+<h3 id="微信"><a href="#微信" class="headerlink" title="微信"></a>微信</h3><ul>
+<li>微信 <a href="weixin://" target="_blank" rel="noopener">weixin://</a></li>
+<li><code>!</code>发起群聊 <a href="weixin://dl/groupchat" target="_blank" rel="noopener">weixin://dl/groupchat</a></li>
+</ul>
+<h3 id="通讯录"><a href="#通讯录" class="headerlink" title="通讯录"></a>通讯录</h3><ul>
+<li><p><code>!</code>添加朋友 <a href="weixin://dl/add" target="_blank" rel="noopener">weixin://dl/add</a></p>
+<ul>
+<li>上报日志 <a href="weixin://dl/log" target="_blank" rel="noopener">weixin://dl/log</a></li>
+<li>故障修复 搜索 <code>:recover</code></li>
+</ul>
+</li>
+<li><p>新的朋友 <a href="weixin://dl/recommendation" target="_blank" rel="noopener">weixin://dl/recommendation</a></p>
+</li>
+<li>群聊 <a href="weixin://dl/groups" target="_blank" rel="noopener">weixin://dl/groups</a></li>
+<li>标签 <a href="weixin://dl/tags" target="_blank" rel="noopener">weixin://dl/tags</a></li>
+<li>公众号 <a href="weixin://dl/officialaccounts" target="_blank" rel="noopener">weixin://dl/officialaccounts</a></li>
+</ul>
+<h3 id="发现"><a href="#发现" class="headerlink" title="发现"></a>发现</h3><ul>
+<li>朋友圈 <a href="weixin://dl/moments" target="_blank" rel="noopener">weixin://dl/moments</a></li>
+<li>扫一扫 <a href="weixin://dl/scan" target="_blank" rel="noopener">weixin://dl/scan</a></li>
+<li>购物（京东） <a href="weixin://dl/shopping" target="_blank" rel="noopener">weixin://dl/shopping</a></li>
+<li>游戏 <a href="weixin://dl/games" target="_blank" rel="noopener">weixin://dl/games</a></li>
+</ul>
+<h3 id="我"><a href="#我" class="headerlink" title="我"></a>我</h3><ul>
+<li>个人信息 <a href="weixin://dl/profile" target="_blank" rel="noopener">weixin://dl/profile</a><ul>
+<li>名字 <a href="weixin://dl/setname" target="_blank" rel="noopener">weixin://dl/setname</a></li>
+<li>我的二维码 <a href="weixin://dl/myQRcode" target="_blank" rel="noopener">weixin://dl/myQRcode</a></li>
+<li>我的地址 <a href="weixin://dl/myaddress" target="_blank" rel="noopener">weixin://dl/myaddress</a></li>
+</ul>
+</li>
+<li>相册 <a href="weixin://dl/posts" target="_blank" rel="noopener">weixin://dl/posts</a></li>
+<li>收藏 <a href="weixin://dl/favorites" target="_blank" rel="noopener">weixin://dl/favorites</a></li>
+<li>优惠券 <a href="weixin://dl/card" target="_blank" rel="noopener">weixin://dl/card</a></li>
+<li>表情 <a href="weixin://dl/stickers" target="_blank" rel="noopener">weixin://dl/stickers</a></li>
+<li><p>设置 <a href="weixin://dl/settings" target="_blank" rel="noopener">weixin://dl/settings</a></p>
+<ul>
+<li>QQ 号 <a href="weixin://dl/bindqq" target="_blank" rel="noopener">weixin://dl/bindqq</a></li>
+<li>手机号 <a href="weixin://dl/bindmobile" target="_blank" rel="noopener">weixin://dl/bindmobile</a></li>
+<li>邮箱地址 <a href="weixin://dl/bindemail" target="_blank" rel="noopener">weixin://dl/bindemail</a></li>
+<li>帐号保护 <a href="weixin://dl/protection" target="_blank" rel="noopener">weixin://dl/protection</a></li>
+<li><p>新消息通知 <a href="weixin://dl/notifications" target="_blank" rel="noopener">weixin://dl/notifications</a></p>
+</li>
+<li><p>通讯录黑名单 <a href="weixin://dl/blacklist" target="_blank" rel="noopener">weixin://dl/blacklist</a></p>
+<ul>
+<li>不让他（她）看我的朋友圈 <a href="weixin://dl/hidemoments" target="_blank" rel="noopener">weixin://dl/hidemoments</a></li>
+<li>不看他（她）的朋友圈 <a href="weixin://dl/blockmoments" target="_blank" rel="noopener">weixin://dl/blockmoments</a></li>
+</ul>
+</li>
+<li><p>通用 <a href="weixin://dl/general" target="_blank" rel="noopener">weixin://dl/general</a></p>
+<ul>
+<li>多语言 <a href="weixin://dl/languages" target="_blank" rel="noopener">weixin://dl/languages</a></li>
+<li>字体大小 <a href="weixin://dl/textsize" target="_blank" rel="noopener">weixin://dl/textsize</a></li>
+<li>我的表情 <a href="weixin://dl/stickersetting" target="_blank" rel="noopener">weixin://dl/stickersetting</a></li>
+<li>朋友圈小视频 <a href="weixin://dl/sight" target="_blank" rel="noopener">weixin://dl/sight</a></li>
+<li><p>功能 <a href="weixin://dl/features" target="_blank" rel="noopener">weixin://dl/features</a></p>
+<ul>
+<li>通讯录同步助手 <a href="weixin://dl/securityassistant" target="_blank" rel="noopener">weixin://dl/securityassistant</a></li>
+<li>群发助手 <a href="weixin://dl/broadcastmessage" target="_blank" rel="noopener">weixin://dl/broadcastmessage</a></li>
+</ul>
+</li>
+<li>聊天记录迁移 <a href="weixin://dl/chathistory" target="_blank" rel="noopener">weixin://dl/chathistory</a></li>
+<li>清理微信存储空间 <a href="weixin://dl/clear" target="_blank" rel="noopener">weixin://dl/clear</a></li>
+</ul>
+</li>
+<li>帮助与反馈<ul>
+<li>意见反馈 <a href="weixin://dl/help" target="_blank" rel="noopener">weixin://dl/help</a> 或 <a href="weixin://dl/feedback" target="_blank" rel="noopener">weixin://dl/feedback</a></li>
+<li>关于微信 <a href="weixin://dl/about" target="_blank" rel="noopener">weixin://dl/about</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><ul>
+<li><strong>隐藏入口</strong> 第三方公众号临时会话接口 <a href="weixin://dl/business" target="_blank" rel="noopener">weixin://dl/business</a><ul>
+<li>参数 <code>ticket</code> <a href="weixin://dl/business/?ticket=" target="_blank" rel="noopener">weixin://dl/business/?ticket=</a></li>
+<li>参阅：<a href="http://xyk.cmbchina.com/wx/20150528" target="_blank" rel="noopener">http://xyk.cmbchina.com/wx/20150528</a> 使用了 <a href="http://xyk.cmbchina.com/getWeiXinURL.do" target="_blank" rel="noopener">http://xyk.cmbchina.com/getWeiXinURL.do</a> 生成 ticket 参数</li>
+</ul>
+</li>
+<li><strong>隐藏入口</strong> <code>参数不明</code> 第三方 Webview 接口 <a href="weixin://dl/businessWebview/link/" target="_blank" rel="noopener">weixin://dl/businessWebview/link/</a></li>
+<li><strong>隐藏入口</strong> <code>参数不明</code> 第三方游戏库接口 <a href="weixin://dl/businessGame/library/" target="_blank" rel="noopener">weixin://dl/businessGame/library/</a></li>
+<li><strong>隐藏入口</strong> <code>参数不明</code> 第三方游戏详情接口 <a href="weixin://dl/businessGame/detail/" target="_blank" rel="noopener">weixin://dl/businessGame/detail/</a></li>
+<li><strong>隐藏入口</strong> <code>参数不明</code> 第三方支付接口 <a href="weixin://dl/businessPay/" target="_blank" rel="noopener">weixin://dl/businessPay/</a></li>
+<li><strong>隐藏入口</strong> <code>参数不明</code> 第三方临时会话接口 <a href="weixin://dl/business/tempsession/" target="_blank" rel="noopener">weixin://dl/business/tempsession/</a> 或 <a href="weixin://dl/businessTempSession/" target="_blank" rel="noopener">weixin://dl/businessTempSession/</a></li>
+</ul>
+<h3 id="未知"><a href="#未知" class="headerlink" title="未知"></a>未知</h3><ul>
+<li><a href="weixin://dl/chat" target="_blank" rel="noopener">weixin://dl/chat</a></li>
+<li><a href="weixin://dl/designeremoji" target="_blank" rel="noopener">weixin://dl/designeremoji</a></li>
+<li><a href="weixin://dl/login/common_view" target="_blank" rel="noopener">weixin://dl/login/common_view</a></li>
+<li><a href="weixin://dl/login/phone_view" target="_blank" rel="noopener">weixin://dl/login/phone_view</a></li>
+<li><a href="weixin://dl/personalemoticon" target="_blank" rel="noopener">weixin://dl/personalemoticon</a></li>
+<li><a href="weixin://private/" target="_blank" rel="noopener">weixin://private/</a><ul>
+<li><a href="weixin://private/setresult/" target="_blank" rel="noopener">weixin://private/setresult/</a></li>
+</ul>
+</li>
+<li><a href="weixin://dl/update_newest_version" target="_blank" rel="noopener">weixin://dl/update_newest_version</a></li>
+<li><a href="weixin://dl/wechatout" target="_blank" rel="noopener">weixin://dl/wechatout</a><ul>
+<li><a href="weixin://dl/wechatoutcoupon" target="_blank" rel="noopener">weixin://dl/wechatoutcoupon</a></li>
+</ul>
+</li>
+</ul>
+<p>参考资料:</p>
+<ul>
+<li><a href="https://github.com/reverseengineeringer/com.tencent.mm/blob/master/src/com/tencent/mm/pluginsdk/d.java" target="_blank" rel="noopener">Wechat 安卓版部分源码</a></li>
+<li><a href="http://spacekid.me/weixin-url-schemes" target="_blank" rel="noopener">太空小孩</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://shengpan.net/2016/07/12/wechat-url/" data-id="cjpgo3o9s000afzo0pzj2te1z" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="../../../09/04/ios-ci-index/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          iOS 持续集成系列 - 开篇
+        
+      </div>
+    </a>
+  
+  
+    <a href="../../../06/23/3dtouch/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">让你的应用更好地利用 3D Touch - WWDC 2016 Session 228 笔记</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/10/">十月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/09/">九月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/07/">七月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/06/">六月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/05/">五月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/04/">四月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/02/">二月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2016/01/">一月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2015/11/">十一月 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2015/10/">十月 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2015/09/">九月 2015</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="../../../10/07/https/">全站 HTTPS 边做边记</a>
+          </li>
+        
+          <li>
+            <a href="../../../09/14/auto-code-review/">iOS 持续集成系列 - 自动化 Code Review</a>
+          </li>
+        
+          <li>
+            <a href="../../../09/06/string-comparable/">深挖 Swift 中的字符串可比性</a>
+          </li>
+        
+          <li>
+            <a href="../../../09/05/swift-max/">从 Swift 中的 max(_:_:) 看设计哲学</a>
+          </li>
+        
+          <li>
+            <a href="../../../09/04/ios-ci-index/">iOS 持续集成系列 - 开篇</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 PPPan<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="../../../../index.html" class="mobile-nav-link">Home</a>
+  
+    <a href="../../../../archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="../../../../fancybox/jquery.fancybox.css">
+  <script src="../../../../fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="../../../../js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
