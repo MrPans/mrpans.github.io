@@ -732,6 +732,70 @@
 
 
   
+    <article id="post-top-tips-for-ios9" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="../../2015/12/15/top-tips-for-ios9/" class="article-date">
+  <time datetime="2015-12-15T00:26:57.000Z" itemprop="datePublished">2015-12-15</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="../../2015/12/15/top-tips-for-ios9/">[译] iOS 9 开发小技巧</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>###前言<br>“小黄鸭”法不仅适用于debug,也适用于学习新知识。表达是最好的吸收。<a href="https://realm.io/news/tips-for-ios-9-development/" target="_blank" rel="noopener">本文原文</a>发表在realm.io上。我翻译并整理成此文。希望可以为国内的iOS朋友提供一些资料。</p>
+<p>###LayoutGuide</p>
+<p>在iOS9.0 和 OS X10.11中，分别有两个新的类：<code>UILayoutGuide</code> 和 <code>NSLayoutGuide</code>。他们可以作为一种类似View的对象，参与到AutoLayout的布局约束中。作为一种新的布局解决方案,这两个类的出现使你无需再创建、显示无关的View了。举个栗子，原本需要一个空的<code>UIView</code>占位的地方，现在只需要用<code>UILayoutGuide</code>去替代它就可以了。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建LayoutGuide</span></span><br><span class="line"><span class="keyword">let</span> layoutGuideA = <span class="type">UILayoutGuide</span>()</span><br><span class="line"><span class="keyword">let</span> layoutGuideB = <span class="type">UILayoutGuide</span>()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 添加到View上</span></span><br><span class="line"><span class="keyword">let</span> view: <span class="type">UIView</span> = ...</span><br><span class="line">view.addLayoutGuide(layoutGuideA)</span><br><span class="line">view.addLayoutGuide(layoutGuideB)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 用UILayoutGuide来添加布局约束</span></span><br><span class="line">layoutGuideA.heightAnchor.constraintEqualToAnchor(layoutGuideB.heightAnchor).active = <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置Identifier，为了方便DEBUG</span></span><br><span class="line">layoutGuideA.identifier = <span class="string">"layoutGuideA"</span></span><br><span class="line">layoutGuideB.identifier = <span class="string">"layoutGuideB"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// ...然后看看他们的Frame吧</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"layoutGuideA.layoutFrame -&gt; <span class="subst">\(layoutGuideA.layoutFrame)</span>"</span>)</span><br></pre></td></tr></table></figure>
+<p>###NSLayoutAnchor<br>iOS9中另一个新增的API是<code>NSLayoutAnchor</code>。它的出现不仅仅是让使用代码添加约束变得简洁明了。通过该类强大的静态检查能力，还提供了额外的约束正确定保证。举个栗子，考虑以下使用<code>NSLayoutConstraint</code>API创建的约束会出现什么问题：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">NSLayoutConstraint *constraint = </span><br><span class="line">    [NSLayoutConstraint constraintWithItem:view1 </span><br><span class="line">                                 attribute:NSLayoutAttributeLeading </span><br><span class="line">                                 relatedBy:NSLayoutRelationEqual </span><br><span class="line">                                    toItem:view2 </span><br><span class="line">                                 attribute:NSLayoutAttributeTop </span><br><span class="line">                                multiplier:1.0 </span><br><span class="line">                                  constant:0.0];</span><br></pre></td></tr></table></figure>
+<p>这个约束是无效的。因为你将一个X轴上的属性(leading)同一个Y轴属性(top)绑定。然而，这个错误可以毫无警告地通过编译，在运行的时候<strong>默默地</strong>就失效了，最终留下一个出错的布局。由于这个错误不会产生任何的日志信息，导致极难debug。假如工程里有许多(成千上万)这样的约束代码，那对于维护来说真是一场噩梦。</p>
+<p>好在<code>NSLayoutAnchor</code>利用了”泛型”解决了这个问题。”泛型”现在在Swift和Objective-C中都已经得到了支持。<code>UIView</code>中<code>NSLayoutAnchor</code>相关的存取方法，明确指出了需要哪些继承自<code>NSLayoutAnchor</code>的子类。这些子类被分为了三类，X轴，Y轴，和尺寸(宽/高)，一种类型的Anchor只允许绑定约束到另外一个相同类型的Anchor上。通过指定<code>NSLayoutAnchor</code>中参数的类型，这个API可以通过类型检查，来避免创建出例子中无效的约束。</p>
+<p>我们回到之前的例子，用<code>NSLayoutAnchor</code>来实现一下这个约束：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">NSLayoutConstraint *constraint = </span><br><span class="line">    [view1.leadingAnchor constraintEqualToAnchor:view2.topAnchor];</span><br></pre></td></tr></table></figure></p>
+<p>相比旧的API，新的API非常明显地提升了代码可读性。并且，当你传入错误的Anchor类型时，新的API会抛出一个”Incompatible pointer type”警告，因为编译器知道这个是两个不同的类。</p>
+<p>想要了解更多，请查阅<a href="https://developer.apple.com/library/prerelease/ios/documentation/AppKit/Reference/NSLayoutAnchor_ClassReference/index.html#//apple_ref/occ/instm/NSLayoutAnchor/constraintEqualToAnchor:constant:" target="_blank" rel="noopener">NSLayoutAnchor官方文档</a></p>
+<p>###HTTPS 和 HTTP<br>Apple介绍了iOS9中的<a href="https://developer.apple.com/library/prerelease/ios/technotes/App-Transport-Security-Technote/" target="_blank" rel="noopener">App Transport Security</a>，它要求所有App在默认情况下使用HTTPS来进行网络请求。由于不是所有的服务器都运行在HTTPS环境下，Apple也提供了相关的方法来禁用ATS。</p>
+<p>如果你的App需要请求的网址不可控（比如说UIWebVeiw请求的网站，有可能是HTTP的，也有可能是HTTPS的)，那么你应当将Info.plist文件中的<code>NSAllowsArbitraryLoads</code>设置为YES，来完全禁用ATS。出于数据安全考虑，在完全禁用ATS的情况下，你也应该为某些重要的站点打开ATS。你可以通过<code>NSExceptionDomains</code>key来禁用/启用特定的站点的ATS。参照如下图片:<br><img src="/content/images/2015/12/ios9-tips-conrad-info-plist.png" alt=""></p>
+<p>该plist文件允许用户在HTTP环境下下载文件，但是只能在HTTPS情况下访问”workflow.is”</p>
+<p>需要提醒的是，ATS的设置只针对当前bundle。这意味着你不仅需要在你主项目的info.plist中添加ATS相关的Key,同时也需要在其他bundle下的info.plist中添加相关配置。</p>
+<p>关于iOS9的适配，github上有一个中文项目<a href="https://github.com/ChenYilong/iOS9AdaptationTips" target="_blank" rel="noopener">iOS9AdaptationTips</a>可以提供很大的帮助。</p>
+<p></p><h3 id="StoryboardReference">Storyboard Reference</h3><br>Storyboard真是让人又爱又恨，每个在多人合作项目中使用Storyboard的人，都遇到过Storyboard文件的冲突。类似的冲突解决起来比较棘手，常常是以回滚告终。这一点直接造成了一些团队放弃使用Storyboard开发而推荐纯代码布局。<p></p>
+<p>如果需要使用Storyboard，但又想最大化地避免冲突呢？最好的方法就是将UI划分的更小的、不同的Storyboard文件中。在过去如果想要做到这一点，意味跨Storyboard的跳转方法，需要在代码里完成：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">UIStoryboard *destinationStoryboard = [UIStoryboard storyboardWithName:@&quot;StoryboardName&quot; bundle:nil];</span><br><span class="line">DestinationViewController *vc = [destinationStoryboard instantiateViewControllerWithIdentifier:@&quot;identifier&quot;];</span><br><span class="line"></span><br><span class="line">//一顿设置</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">[self.navigationController pushViewController:vc animated:YES];</span><br></pre></td></tr></table></figure>
+<p>在Xcode7 和 iOS 9中，只需要用Storyboard Reference就可以用Segue轻松实现跨Storyboard的跳转了。<code>Storyboard Reference</code>的出现，保留了单个Storyboard文件跳转的优点的同时，提供了多Storyboard文件时利于合并的便利。</p>
+<p>开始分割你那巨大的Storyboard文件吧。最快的方法是:</p>
+<ol>
+<li>缩放Storyboard</li>
+<li>框选一组逻辑相近的scenes</li>
+<li>选择Editor &gt; Refactor to Storyboard…</li>
+</ol>
+<p>自动Refactord的故事板文件会为每一个scenes留下一个<code>UIStoryboard Reference</code>，并且在需要的地方自动创建可读性不好的Storyboard ID。所以就个人来说，我更推荐手动复制scenes到新的故事板文件中，然后在源文件中删除这些scenes并手动添加<code>Storyboard Reference</code>。</p>
+<p>如果你已经有多个故事板文件了，为自己庆祝一下吧——你又可以精简你的代码了！从Object库中拖拽一个<code>UIStoryboard Reference</code>，并配置segue。然后选取你手动跳转的代码，大力地按下删除键吧！</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://shengpan.net/2015/12/15/top-tips-for-ios9/" data-id="cjpgpo6z30000njo00ga4uxjs" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-pscarouselview" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="../../2015/11/12/pscarouselview/" class="article-date">
@@ -1284,91 +1348,11 @@
 
 
   
-    <article id="post-iosmultitarget" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="../../2015/09/16/iosmultitarget/" class="article-date">
-  <time datetime="2015-09-16T00:29:49.000Z" itemprop="datePublished">2015-09-16</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="../../2015/09/16/iosmultitarget/">iOS的多Target应用</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>最近刚完成了一个多Target的项目，做了许多思考与选择，现写下心得总结，权当抛砖引玉。</p>
-<p>####项目背景<br>本项目是一个适用于正在学车人群的预约学车平台。分为学生端和教练端。学生端主功能为预约学车，教练端主功能为排课。</p>
-<h3 id="什么时候选用多Target"><a href="#什么时候选用多Target" class="headerlink" title="什么时候选用多Target"></a>什么时候选用多Target</h3><p>多target的选用，意在实现最大化重用代码。其经典情景是有多个类似的App，界面设计与业务逻辑有许多相似之处，仅仅有少数不同的业务逻辑，只需要在打包时将不同的配置文件打包好，就可以形成一个个不同的客户端。</p>
-<p>我负责两个客户端有以下共同点：</p>
-<ol>
-<li>近乎相同的登陆注册界面与逻辑</li>
-<li>近乎相同的主页布局与逻辑</li>
-<li>近乎相同的个人中心主界面</li>
-<li>近乎相同的课表界面</li>
-<li>近乎相同的选课/排课界面</li>
-</ol>
-<p>不同点有：</p>
-<ol>
-<li>不同的应用主题色</li>
-<li>排课与选课的逻辑不同</li>
-<li>一些图标资源和其他细节的不同</li>
-</ol>
-<p>本项目选择多Target方案是十分合适的。</p>
-<p>###为多Target打基础</p>
-<ol>
-<li>编写共用的层（<code>WebService</code>，<code>Common</code>等）</li>
-<li>抽取基类(<code>BaseViewController</code>,<code>BaseModel</code>,<code>BaseView</code>)</li>
-<li>编写子模块，利用MVC模式保持单个子模块的独立性，并预留相对应的差异化枚举和接口。</li>
-</ol>
-<p>项目的结构是这样的</p>
-<p><img src="https://coding.net/u/Shengpan/p/Ghost-On-Coding-Paas/git/raw/master/images/filestruct.png" alt="文件结构"> </p>
-<p>网络层不使用单例，而是采用了<code>Category</code>的模式。<strong>只将最基本的<code>RESTful</code>请求封装好放在<code>WebService</code>中。</strong>而具体的实现采用<code>Category</code>拓展方法。这样的好处是<strong>各自的WebService有各自的生命周期，每个Webservice可以只负责自己模块的网络层服务。</strong>比如说在这个项目中我分了Account，Teacher，Student等Category，分别负责登陆注册，教练端和学生端的网络请求服务。</p>
-<p>View中是通用的View，比如全项目通用的定制<code>AlertView</code>，一模一样的Login界面。</p>
-<p>Category放通用的拓展类，比如说<code>NSCalendar</code>在iOS8.0之后新增了很多日期计算和比较的Api，但是基于目前的项目大多数都需要最低支持iOS7.0，因此可以为<code>NSCalaner</code>或者<code>NSDate</code>写一些拓展方法，可以作为不同项目公用的工具。</p>
-<p>其他例如UserInfo还有Validation则是项目业务需求抽取，在此就不赘述了。</p>
-<p>###实战<br>做好以上准备后，就可以进行业务开发了。多Target项目的开发和普通项目的开发并没有什么不同，只是在新建文件时，注意选择Target即可。<br><img src="https://coding.net/u/Shengpan/p/Ghost-On-Coding-Paas/git/raw/master/images/%E5%A4%9ATarget%E5%BA%94%E7%94%A8%E6%9E%84%E6%9E%B6%E5%B0%8F%E7%BB%93/choose.png" alt="选择Target"></p>
-<p>另外，如果想调整文件的Target归属，只需要选择文件，在右边的工具窗口里的File Inspector选项下面，就可以找到与之前新建文件夹时相同的勾选项。勾选你想要的Target吧！</p>
-<p><img src="https://coding.net/u/Shengpan/p/Ghost-On-Coding-Paas/git/raw/master/images/%E5%A4%9ATarget%E5%BA%94%E7%94%A8%E6%9E%84%E6%9E%B6%E5%B0%8F%E7%BB%93/File_inspector.png" alt="勾选Target"> </p>
-<p>最后，在Debug和打包的时候，注意选择Target即可。</p>
-<p><img src="https://coding.net/u/Shengpan/p/Ghost-On-Coding-Paas/git/raw/master/images/%E5%A4%9ATarget%E5%BA%94%E7%94%A8%E6%9E%84%E6%9E%B6%E5%B0%8F%E7%BB%93/change.png" alt="选择target"> </p>
-<p>###一些应该避免的坑</p>
-<ul>
-<li>除了公用的模块，其他各自不同的类都加上前缀</li>
-</ul>
-<p>由于OC并没有像Java命名空间一样的东西，因此在引入头文件时，如果文件名相同，编译器有时候会错误地引入头文件，这一就会导致找不到对应的方法，进而导致编译不通过。解决这个问题最直接了当的方法就是在新建每一个类的时候加上前缀。</p>
-<ul>
-<li>统一单独的常量或者宏定义文件</li>
-</ul>
-<p>.h文件没有Target选项。因此，如果你有Define或者Constant一类的.h文件，要么为各自target用加前缀的方法创建不同的.h文件，要么将.h文件统一在Common中。不然会触发上面那个坑。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://shengpan.net/2015/09/16/iosmultitarget/" data-id="cjpgo3o9j0004fzo0fpue6fk3" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
 
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="../../">&laquo; Prev</a><a class="page-number" href="../../">1</a><span class="page-number current">2</span>
+    <a class="extend prev" rel="prev" href="../../">&laquo; Prev</a><a class="page-number" href="../../">1</a><span class="page-number current">2</span><a class="page-number" href="../3/">3</a><a class="extend next" rel="next" href="../3/">Next &raquo;</a>
   </nav>
 
 </section>
@@ -1387,7 +1371,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2016/10/">十月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2016/09/">九月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2016/07/">七月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2016/06/">六月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2016/05/">五月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2016/04/">四月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2016/02/">二月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2016/01/">一月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2015/11/">十一月 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2015/10/">十月 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2015/09/">九月 2015</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2016/10/">十月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2016/09/">九月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2016/07/">七月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2016/06/">六月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2016/05/">五月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2016/04/">四月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2016/02/">二月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2016/01/">一月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2015/12/">十二月 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2015/11/">十一月 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2015/10/">十月 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2015/09/">九月 2015</a></li></ul>
     </div>
   </div>
 
