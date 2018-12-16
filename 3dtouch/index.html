@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="z">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    
+    <title>让你的应用更好地利用 3D Touch - WWDC 2016 Session 228 笔记 | PPPan&#39;s 平凡之路</title>
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="PPPan&#39;s 平凡之路 一个技术博客覆盖范围包括 iOS Objecticve-C Swift Xcode 等">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="让你的应用更好地利用 3D Touch - WWDC 2016 Session 228 笔记 | PPPan&#39;s 平凡之路">
+    <meta name="twitter:description" content="PPPan&#39;s 平凡之路 一个技术博客覆盖范围包括 iOS Objecticve-C Swift Xcode 等">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="让你的应用更好地利用 3D Touch - WWDC 2016 Session 228 笔记 | PPPan&#39;s 平凡之路">
+    <meta property="og:description" content="PPPan&#39;s 平凡之路 一个技术博客覆盖范围包括 iOS Objecticve-C Swift Xcode 等">
+
+    
+    <meta name="author" content="PPPan">
+    
+    <link rel="stylesheet" href="../css/vno.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+
+    
+    <link rel="icon" href="/images/favicon.png">
+    
+
+    <meta name="generator" content="hexo"/>
+    
+    <link rel="alternate" type="application/rss+xml" title="PPPan&#39;s 平凡之路" href="/atom.xml">
+    
+
+    <link rel="canonical" href="https://shengpan.net/3dtouch/"/>
+
+                 
+</head>
+
+<body class="home-template no-js">
+    <script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="../js/main.js"></script>
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+<header class="panel-cover panel-cover--collapsed" style="background-image: url(/images/background-cover.jpg)">
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/" title="前往 PPPan&#39;s 平凡之路 的主页"><img src="/images/avatar.jpg" width="80" alt="PPPan&#39;s 平凡之路 logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for PPPan&#39;s 平凡之路">PPPan&#39;s 平凡之路</a></h1>
+        
+        <span class="panel-cover__subtitle panel-subtitle">做一个互联网内容的贡献者</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">PPPan's 平凡之路 一个技术博客覆盖范围包括 iOS Objecticve-C Swift Xcode 等</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+
+        <div class="navigation-wrapper">
+          <div>
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item"><a href="/#blog" title="Visit the blog" class="blog-button">Blog</a></li>
+            
+              <li class="navigation__item"><a href="https://github.com/DeveloperPans">GitHub</a></li>
+            
+            </ul>
+          </nav>
+          </div>
+          <div>
+          <nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  <!-- Weibo-->
+  
+  <li class="navigation__item">
+    <a href="http://weibo.com/u/5666355111" title="Weibo" target="_blank">
+      <i class='social fa fa-weibo'></i>
+      <span class="label">Weibo</span>
+    </a>
+  </li> 
+
+
+  <!-- Github -->
+  
+  <li class="navigation__item">
+    <a href="https://github.com/DeveloperPans" title="GitHub" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+
+
+<!-- Stack Overflow -->
+        
+
+  <!-- Google Plus -->
+  
+
+<!-- Facebook -->
+
+  
+<!-- Twitter -->
+
+  <li class="navigation__item">
+    <a href="https://twitter.com/developerpans" title="Twitter" target="_blank">
+      <i class='social fa fa-twitter'></i>
+      <span class="label">Twitter</span>
+    </a>
+  </li>
+
+  
+
+  <li class="navigation__item">
+    <a href="/atom.xml" title="RSS" target="_blank">
+      <i class='social fa fa-rss'></i>
+      <span class="label">RSS</span>
+    </a>
+  </li>
+
+
+
+  </ul>
+</nav>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay cover-blue"></div>
+  </div> 
+</header>
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single">
+
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2016-06-22T23:52:03.000Z" class="post-list__meta--date date">2016-06-23</time> &#8226; <span class="post-meta__tags tags">于  </span>
+      <span class="page-pv">
+       Read <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>
+      </span> 
+   
+    </div>
+    <h1 class="post-title">让你的应用更好地利用 3D Touch - WWDC 2016 Session 228 笔记</h1>
+  </header>
+
+  <section class="post">
+    <p>我们回首 iPhone 的历程，不禁感叹它是如何不断改变我们对手机的认知的。从触屏改变手机的定义开始，距离传感器、光线传感器，到三轴陀螺仪、GPS、运动传感器、再到指纹。这些功能一步步地拓展 iPhone 的能力，不断地改变着我们的生活。</p>
+<p>iPhone 6s 再次增加了新的功能 – 3D Touch。 它为iOS 设备的操作增加了另一个维度的能力，为用户提供了另一个操作体验，甚至是改变了用户的操作习惯。随着设备的普及和软件的跟进，3D Touch 也许会像指纹解锁一样，不可或缺的存在。</p>
+<p>关于 3D Touch, Apple 主要为我们提供了两种封装好的功能：</p>
+<ol>
+<li>主屏幕快捷菜单 ( Home screen quick action)</li>
+<li>预览 ( peek and pop )</li>
+</ol>
+<h3 id="Home-screen-quick-action"><a href="#Home-screen-quick-action" class="headerlink" title="Home screen quick action"></a>Home screen quick action</h3><p><img src="/content/images/2016/06/IMG_0001-1.jpg" alt=""></p>
+<p>Home screen quick action 的表现形式非常简单，利用 3D Touch 按主屏幕图标，则会弹出该App 的快捷菜单。点击快捷菜单则会唤起app，并进入到相对应的功能。</p>
+<p>主屏幕快捷菜单分为<strong>静态</strong>和<strong>动态</strong>的两种。静态即固定的菜单。动态则代表菜单项是可变的。例如激活一款聊天软件的 Quick Action，出现三个你联系最频繁的人。这便需要动态菜单来实现。</p>
+<p>当然，他们的开发也同表现形式一样简单。</p>
+<h4 id="静态快捷菜单"><a href="#静态快捷菜单" class="headerlink" title="静态快捷菜单"></a>静态快捷菜单</h4><p>创建一个静态的快捷菜单，只需要简单地在<code>Info.plist</code>中添加一个 <code>UIApplicationShortcutItems</code> 的 Array 即可。</p>
+<p>你可以为快捷菜单指定标题、系统或自定义的icon等，所有这些，都只需要在 <code>UIApplicationShortcutItems</code> 下添加一些key 和 value 即可。这些key可以在<a href="https://developer.apple.com/library/prerelease/content/documentation/General/Reference/InfoPlistKeyReference/Articles/iPhoneOSKeys.html#//apple_ref/doc/uid/TP40009252-SW32" target="_blank" rel="noopener">这里</a>找到。</p>
+<p>iOS 10 中，快捷菜单同时可以附带显示一个 Widget ，也就是以前的 App Extension。如果你提供了多个 Extension，可以在 <code>Info.plist</code> 中添加 <code>UIApplicationShortcutWidget</code>，其 Value 代表快捷菜单中展示的 Extension 的 Bundle id. </p>
+<h4 id="动态快捷菜单"><a href="#动态快捷菜单" class="headerlink" title="动态快捷菜单"></a>动态快捷菜单</h4><p>创建一个动态的快捷菜单也非常容易，只需要初始化并配置   <code>UIApplicationShortcutItem</code>, <code>UIMutableApplicationShortcutItem</code> 和 <code>UIApplicationShortcutIcon</code> 这三个类，并将其添加到 AppDelegate 中的 <code>shortcutItems</code> 属性即可。</p>
+<p>值得一提的是，静态快捷菜单在 App 被安装的那一刻就可用了。区别于静态菜单，动态快捷菜单只有当第一次启动后才可用。</p>
+<h4 id="处理快捷菜单的点击"><a href="#处理快捷菜单的点击" class="headerlink" title="处理快捷菜单的点击"></a>处理快捷菜单的点击</h4><p>这里分<em>当 App 被 kill</em> 和 <em>当 App 未被 kill</em>两种情况。</p>
+<p>当 App 仍然在运行的情况下，点击快捷菜单会触发以下方法：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">application</span><span class="params">(<span class="number">_</span> application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: <span class="params">(Bool)</span></span></span> -&gt; <span class="type">Void</span>) &#123;</span><br><span class="line">	<span class="comment">// 做你想做的事</span></span><br><span class="line">	<span class="comment">// 最后不要忘了调用completionHandler()</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当 App 被 kill 的情况下，点击快捷菜单会触发以下方法：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">application</span><span class="params">(<span class="number">_</span> application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?)</span></span> -&gt; <span class="type">Bool</span> &#123;</span><br><span class="line">	<span class="comment">// 通过 UIApplicationLaunchOptionsShortcutItemKey 在 launchOptions 中取得 UIApplicationShortcutItem</span></span><br><span class="line">	<span class="comment">// 然后做你想做的事</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Peek-and-Pop"><a href="#Peek-and-Pop" class="headerlink" title="Peek and Pop"></a>Peek and Pop</h3><p><img src="/content/images/2016/06/IMG_0002-1.jpg" alt=""></p>
+<p>macOS 中按下空格键即可预览各种各样的文件。通过 3D Touch 现在它也来到了 iOS 中。这一操作被 Apple 很形象地称为 <strong>Peek and Pop</strong>。</p>
+<p>Peek and Pop 将传统的 Push 操作分为了两步，当你的手指按压某行列表，背景开始模式模糊，然后出现一个预览界面，然后继续增加压力，伴随着俏皮的弹性动画，下一个界面呈现在你眼前。在 API 中，这两部分别被称为 <code>Preview</code> 和 <code>Commit</code>。 </p>
+<h4 id="为你的-App-添加-Peek-and-Pop"><a href="#为你的-App-添加-Peek-and-Pop" class="headerlink" title="为你的 App 添加 Peek and Pop"></a>为你的 App 添加 Peek and Pop</h4><p>为 App 添加 Peek and Pop 非常简单，只要遵循以下几步：</p>
+<ol>
+<li>让需要预览的 ViewController 遵循 <code>UIViewControllerPreviewingDelegate</code> 协议</li>
+<li>调用 <code>registerForPreviewing(with:sourceView:)</code> 注册该ViewController</li>
+<li>在 preview 代理方法中提供一个预览的ViewController，<strong>并设置好 context 的 sourceRect</strong>.</li>
+<li>在 commit 代理方法中，直接调用 <code>show(_:sender:)</code> 即可。</li>
+</ol>
+<p>编码的过程中，要注意检查 3D Touch 的可用性。 因为这项功能同定位一样，用户是可以将其关闭的！为了保证所有的用户都能使用到你 App 的功能，应当依据 3D Touch 的可用性，来编写不同的代码。 当 3D Touch 可用时，那就用上着炫酷的新功能吧！如果不支持 3D Touch，我们还有另外一个备选方案 – <code>UILongPressGestureRecognizer</code>.</p>
+<p>另外，不要在 UIViewControllerPreviewingDelegate 中做非常耗时的工作，那会造成界面卡顿。</p>
+<p>合理地利用 Peek and Pop 可以为用户带来无缝的体验。 例如，下一个界面会有大量的初始化工作，在preview的过程中，你可以预先加载并提供部分预览（同时也为下一个界面做准备)，记住不要卡住主线程，等到 Pop 时，界面已经初始化好了。这为用户提供了一个非常好的体验。</p>
+<h4 id="Preview-Action"><a href="#Preview-Action" class="headerlink" title="Preview Action"></a>Preview Action</h4><p>在 Preview 的过程中，用户可以上滑来唤出类似 Action Sheet 的菜单。实现这一功能只需要重写 ViewController 中的 <code>previewActionItems() -&gt; [UIPreviewActionItem]</code>方法即可。<br>系统提供了和 <code>UIAlertAction</code> 非常类似的 <code>UIPreviewAction</code>，来实现 <code>UIPreviewActionItem</code>。</p>
+<p>与 Action Sheet 不同的是，系统提供了 <code>UIPreviewActionGroup</code> 类，实现子菜单的功能。</p>
+<p>在开发 Peek and Pop 的过程中，请记住以下原则</p>
+<ol>
+<li>让合适的内容支持 Peek and Pop (不要滥用这项特性）</li>
+<li>始终返回相同的预览界面 （保持一致性和可预测性）</li>
+<li>不要在preview代理方法中花太多的时间</li>
+<li>为 context 设置正确的 sourceRect</li>
+</ol>
+<h3 id="UIPreviewInteractionDelegate"><a href="#UIPreviewInteractionDelegate" class="headerlink" title="UIPreviewInteractionDelegate"></a>UIPreviewInteractionDelegate</h3><p>iOS 10 中为我们带来了全新的 API，可以让你自定义 Peek and Pop 操作。 我们只需要让某个对象遵循 <code>UIPreviewInteractionDelegate</code> 协议，并在相对于的代理方法中做我们想做的事情就可以了。 </p>
+<p>UIPreviewInteractionDelegate 一共包含以下四个方法：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 必须实现</span></span><br><span class="line"><span class="comment">// 这个方法可以让你精细地控制从按压到 Preview 触发过程中发生的事</span></span><br><span class="line"><span class="comment">// 配合 UIViewControllerTransitioningDelegate ，可以做类似新郎微博的 + 号菜单效果。</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@available</span>(iOS <span class="number">10.0</span>, *)</span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">func</span> <span class="title">previewInteraction</span><span class="params">(<span class="number">_</span> previewInteraction: UIPreviewInteraction, didUpdatePreviewTransition transitionProgress: CGFloat, ended: Bool)</span></span> <span class="comment">// transitionProgress ranges from 0 to 1</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 这个方法也是必须实现的，用来处理一些 Interaction 被打断情况</span></span><br><span class="line"><span class="comment">// 比如说：接到一个电话。</span></span><br><span class="line"><span class="meta">@available</span>(iOS <span class="number">10.0</span>, *)</span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">func</span> <span class="title">previewInteractionDidCancel</span><span class="params">(<span class="number">_</span> previewInteraction: UIPreviewInteraction)</span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 你可以用这个方法来控制 Delegate 的触发。</span></span><br><span class="line"><span class="comment">// return false 则不会触发其他代理方法</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@available</span>(iOS <span class="number">10.0</span>, *)</span><br><span class="line"><span class="keyword">optional</span> <span class="keyword">public</span> <span class="function"><span class="keyword">func</span> <span class="title">previewInteractionShouldBegin</span><span class="params">(<span class="number">_</span> previewInteraction: UIPreviewInteraction)</span></span> -&gt; <span class="type">Bool</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 用这个方法来精细地控制 Preview -&gt; Commit 阶段</span></span><br><span class="line"><span class="meta">@available</span>(iOS <span class="number">10.0</span>, *)</span><br><span class="line"><span class="keyword">optional</span> <span class="keyword">public</span> <span class="function"><span class="keyword">func</span> <span class="title">previewInteraction</span><span class="params">(<span class="number">_</span> previewInteraction: UIPreviewInteraction, didUpdateCommitTransition transitionProgress: CGFloat, ended: Bool)</span></span></span><br></pre></td></tr></table></figure>
+<p><code>UIPreviewInteractionDelegate</code> 让 3D Touch 变得更灵活了。如果我们希望 iOS 9 也支持这样的功能怎么办呢？ 不用担心，Apple 还提供了更底层的 API。</p>
+<h3 id="Low-Level-Force-API"><a href="#Low-Level-Force-API" class="headerlink" title="Low Level Force API"></a>Low Level Force API</h3><p>在 UITouch 中有两个关键的属性为我们提供了压力相关数据的存储。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@property(nonatomic,readonly) <span class="type">CGFloat</span> force <span class="type">NS_AVAILABLE_IOS</span>(<span class="number">9_0</span>);</span><br><span class="line">@property(nonatomic,readonly) <span class="type">CGFloat</span> maximumPossibleForce <span class="type">NS_AVAILABLE_IOS</span>(<span class="number">9_0</span>);</span><br></pre></td></tr></table></figure>
+<p><code>force</code> 代表当前 Touch 的压力系数，默认是 0.0 ~ 1.0。你也可以通过 <code>maximumPossibleForce</code> 来调整 <code>force</code> 的上限，来为其提供更宽的变化范围。</p>
+<p>上面的 API 仅在支持 3D Touch 和 Apple Pencil 的设备上可用，所以在使用前，不要忘了检查 <code>UITraitCollection</code> 中的<code>forceTouchCapability</code>，来确定以上 API 是否可用。</p>
+<blockquote>
+<p>为什么将 forceTouchCapability 放在 UITraitCollection 中？</p>
+</blockquote>
+<blockquote>
+<p>因为 Size Classes 将设备抽象成了 Size.</p>
+</blockquote>
+<h3 id="3D-Touch-的最佳实践"><a href="#3D-Touch-的最佳实践" class="headerlink" title="3D Touch 的最佳实践"></a>3D Touch 的最佳实践</h3><ol>
+<li>每个 app 都应该提供 quick actions。其简创建简单，却能带来巨大的价值。</li>
+<li>为高价值的任务提供一个快速的入口。</li>
+<li>很重要的一点，你需要保证 quik action 的可预测性，用户们如果经常使用它，却发现每一次的结果都不一样，就会因此而困惑。</li>
+<li>即使你做了 3D touch 用户也可以禁用这一项功能，因此不能过度依赖这项特性来做一些必须的事情,同时也要准备好备选方案。</li>
+</ol>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ul>
+<li>主页的 quick action 可以让你的app 直接进入相关行为。</li>
+<li>Peek and Pop 允许你快速预览内容，并导航到对应界面。</li>
+<li>UIPreviewInteraction 让你可以更精细地控制 3D Touch。</li>
+<li>用户们期望你支持 3D touch。</li>
+</ul>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p><a href="https://developer.apple.com/videos/play/wwdc2016/228/" target="_blank" rel="noopener">WWDC 2016 Sssion 228 - A Peek at 3D Touch</a></p>
+<p><a href="http://devstreaming.apple.com/videos/wwdc/2016/228a1kbxogojm4fviqc/228/228_a_peek_at_3d_touch.pdf" target="_blank" rel="noopener">WWDC 2016 Sssion 228 - A Peek at 3D Touch Presentation Slides</a></p>
+<p><a href="https://developer.apple.com/library/prerelease/content/documentation/UserExperience/Conceptual/Adopting3DTouchOniPhone/3DTouchAPIs.html#//apple_ref/doc/uid/TP40016543-CH4-SW1" target="_blank" rel="noopener">Adopting 3D Touch</a></p>
+<p><a href="https://developer.apple.com/library/prerelease/content/samplecode/AppChat/Introduction/Intro.html" target="_blank" rel="noopener">Apple WWDC 示例代码: AppChat</a></p>
+
+  </section>
+
+</article>
+
+<section class="read-more">
+           
+    
+               
+            <div class="read-more-item">
+                <span class="read-more-item-dim">Newer Post</span>
+                <h2 class="post-list__post-title post-title"><a href="/wechat-url/" title="微信 URL Schemes">微信 URL Schemes</a></h2>
+                <p class="excerpt">
+                
+                DEPRECATED2016年09月18日更新：
+在 微信 6.3.25 版本中，所有外部唤起 URL 的方式均无法打开对应页面。未来这些 url 都只能在微信内部的浏览器使用了。
+
+年初的动态化分享热潮里，基本上都提到了 URL 跳转，天猫称为统跳协议，蘑菇街称为 URL 路由。其实很多大厂都默默
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2016-07-11T18:29:05.000Z" class="post-list__meta--date date">2016-07-12</time> &#8226; <span class="post-list__meta--tags tags">于 </span><a class="btn-border-small" href="/wechat-url/">继续阅读</a></div>
+                           
+            </div>
+        
+        
+               
+            <div class="read-more-item">
+                <span class="read-more-item-dim">Older Post</span>
+                <h2 class="post-list__post-title post-title"><a href="/battery/" title="电池电量与低电量模式">电池电量与低电量模式</a></h2>
+                <p class="excerpt">
+                
+                优步最近公布的数据显示，当电池快没电的时候，人们更愿意接受溢价。同时，优步也表明他们并没有利用电量相关的数据来设置溢价规则。换句话说，我们在开发App的时候，可以通过电池电量来”提升用户体验”。
+电池状态与电量UIDevice 中有三个电池相关的属性:
+123@property(nonatomic,
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2016-05-30T19:31:24.000Z" class="post-list__meta--date date">2016-05-31</time> &#8226; <span class="post-list__meta--tags tags">于 </span><a class="btn-border-small" href="/battery/">继续阅读</a></div>
+                       
+            </div>
+        
+     
+   
+   
+  
+</section>
+
+  
+
+            <footer class="footer">
+    <span class="footer__copyright">
+        &copy; 2018 PPPan - 本站点采用 <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+       
+    </span>
+    <span class="footer__copyright">
+            基于 <a href="http://hexo.io">Hexo</a> 搭建，使用 <a href="https://github.com/monniya/hexo-theme-new-vno ">new-vno</a> 主题，由<a href="https://monniya.com ">@Monniya</a> 修改自 <a href="https://github.com/lenbo-ma/hexo-theme-vno" target="_blank">Vno</a>, 原创出自<a href="http://github.com/onevcat/vno" target="_blank">onevcat</a>
+    </span>
+    <span class="footer__copyright">
+            <a href="http://www.miitbeian.gov.cn/">浙ICP备15035859号</a>
+    </span>
+    
+    
+</footer>
+
+
+        </div>
+    </div>
+
+     
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-86796774-1', 'auto');
+	ga('send', 'pageview');
+</script>
+
+    
+
+
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    
+</body>
+</html>

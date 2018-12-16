@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="z">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    
+    <title>iOS项目架构 - 规范 | PPPan&#39;s 平凡之路</title>
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="PPPan&#39;s 平凡之路 一个技术博客覆盖范围包括 iOS Objecticve-C Swift Xcode 等">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="iOS项目架构 - 规范 | PPPan&#39;s 平凡之路">
+    <meta name="twitter:description" content="PPPan&#39;s 平凡之路 一个技术博客覆盖范围包括 iOS Objecticve-C Swift Xcode 等">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="iOS项目架构 - 规范 | PPPan&#39;s 平凡之路">
+    <meta property="og:description" content="PPPan&#39;s 平凡之路 一个技术博客覆盖范围包括 iOS Objecticve-C Swift Xcode 等">
+
+    
+    <meta name="author" content="PPPan">
+    
+    <link rel="stylesheet" href="../css/vno.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+
+    
+    <link rel="icon" href="/images/favicon.png">
+    
+
+    <meta name="generator" content="hexo"/>
+    
+    <link rel="alternate" type="application/rss+xml" title="PPPan&#39;s 平凡之路" href="/atom.xml">
+    
+
+    <link rel="canonical" href="https://shengpan.net/standard/"/>
+
+                 
+</head>
+
+<body class="home-template no-js">
+    <script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="../js/main.js"></script>
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+<header class="panel-cover panel-cover--collapsed" style="background-image: url(/images/background-cover.jpg)">
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/" title="前往 PPPan&#39;s 平凡之路 的主页"><img src="/images/avatar.jpg" width="80" alt="PPPan&#39;s 平凡之路 logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for PPPan&#39;s 平凡之路">PPPan&#39;s 平凡之路</a></h1>
+        
+        <span class="panel-cover__subtitle panel-subtitle">做一个互联网内容的贡献者</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">PPPan's 平凡之路 一个技术博客覆盖范围包括 iOS Objecticve-C Swift Xcode 等</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+
+        <div class="navigation-wrapper">
+          <div>
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item"><a href="/#blog" title="Visit the blog" class="blog-button">Blog</a></li>
+            
+              <li class="navigation__item"><a href="https://github.com/DeveloperPans">GitHub</a></li>
+            
+            </ul>
+          </nav>
+          </div>
+          <div>
+          <nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  <!-- Weibo-->
+  
+  <li class="navigation__item">
+    <a href="http://weibo.com/u/5666355111" title="Weibo" target="_blank">
+      <i class='social fa fa-weibo'></i>
+      <span class="label">Weibo</span>
+    </a>
+  </li> 
+
+
+  <!-- Github -->
+  
+  <li class="navigation__item">
+    <a href="https://github.com/DeveloperPans" title="GitHub" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+
+
+<!-- Stack Overflow -->
+        
+
+  <!-- Google Plus -->
+  
+
+<!-- Facebook -->
+
+  
+<!-- Twitter -->
+
+  <li class="navigation__item">
+    <a href="https://twitter.com/developerpans" title="Twitter" target="_blank">
+      <i class='social fa fa-twitter'></i>
+      <span class="label">Twitter</span>
+    </a>
+  </li>
+
+  
+
+  <li class="navigation__item">
+    <a href="/atom.xml" title="RSS" target="_blank">
+      <i class='social fa fa-rss'></i>
+      <span class="label">RSS</span>
+    </a>
+  </li>
+
+
+
+  </ul>
+</nav>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay cover-blue"></div>
+  </div> 
+</header>
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single">
+
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2015-10-14T06:51:46.000Z" class="post-list__meta--date date">2015-10-14</time> &#8226; <span class="post-meta__tags tags">于  </span>
+      <span class="page-pv">
+       Read <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>
+      </span> 
+   
+    </div>
+    <h1 class="post-title">iOS项目架构 - 规范</h1>
+  </header>
+
+  <section class="post">
+    <p>记得刚工作的时候，我的Mentor带我参加某银行业务系统研发成果交流分享会。会议让我印象很深的一点，是关于规范。发言人在说规范的时候，举了他见过的这么一个例子：</p>
+<pre><code>&lt;div class=&quot;div1&quot; ...&gt;
+  &lt;div class=&quot;div2&quot; ...&gt;
+    &lt;div class=&quot;div3&quot; ...&gt;
+     ...
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre><p>“只有鬼才知道他的div1是什么！”</p>
+<p>没有规范的代码，增加了代码的阅读成本，也因此大大降低了团队合作的效率。当产品上线后，出了BUG需要修复，而负责维护的却不是当初的开发团队，这是看混乱的代码成了一个噩梦。我们不只一次地听别的程序猿哀嚎过：“嗷，又要看别人的代码”。不规范的代码也是一方面的成因。</p>
+<p>为了提高生产效率，同时也是本着对自己产出的代码，以及对他人负责的理念，在公司内部（如果客观条件做不到，至少在团队内部）需要践行代码的规范。一般来说，各司有各司的代码规范，基本的代码规范在此就不赘述了。然而，有一些<strong>原则</strong>是通用的，在此略作梳理：</p>
+<p><strong>1. 首先是为人编写程序，其次才是计算机。</strong><br>软件的生命周期贯穿产品的开发，测试，生产，用户使用，版本升级和后期维护等过程，只有易读，易维护的软件代码才具有生命力。</p>
+<p><strong>2. 保持代码的简明清晰，避免过分的编程技巧。</strong><br>简单是最美。不要过分追求技巧，否则会降低程序的可读性。</p>
+<p><strong>3. 编程时首先达到正确性，其次考虑效率。</strong><br>编程首先考虑的是满足正确性，健壮性，可维护性，可移植性等质量因素。</p>
+<p><strong>4. 编写代码时需要考虑到代码的可测试性。</strong><br>不可以测试的代码是无法保障质量的。实现设计功能的同时，要提供可以测试、验证的方法。</p>
+<p><strong>5. 函数（方法）是为一特定功能而编写，不是万能工具箱。</strong><br>方法是一个处理单元，是由特定功能的，所以应该很好地规划方法，不能是所有东西都放在一个方法里实现</p>
+<p><strong>6. 鼓励多注释。</strong></p>
+<p>###一些较为实用的iOS规范小Tips<br>在项目实战中，我总结出了一些比较实用的小点，在此分享一下，希望对大家有所帮助。</p>
+<p><strong>1.所创建项目的文件夹目录结构和Xcode中的虚拟Group文件夹的结构须一致，便于代码文件的维护。</strong></p>
+<p>规范的文件目录结构如下：</p>
+<p><img src="/content/images/2015/10/standard-floder.jpg" alt="文件夹结构"></p>
+<p>推荐划分文件夹的时候按功能模块划分，便于修改BUG的时候寻找。</p>
+<p>不规范的文件夹目录结构如下：</p>
+<p><img src="/content/images/2015/10/floder.jpg" alt="不规范的文件夹结构"></p>
+<p>资源文件、源码文件、第三方库全部混合放置，每个文件引用次数未知，稍微移动便会造成引用错误编译失败，都是因为文件夹目录结构不规范T T。</p>
+<p><strong>2. 胖Model瘦Controller。</strong></p>
+<p>大部分业务逻辑放在Model中做，Controller只负责Model和View的调配。Model和View不可直接沟通。Model-&gt;Controller，使用NSNotification传递消息。View-&gt;Controller采用Targt-action或者Delegate传递消息。<em>ViewController终于从上千行代码的困境中解放出来了！</em> </p>
+<p><strong>这条规范</strong>的<strong>为什么</strong>我们会在MVC的文章中详细讨论。</p>
+<p><strong>3.标注方法块</strong></p>
+<p>同类方法写在一起，并用<code>#pragma mark</code>做标注。一个.m文件的方法至上而下应该是这样的：</p>
+<pre><code>#pragma mark - Life cycle
+
+- (void)viewDidLoad {...}
+- (void)viewWillAppear:(BOOL)animated {...}
+
+#pragma mark - Private Method
+
+-(void)setContentofScrollView {...}
+
+#pragma mark - Notification
+
+- (void)userDidLogin:(NSNotification *)notification {...}
+- (void)mainViewPicsDownloaded:(NSNotification *)notification {...}
+
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {...}
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {...}
+
+#pragma mark - Navigation
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {...}
+
+#pragma mark - Getter and Setter
+
+- (MainViewModel *)model{...}
+</code></pre><p>在标注<code>Delegate</code>的时候，把Delegate名称直接做作为标注，比如<code>UITableViewDelegate</code>,<code>UITableViewDataSource</code>。这样的好处是，当这个Delegate是自定义的时候，别人在看代码的时候可以直接<em>command+左键</em>点击跳转到Delegate，便于他人阅读和寻找自定的Delegate。</p>
+<p>Getter 和 Setter放在最后。</p>
+<p>另外，尽可能地减少Controller中的私有方法。私有方法大多可以在Model中实现。</p>
+<p><strong>4.所有属性都使用Getter and Setter</strong></p>
+<p>不要在<code>viewDidLoad</code>里面初始化view然后再add，这样代码就很难看。在<code>viewDidload</code>里面只做<code>addSubview</code>的事情，然后在<code>viewWillAppear</code>里面做布局的事情，<del>最后在<code>viewDidAppear</code>里面做<code>Notification</code>的监听之类的事情</del><em>监听也同时放在<code>ViewWillAppear</code>中，在某些特殊的情况下，在<code>ViewDidAppear</code>中注册的监听会导致无法<code>removeObserver</code></em>。至于属性的初始化，则交给getter去做。</p>
+<p>不要：</p>
+<pre><code>- (void)viewDidLoad
+{
+   [super viewDidLoad];
+   self.textLabel = [[UILabel alloc] init];
+   self.textLabel.textColor = [UIColor blackColor];
+   self.textLabel ... ...
+   self.textLabel ... ...
+   self.textLabel ... ...
+   [self.view addSubview:self.textLabel];
+}
+</code></pre><p>而是：</p>
+<pre><code>- (UILabel *)textLabel
+{
+    if (!_textLabel)
+    {
+        _textLabel = [[UILabel alloc] init];
+        _textLabel.textColor = [UIColor blackColor];
+        _textLabel ... ...
+        _textLabel ... ...
+        _textLabel ... ...
+    }
+    return _textLabel;
+}
+</code></pre><p><strong>5.注释你的公有方法</strong></p>
+<p>使用<a href="https://github.com/onevcat/VVDocumenter-Xcode/archive/master.zip" target="_blank" rel="noopener">这个工具</a>规范注释.h头文件中的属性和方法。十分直白的方法和属性可以不注释。</p>
+<p>That’s all.Hope u enjoy it. : )</p>
+
+  </section>
+
+</article>
+
+<section class="read-more">
+           
+    
+               
+            <div class="read-more-item">
+                <span class="read-more-item-dim">Newer Post</span>
+                <h2 class="post-list__post-title post-title"><a href="/basevc/" title="iOS项目架构 - 统一行为">iOS项目架构 - 统一行为</a></h2>
+                <p class="excerpt">
+                
+                “我们虽然在构造软件，但软件也会重新塑造我们”。在写iOS项目架构-模块化的时候，我仍然觉得我所构建的统一行为方式还算不错，可以写出来与大家探讨探讨。昨日将应用发布的闲暇之余阅读了objc中国的这篇文章，令我明白尚有更优的解决方案。本文从实际的例子出发，发表一下我的拙见，用以和上文做对照，权当抛砖引
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2015-10-14T06:55:43.000Z" class="post-list__meta--date date">2015-10-14</time> &#8226; <span class="post-list__meta--tags tags">于 </span><a class="btn-border-small" href="/basevc/">继续阅读</a></div>
+                           
+            </div>
+        
+        
+               
+            <div class="read-more-item">
+                <span class="read-more-item-dim">Older Post</span>
+                <h2 class="post-list__post-title post-title"><a href="/module/" title="iOS项目架构 - 模块化">iOS项目架构 - 模块化</a></h2>
+                <p class="excerpt">
+                
+                ###当我们谈论iOS架构的时候我们在谈论什么
+
+模块化
+规范化
+统一行为
+
+本文主要就以上模块化，以网络请求模块的抽取为例稍作讨论。
+###模块化模块化的目的是实现解耦，提升模块、组件的复用性。一个很简单的例子，App需要与服务器交换数据，最差的做法，是把网络请求、回调、业务处理、界面操作全部写在
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2015-10-14T06:49:30.000Z" class="post-list__meta--date date">2015-10-14</time> &#8226; <span class="post-list__meta--tags tags">于 </span><a class="btn-border-small" href="/module/">继续阅读</a></div>
+                       
+            </div>
+        
+     
+   
+   
+  
+</section>
+
+  
+
+            <footer class="footer">
+    <span class="footer__copyright">
+        &copy; 2018 PPPan - 本站点采用 <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+       
+    </span>
+    <span class="footer__copyright">
+            基于 <a href="http://hexo.io">Hexo</a> 搭建，使用 <a href="https://github.com/monniya/hexo-theme-new-vno ">new-vno</a> 主题，由<a href="https://monniya.com ">@Monniya</a> 修改自 <a href="https://github.com/lenbo-ma/hexo-theme-vno" target="_blank">Vno</a>, 原创出自<a href="http://github.com/onevcat/vno" target="_blank">onevcat</a>
+    </span>
+    <span class="footer__copyright">
+            <a href="http://www.miitbeian.gov.cn/">浙ICP备15035859号</a>
+    </span>
+    
+    
+</footer>
+
+
+        </div>
+    </div>
+
+     
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-86796774-1', 'auto');
+	ga('send', 'pageview');
+</script>
+
+    
+
+
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    
+</body>
+</html>

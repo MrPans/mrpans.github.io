@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="z">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    
+    <title>iOS项目架构 - 模块化 | PPPan&#39;s 平凡之路</title>
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="PPPan&#39;s 平凡之路 一个技术博客覆盖范围包括 iOS Objecticve-C Swift Xcode 等">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="iOS项目架构 - 模块化 | PPPan&#39;s 平凡之路">
+    <meta name="twitter:description" content="PPPan&#39;s 平凡之路 一个技术博客覆盖范围包括 iOS Objecticve-C Swift Xcode 等">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="iOS项目架构 - 模块化 | PPPan&#39;s 平凡之路">
+    <meta property="og:description" content="PPPan&#39;s 平凡之路 一个技术博客覆盖范围包括 iOS Objecticve-C Swift Xcode 等">
+
+    
+    <meta name="author" content="PPPan">
+    
+    <link rel="stylesheet" href="../css/vno.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+
+    
+    <link rel="icon" href="/images/favicon.png">
+    
+
+    <meta name="generator" content="hexo"/>
+    
+    <link rel="alternate" type="application/rss+xml" title="PPPan&#39;s 平凡之路" href="/atom.xml">
+    
+
+    <link rel="canonical" href="https://shengpan.net/module/"/>
+
+                 
+</head>
+
+<body class="home-template no-js">
+    <script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="../js/main.js"></script>
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+<header class="panel-cover panel-cover--collapsed" style="background-image: url(/images/background-cover.jpg)">
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/" title="前往 PPPan&#39;s 平凡之路 的主页"><img src="/images/avatar.jpg" width="80" alt="PPPan&#39;s 平凡之路 logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for PPPan&#39;s 平凡之路">PPPan&#39;s 平凡之路</a></h1>
+        
+        <span class="panel-cover__subtitle panel-subtitle">做一个互联网内容的贡献者</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">PPPan's 平凡之路 一个技术博客覆盖范围包括 iOS Objecticve-C Swift Xcode 等</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+
+        <div class="navigation-wrapper">
+          <div>
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item"><a href="/#blog" title="Visit the blog" class="blog-button">Blog</a></li>
+            
+              <li class="navigation__item"><a href="https://github.com/DeveloperPans">GitHub</a></li>
+            
+            </ul>
+          </nav>
+          </div>
+          <div>
+          <nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  <!-- Weibo-->
+  
+  <li class="navigation__item">
+    <a href="http://weibo.com/u/5666355111" title="Weibo" target="_blank">
+      <i class='social fa fa-weibo'></i>
+      <span class="label">Weibo</span>
+    </a>
+  </li> 
+
+
+  <!-- Github -->
+  
+  <li class="navigation__item">
+    <a href="https://github.com/DeveloperPans" title="GitHub" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+
+
+<!-- Stack Overflow -->
+        
+
+  <!-- Google Plus -->
+  
+
+<!-- Facebook -->
+
+  
+<!-- Twitter -->
+
+  <li class="navigation__item">
+    <a href="https://twitter.com/developerpans" title="Twitter" target="_blank">
+      <i class='social fa fa-twitter'></i>
+      <span class="label">Twitter</span>
+    </a>
+  </li>
+
+  
+
+  <li class="navigation__item">
+    <a href="/atom.xml" title="RSS" target="_blank">
+      <i class='social fa fa-rss'></i>
+      <span class="label">RSS</span>
+    </a>
+  </li>
+
+
+
+  </ul>
+</nav>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay cover-blue"></div>
+  </div> 
+</header>
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single">
+
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2015-10-14T06:49:30.000Z" class="post-list__meta--date date">2015-10-14</time> &#8226; <span class="post-meta__tags tags">于  </span>
+      <span class="page-pv">
+       Read <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>
+      </span> 
+   
+    </div>
+    <h1 class="post-title">iOS项目架构 - 模块化</h1>
+  </header>
+
+  <section class="post">
+    <p>###当我们谈论iOS架构的时候我们在谈论什么</p>
+<ol>
+<li>模块化</li>
+<li>规范化</li>
+<li>统一行为</li>
+</ol>
+<p>本文主要就以上模块化，以网络请求模块的抽取为例稍作讨论。</p>
+<p>###模块化<br>模块化的目的是实现解耦，提升模块、组件的复用性。一个很简单的例子，App需要与服务器交换数据，最差的做法，是把网络请求、回调、业务处理、界面操作全部写在<code>ViewController</code>里。如果把网络请求抽取出来，建一个<code>Webservice</code>类，仅负责最基本的RESTful请求，并在回调中处理好类似404，无网络等各种网络状况。那么，这个类就变成了通用的网络服务处理模块，便于维护和复用。</p>
+<p>###遇到的问题<br>在划分模块的一个前提是，模块不要对其他层有依赖性。最好的情况是，这个模块拿到任意一个项目都可以直接使用。在这一点上，我遇到了一个值得思考的问题。</p>
+<p>在iOS客户端里，网络请求可以分为两种，一种是<strong>静默请求</strong>,也就是在用户不知情的情况下默默地进行网络请求处理。典型的例子有微信朋友圈点赞。用户在点赞时，UI直接进行点赞成功的反馈，同时网络请求在静默进行，不阻碍用户的正常操作。另一种是<strong>显示请求</strong>，用户需等待操作完成后才能进行下一步操作。典型的例子一种是下拉刷新，另一种是支付宝付款。付款的请求中，UI暂时显示一个Loading图标，用以提示用户程序正在处理，而非卡死（设计思想：<strong>反馈</strong> ——<a href="http://zhuanlan.zhihu.com/langqixu/19675089" target="_blank" rel="noopener">《iOS Human Interface Guidelines》</a>）。</p>
+<p>遇到的选择，是在第二种<strong>显示请求</strong>的情况下如何更好地封装。我所负责的这个项目，除网络请求外，并没有耗时很长的I/O等情况需要处理。因此，有两个方案。</p>
+<p>将UI的Loading封装在WebService中，仅暴露<code>isShowIndicator</code>和<code>toView</code>两个参数在网络请求的接口中</p>
+<pre><code>- (void)requestWithPath:(NSString *)path
+             parameters:(id)parameters
+        isShowIndicator:(BOOL) isShowIndicator
+                  toView:(UIView *)toView
+               labelText:(NSString *)labelText
+                 success:(SuccessBlock)success
+                 failure:(FailureBlock)failure;
+</code></pre><p>或者，将UI的Loading封装在BaseViewController中，作为一个ViewController的基础行为，相应的业务模块需要显示请求时，调用显示指示器方法。</p>
+<pre><code>@interface BaseViewController : UIViewController
+
+- (void)showTips:(NSString *)tips;
+- (void)showIndicatorWithTitle:(NSString *)title;
+- (void)hideIndicator;
+
+@end
+</code></pre><p>前一种方式在写具体的业务逻辑时非常方便。只需要在调用前考虑一下这个请求是否为静默请求，然后将<code>BOOL</code>和<code>View</code>参数传入此方法中即可。这样封装的==好处==是，可以在网络层的回调中，处理好指示器的隐藏，以免出现忘记调用Hide方法的情况，并且<code>ViewController</code>不必因为需要这两个方法，就继承<code>BaseViewController</code> 。==缺点==是不够灵活，如果有不同的业务需要处理不同的显示，隐藏方式，还是需要在<code>ViewController</code>中重新写一下。</p>
+<p>后一种方式在写具体的业务时==缺点==是略微麻烦一些，需要考虑好相对应业务具体情况，具体调用显示隐藏指示器，优点是灵活，<strong>并且做到了网络层的去UI依赖</strong>。</p>
+<p>就MVC模式来说，<code>UI</code>响应数据的处理，应当由<code>Controller</code>负责调度。苹果自己在设计的时候，也都遵循了这一设计模式。<code>WebService</code>层，可以算作<code>Model</code>层的一个工具。而<code>Model</code>层与<code>View</code>层，在iOS的设计上是<strong>绝对不允许直接交互</strong>的。引用一张斯坦福大学iOS7公开课上的图来形象地展示一下。<br><img src="/content/images/2015/10/stanford.png" alt=""></p>
+<p>Model和View之间是双黄线，就像开车一样，绝对不能压过双黄线 ：）至于为什么，我们以后讨论到MVC设计模式再详细讨论。</p>
+<p>因此，在WebService中封装了View，实际上是在Model层操作View。多了这么一个View，多出来的事可就多了。我们不仅需要Import进UIKit，还需要Import通用的Indicator。这一依赖就产生了模块之间的依赖，原本为了解耦合而提取的WebService层反而耦合了Indicator。同时，也造成Webservice的粒度增大。需要处理的事情变得更多。</p>
+<p>反观第二种方法，需要所有ViewController继承BaseViewController。继承本身是紧耦合的。然而纵向的紧耦合有时候减少了重复工作，将一些相同的行为，做统一化的处理，并且没有造成横向跨层的依赖。类似于无网络时的处理，网络请求出错时的处理，Token过期的处理，都应该放在BaseViewController里面。因为这是所有Controller都需要面对的问题。因此，继承BaseViewController是必要的。在统一行为之余，把这几个方法封装在BaseViewController中，又让WebService层实现了细颗粒的模块化组件化。同时，Controller本身就需要控制View，不会因此Import进许多不相关的模块。所需要付出的仅仅是在网络请求结束的时候别忘记调用Hide方法，不然测试小妹的“界面失去响应”BUG就会指派到我们头上 ：（</p>
+<p>最终，我们的Webservice是封装成这样的：</p>
+<pre><code>/**
+ *  post a request to server
+ *
+ *  @param path       the request path append at BASEURL
+ *  @param parameters parameters
+ *  @param token      Authorization token
+ *  @param success    when success goto this block
+ *  @param failure    when failure goto this block
+ */    
+- (void)postWithPath:(NSString *)path
+     parameters:(NSDictionary *)parameters
+          token:(NSString *)token
+        success:(void (^)(id JSON))success
+        failure:(void (^)(NSError *error, id JSON))failure;
+</code></pre><p>综上所述，模块化所需要遵循的思想就是：轻，少，专。其实思想和我们写方法的时候考虑的“一个方法只做一件事”有类似的地方。</p>
+<p>That’s all，hope you enjoy it ：）</p>
+
+  </section>
+
+</article>
+
+<section class="read-more">
+           
+    
+               
+            <div class="read-more-item">
+                <span class="read-more-item-dim">Newer Post</span>
+                <h2 class="post-list__post-title post-title"><a href="/standard/" title="iOS项目架构 - 规范">iOS项目架构 - 规范</a></h2>
+                <p class="excerpt">
+                
+                记得刚工作的时候，我的Mentor带我参加某银行业务系统研发成果交流分享会。会议让我印象很深的一点，是关于规范。发言人在说规范的时候，举了他见过的这么一个例子：
+&amp;lt;div class=&amp;quot;div1&amp;quot; ...&amp;gt;
+  &amp;lt;div class=&amp;quot;div2&amp;quo
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2015-10-14T06:51:46.000Z" class="post-list__meta--date date">2015-10-14</time> &#8226; <span class="post-list__meta--tags tags">于 </span><a class="btn-border-small" href="/standard/">继续阅读</a></div>
+                           
+            </div>
+        
+        
+               
+            <div class="read-more-item">
+                <span class="read-more-item-dim">Older Post</span>
+                <h2 class="post-list__post-title post-title"><a href="/iosmultitarget/" title="iOS的多Target应用">iOS的多Target应用</a></h2>
+                <p class="excerpt">
+                
+                最近刚完成了一个多Target的项目，做了许多思考与选择，现写下心得总结，权当抛砖引玉。
+####项目背景本项目是一个适用于正在学车人群的预约学车平台。分为学生端和教练端。学生端主功能为预约学车，教练端主功能为排课。
+什么时候选用多Target多target的选用，意在实现最大化重用代码。其经典情景
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2015-09-16T00:29:49.000Z" class="post-list__meta--date date">2015-09-16</time> &#8226; <span class="post-list__meta--tags tags">于 </span><a class="btn-border-small" href="/iosmultitarget/">继续阅读</a></div>
+                       
+            </div>
+        
+     
+   
+   
+  
+</section>
+
+  
+
+            <footer class="footer">
+    <span class="footer__copyright">
+        &copy; 2018 PPPan - 本站点采用 <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+       
+    </span>
+    <span class="footer__copyright">
+            基于 <a href="http://hexo.io">Hexo</a> 搭建，使用 <a href="https://github.com/monniya/hexo-theme-new-vno ">new-vno</a> 主题，由<a href="https://monniya.com ">@Monniya</a> 修改自 <a href="https://github.com/lenbo-ma/hexo-theme-vno" target="_blank">Vno</a>, 原创出自<a href="http://github.com/onevcat/vno" target="_blank">onevcat</a>
+    </span>
+    <span class="footer__copyright">
+            <a href="http://www.miitbeian.gov.cn/">浙ICP备15035859号</a>
+    </span>
+    
+    
+</footer>
+
+
+        </div>
+    </div>
+
+     
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-86796774-1', 'auto');
+	ga('send', 'pageview');
+</script>
+
+    
+
+
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    
+</body>
+</html>

@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="z">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    
+    <title>从 Swift 中的 max(_:_:) 看设计哲学 | PPPan&#39;s 平凡之路</title>
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="PPPan&#39;s 平凡之路 一个技术博客覆盖范围包括 iOS Objecticve-C Swift Xcode 等">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="从 Swift 中的 max(_:_:) 看设计哲学 | PPPan&#39;s 平凡之路">
+    <meta name="twitter:description" content="PPPan&#39;s 平凡之路 一个技术博客覆盖范围包括 iOS Objecticve-C Swift Xcode 等">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="从 Swift 中的 max(_:_:) 看设计哲学 | PPPan&#39;s 平凡之路">
+    <meta property="og:description" content="PPPan&#39;s 平凡之路 一个技术博客覆盖范围包括 iOS Objecticve-C Swift Xcode 等">
+
+    
+    <meta name="author" content="PPPan">
+    
+    <link rel="stylesheet" href="../css/vno.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+
+    
+    <link rel="icon" href="/images/favicon.png">
+    
+
+    <meta name="generator" content="hexo"/>
+    
+    <link rel="alternate" type="application/rss+xml" title="PPPan&#39;s 平凡之路" href="/atom.xml">
+    
+
+    <link rel="canonical" href="https://shengpan.net/swift-max/"/>
+
+                 
+</head>
+
+<body class="home-template no-js">
+    <script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="../js/main.js"></script>
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+<header class="panel-cover panel-cover--collapsed" style="background-image: url(/images/background-cover.jpg)">
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/" title="前往 PPPan&#39;s 平凡之路 的主页"><img src="/images/avatar.jpg" width="80" alt="PPPan&#39;s 平凡之路 logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for PPPan&#39;s 平凡之路">PPPan&#39;s 平凡之路</a></h1>
+        
+        <span class="panel-cover__subtitle panel-subtitle">做一个互联网内容的贡献者</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">PPPan's 平凡之路 一个技术博客覆盖范围包括 iOS Objecticve-C Swift Xcode 等</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+
+        <div class="navigation-wrapper">
+          <div>
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item"><a href="/#blog" title="Visit the blog" class="blog-button">Blog</a></li>
+            
+              <li class="navigation__item"><a href="https://github.com/DeveloperPans">GitHub</a></li>
+            
+            </ul>
+          </nav>
+          </div>
+          <div>
+          <nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  <!-- Weibo-->
+  
+  <li class="navigation__item">
+    <a href="http://weibo.com/u/5666355111" title="Weibo" target="_blank">
+      <i class='social fa fa-weibo'></i>
+      <span class="label">Weibo</span>
+    </a>
+  </li> 
+
+
+  <!-- Github -->
+  
+  <li class="navigation__item">
+    <a href="https://github.com/DeveloperPans" title="GitHub" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+
+
+<!-- Stack Overflow -->
+        
+
+  <!-- Google Plus -->
+  
+
+<!-- Facebook -->
+
+  
+<!-- Twitter -->
+
+  <li class="navigation__item">
+    <a href="https://twitter.com/developerpans" title="Twitter" target="_blank">
+      <i class='social fa fa-twitter'></i>
+      <span class="label">Twitter</span>
+    </a>
+  </li>
+
+  
+
+  <li class="navigation__item">
+    <a href="/atom.xml" title="RSS" target="_blank">
+      <i class='social fa fa-rss'></i>
+      <span class="label">RSS</span>
+    </a>
+  </li>
+
+
+
+  </ul>
+</nav>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay cover-blue"></div>
+  </div> 
+</header>
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single">
+
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2016-09-05T01:18:09.000Z" class="post-list__meta--date date">2016-09-05</time> &#8226; <span class="post-meta__tags tags">于  </span>
+      <span class="page-pv">
+       Read <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>
+      </span> 
+   
+    </div>
+    <h1 class="post-title">从 Swift 中的 max(_:_:) 看设计哲学</h1>
+  </header>
+
+  <section class="post">
+    <p>由于 Swift 不再支持宏了，于是 MAX,MIN 等一些列常用宏都被重写为 Swift 函数。我们来看看函数的定义:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@warn_unused_result</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">func</span> <span class="title">max</span>&lt;T : Comparable&gt;<span class="params">(x: T, <span class="number">_</span> y: T)</span></span> -&gt; <span class="type">T</span></span><br></pre></td></tr></table></figure>
+<h3 id="warn-unused-result"><a href="#warn-unused-result" class="headerlink" title="warn_unused_result"></a><code>warn_unused_result</code></h3><p>先说说 @warn_unused_result 注解。 顾名思义，被该注解标记的方法所产生的返回值，如果未被使用，编译器会不开心哦（编译的时候会产生一条警告⚠️）。</p>
+<p>这里讲一下方法的设计哲学。一般来说一个理想的带有返回值的方法，除了返回返回值以外，是不会产生任何其他副作用的。比如说不会改变入参的值(这也是 <code>inout</code>存在的原因)<br>，不会对系统的其他状态有影响（比如说不会改变类的实例变量的值）。这样的好处是减少方法产生的不确定性，同时方法使用的目的变得非常明确。</p>
+<p>拿 <code>max</code> 来举例。<code>max</code> 方法被设计用来判断并返回两个参数中更大的那个。容易理解，当返回值没有被使用的时候，这次方法的调用也是没有意义的，因此 @warn_unused_result 的标注是非常合理的。</p>
+<p>所以当你在开发 SDK 或是框架，甚至是和同事合作开发业务，同事会用到你的 API 的时候，你可以在需要的地方，用此注解来标记你的方法，以提示使用者注意使用方法产生的返回值。</p>
+<h3 id="面向协议"><a href="#面向协议" class="headerlink" title="面向协议"></a>面向协议</h3><p>从方法的定义中，我们可以看到，传入的参数只要符合 <code>Comparable</code> 协议，就可以正确得到返回结果。</p>
+<p>这意味着我们不仅可以用它来比较数字大小:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> maxInteger = <span class="built_in">max</span>(<span class="number">10</span>, <span class="number">20</span>)</span><br></pre></td></tr></table></figure>
+<p>还可以用来比较 <code>String</code> 的大小</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> maxString = <span class="built_in">max</span>(<span class="string">"bc"</span>, <span class="string">"abc"</span>)</span><br></pre></td></tr></table></figure>
+<p>甚至是自定义的对象，只要它实现了 <code>Comparable</code> 协议。从这一点上，我们可以窥见 Swift “面向协议编程” 的一斑。面向协议编程让 <code>max(_:_:)</code> 从具体的类中解放出来，不关心入参是什么类，有什么结构，只关心 <strong>所传进来的参数能否被比较</strong>,而具体的比较则让入参自己去做，从而让 <code>max(_:_:)</code> 具有普适性，达到程序设计上的低耦合。</p>
+<p>这么说可能有点抽象，我们来举个具体的例子。</p>
+<p>假设我们有这样的餐馆定义</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Restaurant</span> </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> area: <span class="type">Int</span> <span class="comment">// 占地面积</span></span><br><span class="line">    <span class="keyword">var</span> michelinRate: <span class="type">Int</span> <span class="comment">// 米其林等级</span></span><br><span class="line">    <span class="keyword">var</span> averageCoast: <span class="type">Int</span> <span class="comment">// 人均消费</span></span><br><span class="line">    <span class="keyword">var</span> name: <span class="type">String</span> <span class="comment">// 餐厅名称</span></span><br><span class="line">    <span class="keyword">var</span> logo: <span class="type">UIImage</span> <span class="comment">// 餐厅LOGO</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>如何比较两家餐馆谁大谁小？</strong></p>
+<p>按照餐馆面积比，平海路上的日料店表示不服；按照人均消费比，新白鹿表示不服；按照米其林等级比，一众特色小吃店表示不服；按照餐厅名称长度比，产品经理表示不服。</p>
+<p>总地来说，”谁更大”其实是一种抽象的概念， <code>max</code> 方法不能也不该知道入参是如何比较的。只有入参自己知道自己该如何比较。因此抽象出 <code>Comparable</code> 协议是非常自然的。</p>
+<h3 id="Comparable"><a href="#Comparable" class="headerlink" title="Comparable"></a>Comparable</h3><p>我们再来看看 <code>Comparable</code> 的定义</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">protocol</span> <span class="title">Comparable</span> : <span class="title">Equatable</span> </span>&#123;</span><br><span class="line">    <span class="comment">/// over instances of `Self`.</span></span><br><span class="line">    <span class="meta">@warn_unused_result</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">func</span> &lt;(lhs: Self, rhs: Self) -&gt; <span class="title">Bool</span></span></span><br><span class="line"><span class="function">    @<span class="title">warn_unused_result</span></span></span><br><span class="line"><span class="function">    <span class="title">public</span> <span class="title">func</span> &lt;=(lhs: Self, rhs: Self) -&gt; <span class="title">Bool</span></span></span><br><span class="line"><span class="function">    @<span class="title">warn_unused_result</span></span></span><br><span class="line"><span class="function">    <span class="title">public</span> <span class="title">func</span> &gt;=<span class="params">(lhs: <span class="keyword">Self</span>, rhs: <span class="keyword">Self</span>)</span></span> -&gt; <span class="type">Bool</span></span><br><span class="line">    <span class="meta">@warn_unused_result</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">func</span> &gt;<span class="params">(lhs: <span class="keyword">Self</span>, rhs: <span class="keyword">Self</span>)</span></span> -&gt; <span class="type">Bool</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>Comparable</code> 抽象了数学上<a href="http://en.wikipedia.org/wiki/Total_order#Strict_total_order" target="_blank" rel="noopener">严格全序</a>的概念。虽然定义了五个方法(别忘了 Equatable 中还有一个 ==),但只需要实现 <code>==</code> 和 <code>&lt;</code> ，其他方法只需要使用 Swift 标准库提供的默认实现，就可以根据严格全序定义推导出实现。</p>
+<p>数学真是计算机科学的基石啊！</p>
+
+  </section>
+
+</article>
+
+<section class="read-more">
+           
+    
+               
+            <div class="read-more-item">
+                <span class="read-more-item-dim">Newer Post</span>
+                <h2 class="post-list__post-title post-title"><a href="/string-comparable/" title="深挖 Swift 中的字符串可比性">深挖 Swift 中的字符串可比性</a></h2>
+                <p class="excerpt">
+                
+                
+在写 《从 Swift 中的 max(_:_:) 看设计哲学》的过程中，产生了这样一个想法: 既然 max(_:_:) 可以用来对比任何 Comparable ,而 String 是符合 Comparable 的，那么用它来比较两个字符串”谁大谁小”会怎么样呢？
+由于实验结果的捉摸不定，于是产生了
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2016-09-06T01:13:20.000Z" class="post-list__meta--date date">2016-09-06</time> &#8226; <span class="post-list__meta--tags tags">于 </span><a class="btn-border-small" href="/string-comparable/">继续阅读</a></div>
+                           
+            </div>
+        
+        
+               
+            <div class="read-more-item">
+                <span class="read-more-item-dim">Older Post</span>
+                <h2 class="post-list__post-title post-title"><a href="/ios-ci-index/" title="iOS 持续集成系列 - 开篇">iOS 持续集成系列 - 开篇</a></h2>
+                <p class="excerpt">
+                
+                
+iOS 持续集成 - 开篇
+iOS 持续集成 - 自动化 Code Review
+[iOS 持续集成 - 自动化单元测试]
+[iOS 持续集成 - 自动化打包与分发]
+
+前言iOS 开发在经过这几年的野蛮生长之后，慢慢地趋于稳定。无论开发语言是 Objective-C 还是 Swift,工程类型是
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2016-09-04T05:48:18.000Z" class="post-list__meta--date date">2016-09-04</time> &#8226; <span class="post-list__meta--tags tags">于 </span><a class="btn-border-small" href="/ios-ci-index/">继续阅读</a></div>
+                       
+            </div>
+        
+     
+   
+   
+  
+</section>
+
+  
+
+            <footer class="footer">
+    <span class="footer__copyright">
+        &copy; 2018 PPPan - 本站点采用 <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+       
+    </span>
+    <span class="footer__copyright">
+            基于 <a href="http://hexo.io">Hexo</a> 搭建，使用 <a href="https://github.com/monniya/hexo-theme-new-vno ">new-vno</a> 主题，由<a href="https://monniya.com ">@Monniya</a> 修改自 <a href="https://github.com/lenbo-ma/hexo-theme-vno" target="_blank">Vno</a>, 原创出自<a href="http://github.com/onevcat/vno" target="_blank">onevcat</a>
+    </span>
+    <span class="footer__copyright">
+            <a href="http://www.miitbeian.gov.cn/">浙ICP备15035859号</a>
+    </span>
+    
+    
+</footer>
+
+
+        </div>
+    </div>
+
+     
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-86796774-1', 'auto');
+	ga('send', 'pageview');
+</script>
+
+    
+
+
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    
+</body>
+</html>

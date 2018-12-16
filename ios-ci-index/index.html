@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="z">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    
+    <title>iOS 持续集成系列 - 开篇 | PPPan&#39;s 平凡之路</title>
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="PPPan&#39;s 平凡之路 一个技术博客覆盖范围包括 iOS Objecticve-C Swift Xcode 等">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="iOS 持续集成系列 - 开篇 | PPPan&#39;s 平凡之路">
+    <meta name="twitter:description" content="PPPan&#39;s 平凡之路 一个技术博客覆盖范围包括 iOS Objecticve-C Swift Xcode 等">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="iOS 持续集成系列 - 开篇 | PPPan&#39;s 平凡之路">
+    <meta property="og:description" content="PPPan&#39;s 平凡之路 一个技术博客覆盖范围包括 iOS Objecticve-C Swift Xcode 等">
+
+    
+    <meta name="author" content="PPPan">
+    
+    <link rel="stylesheet" href="../css/vno.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+
+    
+    <link rel="icon" href="/images/favicon.png">
+    
+
+    <meta name="generator" content="hexo"/>
+    
+    <link rel="alternate" type="application/rss+xml" title="PPPan&#39;s 平凡之路" href="/atom.xml">
+    
+
+    <link rel="canonical" href="https://shengpan.net/ios-ci-index/"/>
+
+                 
+</head>
+
+<body class="home-template no-js">
+    <script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="../js/main.js"></script>
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+<header class="panel-cover panel-cover--collapsed" style="background-image: url(/images/background-cover.jpg)">
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/" title="前往 PPPan&#39;s 平凡之路 的主页"><img src="/images/avatar.jpg" width="80" alt="PPPan&#39;s 平凡之路 logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for PPPan&#39;s 平凡之路">PPPan&#39;s 平凡之路</a></h1>
+        
+        <span class="panel-cover__subtitle panel-subtitle">做一个互联网内容的贡献者</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">PPPan's 平凡之路 一个技术博客覆盖范围包括 iOS Objecticve-C Swift Xcode 等</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+
+        <div class="navigation-wrapper">
+          <div>
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item"><a href="/#blog" title="Visit the blog" class="blog-button">Blog</a></li>
+            
+              <li class="navigation__item"><a href="https://github.com/DeveloperPans">GitHub</a></li>
+            
+            </ul>
+          </nav>
+          </div>
+          <div>
+          <nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  <!-- Weibo-->
+  
+  <li class="navigation__item">
+    <a href="http://weibo.com/u/5666355111" title="Weibo" target="_blank">
+      <i class='social fa fa-weibo'></i>
+      <span class="label">Weibo</span>
+    </a>
+  </li> 
+
+
+  <!-- Github -->
+  
+  <li class="navigation__item">
+    <a href="https://github.com/DeveloperPans" title="GitHub" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+
+
+<!-- Stack Overflow -->
+        
+
+  <!-- Google Plus -->
+  
+
+<!-- Facebook -->
+
+  
+<!-- Twitter -->
+
+  <li class="navigation__item">
+    <a href="https://twitter.com/developerpans" title="Twitter" target="_blank">
+      <i class='social fa fa-twitter'></i>
+      <span class="label">Twitter</span>
+    </a>
+  </li>
+
+  
+
+  <li class="navigation__item">
+    <a href="/atom.xml" title="RSS" target="_blank">
+      <i class='social fa fa-rss'></i>
+      <span class="label">RSS</span>
+    </a>
+  </li>
+
+
+
+  </ul>
+</nav>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay cover-blue"></div>
+  </div> 
+</header>
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single">
+
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2016-09-04T05:48:18.000Z" class="post-list__meta--date date">2016-09-04</time> &#8226; <span class="post-meta__tags tags">于  </span>
+      <span class="page-pv">
+       Read <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>
+      </span> 
+   
+    </div>
+    <h1 class="post-title">iOS 持续集成系列 - 开篇</h1>
+  </header>
+
+  <section class="post">
+    <ul>
+<li><a href="#">iOS 持续集成 - 开篇</a></li>
+<li><a href="/auto-code-review/">iOS 持续集成 - 自动化 Code Review</a></li>
+<li>[iOS 持续集成 - 自动化单元测试]</li>
+<li>[iOS 持续集成 - 自动化打包与分发]</li>
+</ul>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>iOS 开发在经过这几年的野蛮生长之后，慢慢地趋于稳定。无论开发语言是 Objective-C 还是 Swift,工程类型是 Hybird 还是原生，开发思想是 OOP 还是函数式，随着项目逐渐变大都在面临相同的问题: 测试、发布等重复性工作占了很大一部分时间，回归成本越来越高。持续集成不可避免地被提上了日程。</p>
+<p>本文主要阐述 iOS 下的持续集成，以目标、内容、流程、工具入手，希望可以为大家描绘一幅 iOS 持续集成的蓝图。这可能不是一篇可以让你 Step by Step 跟着做的文章，但愿可以在你脑海中建立相关概念，以便在实操时走对方向。</p>
+<p>我们会在后面几篇内容中，详细阐述 <strong>是什么</strong> 和 <strong>如何做</strong> 。</p>
+<h2 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h2><p>对于我们来说，减少重复工作、提升团队效率。<br>对于公司来说，省钱！</p>
+<p>狭义上持续集成指早集成早测试尽早早发现问题早修复，并辅以一些自动化的手段，其目标是减少修复的成本。通过其目的，我们可以发现，其实<strong>通过自动化减少重复工作</strong>和<strong>通过早发现问题降低成本</strong>是持续集成的核心理念。因此，我把自动化 Code Review 也放到这里讲。</p>
+<h2 id="内容"><a href="#内容" class="headerlink" title="内容"></a>内容</h2><p>iOS 下的持续集成内容包括自<strong>动化 Code Reivew、自动化单元测试、自动化打包和自动化分发</strong>。自动化 Code Review 保证团队遵守代码规范，在编码阶段减少 BUG 的产生。在人员流动较大的公司里，用同一套代码规范，也可以保证项目交接更流畅。自动化单元测试在集成阶段检测出 BUG ,以减少回归成本。自动化打包和自动化分发则是减少重复劳动，毕竟，工程师的时间就是金钱啊。</p>
+<h4 id="自动化-Code-Review"><a href="#自动化-Code-Review" class="headerlink" title="自动化 Code Review"></a>自动化 Code Review</h4><p>顾名思义，自动化 Code Review 既采用自动化的手段，对团队成员得代码进行 Review，以保证代码质量。从现实角度来说，自动化的 Code Review 更多地是对代码进行静态分析，通过扫描代码并对比制定的规则，产出所需要的结果。这个所需要的结果，可以是工程总体的量化的质量报告，也可以是显示在 Xcode 中的一条警告⚠️。这取决于用户是什么角色。</p>
+<p>在实际实践中，一般会有两种角色会关注这份结果 – <strong>工程师和管理层</strong>。工程师需要在开发的过程中及时了解代码错误，以便及时纠正。管理层需要了解工程的总体代码质量，以掌握项目的相关风险。同时，也可以作为工程师绩效的依据之一。</p>
+<p>要完成这一块内容，我们需要这些工具:</p>
+<ul>
+<li><a href="https://jenkins-ci.org" target="_blank" rel="noopener">Jenkins</a></li>
+<li><a href="http://www.sonarqube.org" target="_blank" rel="noopener">SonarQube</a></li>
+<li><a href="http://oclint.org" target="_blank" rel="noopener">OCLint</a> OR <a href="https://github.com/realm/SwiftLint" target="_blank" rel="noopener">SwiftLint</a></li>
+</ul>
+<p>通过这三者协作，我们可以实现以下流程:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">工程师通过 `Git Commit` 提交代码 → Web Hook 触发 `Jenkins` 构建 → `OCLint` 扫描代码生成PMD格式报告 → `Sonar-runner` 读取报告并展现到 `SonarQube`。</span><br></pre></td></tr></table></figure>
+<p>关于 Code Review 需要指出的是，自动化工具是有局限性的。其无法分析出较为”智能”的规则。比如说下面这条</p>
+<blockquote>
+<p>4.7 方法名以小写字母动词作为开头</p>
+</blockquote>
+<p>还有下面这种代码，尽管含有多个容易造成闪退的 BUG,也是可以顺利逃过分析器的眼睛的</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> result?.bindPhone == <span class="string">"true"</span> &#123;</span><br><span class="line">	<span class="keyword">let</span> range = (result?.loginId?.startIndex.advancedBy(<span class="number">3</span>))!...(result?.loginId?.endIndex.advancedBy(-<span class="number">5</span>))!</span><br><span class="line">	<span class="keyword">let</span> phoneNumber: <span class="type">String</span>? = result?.loginId?.stringByReplacingCharactersInRange(range, withString: <span class="string">"****"</span>)</span><br><span class="line">	<span class="keyword">self</span>.phoneNumLabel.text = phoneNumber!</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>因此，想要达到 “保证代码质量” 的目的，还需要人工 Review 和自动化 Review 相结合。</p>
+<h4 id="自动化单元测试"><a href="#自动化单元测试" class="headerlink" title="自动化单元测试"></a>自动化单元测试</h4><p>自动化地执行单元测试，在测试失败的情况下中断集成，并通知相关人员，就是这一块工作的内容。</p>
+<p>为此，我们需要如下的工具:</p>
+<ul>
+<li><a href="https://jenkins-ci.org" target="_blank" rel="noopener">Jenkins</a></li>
+<li><a href="https://github.com/facebook/xctool" target="_blank" rel="noopener">xctool</a></li>
+</ul>
+<p>我们可以实现以下的流程:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">`Git Merge`  → Web Hook 触发 `Jenkins` 构建 → xctool 执行单元测试 → 如果失败则发邮件给相关人员。</span><br></pre></td></tr></table></figure>
+<p>当然，如果你公司的项目托管在 GitHub 上，业界有两个非常优秀的 Jenkins 替代产品 <a href="https://travis-ci.org" target="_blank" rel="noopener">travis-ci</a> 和 <a href="https://circleci.com" target="_blank" rel="noopener">circle-ci</a>。他们对 GitHub 的支持完美，且对开源项目是免费的。私有项目则需要付费试用。</p>
+<p>在单元测试这一块，最高的成本还是写单元测试的时间成本。脑洞大开地说，如果能实现一款工具，可以自动地为业务代码生成测试代码，那才是生产力的大大提升。</p>
+<h4 id="自动化打包与分发"><a href="#自动化打包与分发" class="headerlink" title="自动化打包与分发"></a>自动化打包与分发</h4><p>一次完整的打包，需要经历配置证书、切换环境、调整参数(构建版本号等)、Archive、导出。<br>根据工程的复杂程度，以上过程快则五分钟，慢则半小时。当需要频繁发版的情况下，浪费了工程师非常多的时间。</p>
+<p>我们其实可以利用一些工具来实现这样的一个流程:</p>
+<p>Git Merge 到 Master（通常这意味着一个 Release）→ 触发 Jenkins 构建生成 ipa → <strong>自动化分发</strong>。</p>
+<p>自动分发包含以下工作：</p>
+<ul>
+<li>自动上传 App Store</li>
+<li>自动使用 TestFlight 分发</li>
+<li>自动上传到 蒲公英/Fir 等平台</li>
+<li>自动上传到企业 App Store</li>
+</ul>
+<p>我们可以分别配置相关的脚本，来实现测试的分发，和发布等。</p>
+<p>要实现这样的流程，我们需要这些工具:</p>
+<ul>
+<li><a href="https://jenkins-ci.org" target="_blank" rel="noopener">Jenkins</a></li>
+<li><a href="https://fastlane.tools" target="_blank" rel="noopener">Fastlane</a></li>
+</ul>
+<p>Fastlane 是由一个个小组件组成的工具，功能包括上传截图到 iTunes Connect,创建 provisioning file, 管理 TestFlight 的测试员，分发等。这个工具几乎可以用命令行来实现打包上传分发相关的所有功能，并且越来越有成为默认的业界持续集成标准工具的样子。就像 CocoaPods 在依赖管理方面一样。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>持续集成，可以看做是通过版本控制系统、CI平台(如Jenkins)和相关工具链来完成一套工作流，以减少团队重复性工作，并保证软件可以不停地迭代而不出太大的差错。iOS 下的持续集成大体就是上述几块内容，我们在实现的过程中遇到了不少坑，后面的文章分块详细讲。</p>
+
+  </section>
+
+</article>
+
+<section class="read-more">
+           
+    
+               
+            <div class="read-more-item">
+                <span class="read-more-item-dim">Newer Post</span>
+                <h2 class="post-list__post-title post-title"><a href="/swift-max/" title="从 Swift 中的 max(_:_:) 看设计哲学">从 Swift 中的 max(_:_:) 看设计哲学</a></h2>
+                <p class="excerpt">
+                
+                由于 Swift 不再支持宏了，于是 MAX,MIN 等一些列常用宏都被重写为 Swift 函数。我们来看看函数的定义:
+12@warn_unused_resultpublic func max&amp;lt;T : Comparable&amp;gt;(x: T, _ y: T) -&amp;gt; T
+warn_unu
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2016-09-05T01:18:09.000Z" class="post-list__meta--date date">2016-09-05</time> &#8226; <span class="post-list__meta--tags tags">于 </span><a class="btn-border-small" href="/swift-max/">继续阅读</a></div>
+                           
+            </div>
+        
+        
+               
+            <div class="read-more-item">
+                <span class="read-more-item-dim">Older Post</span>
+                <h2 class="post-list__post-title post-title"><a href="/wechat-url/" title="微信 URL Schemes">微信 URL Schemes</a></h2>
+                <p class="excerpt">
+                
+                DEPRECATED2016年09月18日更新：
+在 微信 6.3.25 版本中，所有外部唤起 URL 的方式均无法打开对应页面。未来这些 url 都只能在微信内部的浏览器使用了。
+
+年初的动态化分享热潮里，基本上都提到了 URL 跳转，天猫称为统跳协议，蘑菇街称为 URL 路由。其实很多大厂都默默
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2016-07-11T18:29:05.000Z" class="post-list__meta--date date">2016-07-12</time> &#8226; <span class="post-list__meta--tags tags">于 </span><a class="btn-border-small" href="/wechat-url/">继续阅读</a></div>
+                       
+            </div>
+        
+     
+   
+   
+  
+</section>
+
+  
+
+            <footer class="footer">
+    <span class="footer__copyright">
+        &copy; 2018 PPPan - 本站点采用 <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+       
+    </span>
+    <span class="footer__copyright">
+            基于 <a href="http://hexo.io">Hexo</a> 搭建，使用 <a href="https://github.com/monniya/hexo-theme-new-vno ">new-vno</a> 主题，由<a href="https://monniya.com ">@Monniya</a> 修改自 <a href="https://github.com/lenbo-ma/hexo-theme-vno" target="_blank">Vno</a>, 原创出自<a href="http://github.com/onevcat/vno" target="_blank">onevcat</a>
+    </span>
+    <span class="footer__copyright">
+            <a href="http://www.miitbeian.gov.cn/">浙ICP备15035859号</a>
+    </span>
+    
+    
+</footer>
+
+
+        </div>
+    </div>
+
+     
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-86796774-1', 'auto');
+	ga('send', 'pageview');
+</script>
+
+    
+
+
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    
+</body>
+</html>

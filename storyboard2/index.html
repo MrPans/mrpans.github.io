@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="z">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    
+    <title>Storyboard的爱与恨（下） | PPPan&#39;s 平凡之路</title>
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="PPPan&#39;s 平凡之路 一个技术博客覆盖范围包括 iOS Objecticve-C Swift Xcode 等">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Storyboard的爱与恨（下） | PPPan&#39;s 平凡之路">
+    <meta name="twitter:description" content="PPPan&#39;s 平凡之路 一个技术博客覆盖范围包括 iOS Objecticve-C Swift Xcode 等">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Storyboard的爱与恨（下） | PPPan&#39;s 平凡之路">
+    <meta property="og:description" content="PPPan&#39;s 平凡之路 一个技术博客覆盖范围包括 iOS Objecticve-C Swift Xcode 等">
+
+    
+    <meta name="author" content="PPPan">
+    
+    <link rel="stylesheet" href="../css/vno.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+
+    
+    <link rel="icon" href="/images/favicon.png">
+    
+
+    <meta name="generator" content="hexo"/>
+    
+    <link rel="alternate" type="application/rss+xml" title="PPPan&#39;s 平凡之路" href="/atom.xml">
+    
+
+    <link rel="canonical" href="https://shengpan.net/storyboard2/"/>
+
+                 
+</head>
+
+<body class="home-template no-js">
+    <script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="../js/main.js"></script>
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+<header class="panel-cover panel-cover--collapsed" style="background-image: url(/images/background-cover.jpg)">
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/" title="前往 PPPan&#39;s 平凡之路 的主页"><img src="/images/avatar.jpg" width="80" alt="PPPan&#39;s 平凡之路 logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for PPPan&#39;s 平凡之路">PPPan&#39;s 平凡之路</a></h1>
+        
+        <span class="panel-cover__subtitle panel-subtitle">做一个互联网内容的贡献者</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">PPPan's 平凡之路 一个技术博客覆盖范围包括 iOS Objecticve-C Swift Xcode 等</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+
+        <div class="navigation-wrapper">
+          <div>
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item"><a href="/#blog" title="Visit the blog" class="blog-button">Blog</a></li>
+            
+              <li class="navigation__item"><a href="https://github.com/DeveloperPans">GitHub</a></li>
+            
+            </ul>
+          </nav>
+          </div>
+          <div>
+          <nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  <!-- Weibo-->
+  
+  <li class="navigation__item">
+    <a href="http://weibo.com/u/5666355111" title="Weibo" target="_blank">
+      <i class='social fa fa-weibo'></i>
+      <span class="label">Weibo</span>
+    </a>
+  </li> 
+
+
+  <!-- Github -->
+  
+  <li class="navigation__item">
+    <a href="https://github.com/DeveloperPans" title="GitHub" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+
+
+<!-- Stack Overflow -->
+        
+
+  <!-- Google Plus -->
+  
+
+<!-- Facebook -->
+
+  
+<!-- Twitter -->
+
+  <li class="navigation__item">
+    <a href="https://twitter.com/developerpans" title="Twitter" target="_blank">
+      <i class='social fa fa-twitter'></i>
+      <span class="label">Twitter</span>
+    </a>
+  </li>
+
+  
+
+  <li class="navigation__item">
+    <a href="/atom.xml" title="RSS" target="_blank">
+      <i class='social fa fa-rss'></i>
+      <span class="label">RSS</span>
+    </a>
+  </li>
+
+
+
+  </ul>
+</nav>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay cover-blue"></div>
+  </div> 
+</header>
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single">
+
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2016-02-21T23:53:04.000Z" class="post-list__meta--date date">2016-02-22</time> &#8226; <span class="post-meta__tags tags">于  </span>
+      <span class="page-pv">
+       Read <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>
+      </span> 
+   
+    </div>
+    <h1 class="post-title">Storyboard的爱与恨（下）</h1>
+  </header>
+
+  <section class="post">
+    <h3 id="Scene的转场"><a href="#Scene的转场" class="headerlink" title="Scene的转场"></a>Scene的转场</h3><p>如我们所料，Storyboard也可以通过可视化的操作来实现Scene的转场。</p>
+<p>故事板的转场有两种，可以分为手动触发和自动触发。自动触发完全由Storyboard实现，而手动触发则需要配合代码。前者简单易用，后者适用于配合业务逻辑，进行不同转场的触发。自动触发的转场非常简单，我们只需选择一个UIControl(比如UIButton),按住Control+左键，拖线至目标Scene,选择<code>Action</code>类型，即可在触发UIControl的某些事件的时候，自动执行转场。<br><img src="/content/images/2016/02/ooooo-1.gif" alt=""></p>
+<p>例如利用UIButton转场，实际上是在触发<code>TouchUpInside</code>事件时执行。这一简单的操作实际上相当于如下代码:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">- (void)viewDidLoad</span><br><span class="line">&#123;</span><br><span class="line">    [self.button addTarget:self</span><br><span class="line">                    action:@selector(showPSViewControllerB)</span><br><span class="line">          forControlEvents:UIControlEventTouchUpInside];</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)showPSViewControllerB</span><br><span class="line">&#123;</span><br><span class="line">    PSViewControllerB *viewController = [[PSViewControllerB alloc]init];</span><br><span class="line">    //配置..传值...</span><br><span class="line">    [self.navigationController pushViewController:viewController animated:YES];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Storyboard将Scene转场变成了可视化的操作又引入了一个新的问题，需要如何传递参数给目标ViewController？</p>
+<p>解决方法就是，我们需要在Storyboard中给Segue一个Identifier，然后在源ViewController中重写如下方法即可:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender</span><br><span class="line">&#123;</span><br><span class="line">    if ([segue.identifier isEqualToString:[PSViewControllerB description]])</span><br><span class="line">    &#123;</span><br><span class="line">        PSViewControllerB *vc = segue.destinationViewController;</span><br><span class="line">        //配置..传值..</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>手动触发则需要代码配合。不同的是，拖线的对象从UIControl变成了UIViewController(不要忘了在Storyboard中填写Segue Identifier)。</p>
+<p><img src="/content/images/2016/02/aaa.gif" alt=""></p>
+<p>然后在代码中需要转场的地方，加上<code>performSegueWithIdentifier:sender:</code>即可。例子如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//self:PSViewControllerA</span><br><span class="line">    if (isBizSuccess)&#123;</span><br><span class="line">        [self performSegueWithIdentifier:[PSViewControllerB description] sender:parameter];</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        [self showTips:@&quot;some failure reason&quot;];</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>你可以利用<code>performSegueWithIdentifier:sender:</code>来进行任何形式的转场。Segue为我们的转场提供了不同的Action，囊括了常见的UINavigationViewController的push，或者所有ViewController都可以执行的Modelly Presentation。</p>
+<blockquote>
+<p>事实上，在iOS 8以后，我们就可以利用Storyboard结合代码实现自定义的转场，无论是在哪一种上下文环境中。</p>
+</blockquote>
+<p>采用Storyboard进行Scene转场的好处在于，一个ViewController的所有转场代码，都集中到了<code>prepareForSegue:sender:</code>方法中，debug或者添加新功能时，可以很容易顺藤摸瓜。但缺点同样明显。每次转场的修改/删除需要同时修改Storyboard和代码文件。同时，随着项目的进行，越来越多的Scene和业务逻辑，导致Storyboard中Segue的数量剧增，难以维护。</p>
+<p><em>巨量的Segue(仅仅是部分截图)</em></p>
+<p><img src="/content/images/2016/02/-----2016-02-22-17-04-05.png" alt="难以维护的Segue"></p>
+<h4 id="多Storyboard协作"><a href="#多Storyboard协作" class="headerlink" title="多Storyboard协作"></a>多Storyboard协作</h4><p>解决如上问题的方法就是，尽量将项目的界面分割在多个Storyboard文件中。一个最佳实践是，按照项目功能模块来区分故事板，例如<code>Login.Storyboard</code>,<code>Chat.Storyboard</code>,<code>Person.Storyboard</code>等。尽量把每个Storyboard的Scene数量控制在20个以内。</p>
+<p>同时，Scene间的转场我们依然可以采用Segue,并且使用起来和单个Storyboard无异。这要多亏Apple在iOS 9新推出的<br><a href="http://shengpan.net/top-tips-for-ios9/#StoryboardReference">UIStoryboard Reference</a>。</p>
+<h3 id="代码可视化"><a href="#代码可视化" class="headerlink" title="代码可视化"></a>代码可视化</h3><p>还有什么能比代码可视化更加炫酷的呢？作为前端工程师，最享受的时候，就是枯燥的代码和算法变成了优美的动画。但这一切都只在按下command+R之后。</p>
+<p>现在，通过Storyboard,我们也可以在编译时实时预览我们的代码所产生的效果。</p>
+<h4 id="IB-DESIGNABLE"><a href="#IB-DESIGNABLE" class="headerlink" title="IB_DESIGNABLE"></a>IB_DESIGNABLE</h4><p><img src="/content/images/2016/02/IB_DESIGNABLE.gif" alt=""></p>
+<p>通过为自定义的View添加<code>IB_DESIGNABLE</code>关键字（注意图中关键字的位置）,我们让Storyboard为我们自定义的视图进行实时渲染。有的人可能会担心实时渲染造成的性能问题。这点大可放心，Xcode有一套非常优秀的缓存机制(优秀到有些时候必须要clean一下，某些小改动才会在真机上生效),只需要编译一次，视图就会被缓存，不会造成每次在Storyboard、代码文件中切换时多次渲染的问题。</p>
+<blockquote>
+<p>在swift中则为@IBDesignable，放在class关键字之前</p>
+</blockquote>
+<p>到这里令人惊叹的类似Playground的事实渲染功能，已经可以动态地应用在项目中了。我们可以利用IB_DESIGNABLE和IBInspectable来制作图表等高度自定义的、独特的视图。</p>
+<p>当然，故事板狂魔对故事板的使用不会就此罢手的，本着一切能用Storyboard配置就不写代码的原则，我们也希望可以在故事板中配置自定义控件的属性。幸运的是，Apple再次为我们的想法提供了可能。</p>
+<h4 id="IBInspectable"><a href="#IBInspectable" class="headerlink" title="IBInspectable"></a>IBInspectable</h4><p><img src="/content/images/2016/02/IBInspectable.gif" alt=""></p>
+<p>通过为自定义View的属性添加<code>IBInspectable</code>关键字（注意图中关键字的位置），我们可以将原本需要代码配置的属性，放到故事板中。IBInspectable支持以下类型的属性：</p>
+<ul>
+<li>BOOL </li>
+<li> NSString</li>
+<li>NSNumber </li>
+<li>CGPoint</li>
+<li>CGSize</li>
+<li>CGRect</li>
+<li>UIColor</li>
+<li>NSRange</li>
+<li>UIImage</li>
+</ul>
+<blockquote>
+<p>在swift中则为@IBInspectable，放在var关键字之前</p>
+</blockquote>
+<h4 id="为系统控件添加IBInspectable"><a href="#为系统控件添加IBInspectable" class="headerlink" title="为系统控件添加IBInspectable"></a>为系统控件添加IBInspectable</h4><p>不少设计设都喜欢设计圆角。通常我们需要写如下代码:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">view.layer.cornerRadius = 5;</span><br><span class="line">view.layer.masksToBounds = YES;</span><br></pre></td></tr></table></figure>
+<p>为了解决这些重复代码的问题，有的人喜欢为View写Category，一行代码实现圆角。然而这需要在不同的ViewController中不断引入这个Category,不够优雅。当然，这种小事情我们也肯定不会愿意采用继承的。</p>
+<p>实际上，我们只需要为项目添加一个View的Category，在其中声明一个@property并加上IBInspectable关键字,然后在实现文件中的getter&amp;&amp;setter方法中实现具体的逻辑。<strong>不用import头文件，也不需要运行</strong>,Storyboard中将自动出现这个属性以供配置。这不正是我们梦寐以求的完全解耦吗！？</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//UIView+CornerRadius.h</span><br><span class="line">@interface UIView (CornerRadius)</span><br><span class="line"></span><br><span class="line">@property (nonatomic, assign) IBInspectable CGFloat cornerRadius;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">//UIView+CornerRadius.m</span><br><span class="line">@implementation UIView (CornerRadius)</span><br><span class="line"></span><br><span class="line">- (void)setCornerRadius:(CGFloat)cornerRadius</span><br><span class="line">&#123;</span><br><span class="line">    self.layer.cornerRadius = cornerRadius;</span><br><span class="line">    self.layer.masksToBounds = cornerRadius &gt; 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (CGFloat)cornerRadius</span><br><span class="line">&#123;</span><br><span class="line">    return self.layer.cornerRadius;</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p><img src="/content/images/2016/02/CornerRadius.gif" alt=""></p>
+<blockquote>
+<p>实际上，IBInspectable是对运行时属性进行的一种拓展，你在Attributed Inspector中进行的自定义属性配置，都会在Identity Inspector的运行时属性中得到体现。</p>
+</blockquote>
+<h3 id="Storyboard的弊端"><a href="#Storyboard的弊端" class="headerlink" title="Storyboard的弊端"></a>Storyboard的弊端</h3><p>Storyboard也并非十全十美的。它依然有许多的问题亟待解决，有些致命的问题，更是成为导致许多开发者放弃Storyboard的原因。在iOS9普及率已经达到<a href="https://developer.apple.com/support/app-store/" target="_blank" rel="noopener">77%</a>的今天，Storyboard仍然有很多问题需要完善。</p>
+<h4 id="难以维护"><a href="#难以维护" class="headerlink" title="难以维护"></a>难以维护</h4><p>Storyboard在某些角度上，是难以维护的。我所遇到过的实际情况是，公司一个项目的2.0版本，设计师希望替换原有字体。然而原来项目的每一个Label都是采用Storyboard来定义字体的，因此替换新字体需要在Storyboard中更改每一个Label。</p>
+<p>幸亏我们知道Storyboard的源文件是XML，最终写了一个读取-解析-替换脚本来搞定这件事。</p>
+<h4 id="性能瓶颈"><a href="#性能瓶颈" class="headerlink" title="性能瓶颈"></a>性能瓶颈</h4><p>当项目达到一定的规模，即使是高性能的MacBook Pro,在打开Storyboard是也会有3-5秒的读取时间。无论是只有几个Scene的小东西，还是几十个Scene的庞然大物，都无法避免。Scene越多的文件，打开速度越慢(从另一个方面说明了分割大故事板的重要性)。</p>
+<p>让人沮丧的是，这个造成卡顿的项目规模并不是太难达到。</p>
+<p>我猜想是由于每一次打开都需要进行I/O操作造成的，Apple对这一块的缓存优化没有做到位。可能是由于Storyboard占用了太多内存，难以在内存中进行缓存。Whatever,这个问题总是让人困扰的。</p>
+<p>然而需要指出的是，采用Storyboard开发或采用纯代码开发的App，在真机的运行效率上，并没有太大的区别。</p>
+<h4 id="错误定位困难"><a href="#错误定位困难" class="headerlink" title="错误定位困难"></a>错误定位困难</h4><p>Storyboard的初学者应该对此深有体会。排除BAD_EXCUSE错误不说，单单是有提示的错误，就足以让人在代码和Storyboard之间来回摸索，却无法找到解决方案。</p>
+<p>一个典型的例子是，在代码中删除了IBOUTLET属性或者IBAction方法，但是却忘了在Storyboard中删除对应的连接，运行后crash。然而控制台只会输出一些模糊其词的错误描述。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">*** Terminating app due to uncaught exception &apos;NSUnknownKeyException&apos;, </span><br><span class="line">reason: &apos;[&lt;DrawViewController 0x7fe9f6a11240&gt; setValue:forUndefinedKey:]: </span><br><span class="line">this class is not key value coding-compliant for the key drawButton.&apos;</span><br></pre></td></tr></table></figure>
+<p>有经验的开发者可以从drawButton这个关键字中找到突破口，但大部分刚接触Storyboard的开发者，会被困在其中。</p>
+<h3 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h3><p>综合其利弊，毅然选择了站在Storyboard这边。一方面是其提供的便利，另一方面是Apple对Storyboard的大力支持。这一点宏观上看，可以在以往对Storyboard的改进和增强上看出，微观上看，几乎所有iOS 8之后的simple code都或多或少采用了Storyboard作为界面开发工具。有理由相信，Storyboard的未来是光明的。</p>
+<p>愿大家在Storyboard的路(keng)上，越走越远。</p>
+
+  </section>
+
+</article>
+
+<section class="read-more">
+           
+    
+               
+            <div class="read-more-item">
+                <span class="read-more-item-dim">Newer Post</span>
+                <h2 class="post-list__post-title post-title"><a href="/usingswiftwithobjc/" title="Objective-C与Swift混编实践">Objective-C与Swift混编实践</a></h2>
+                <p class="excerpt">
+                
+                ###前言
+由于Swift的语法趋于稳定，目前本人负责的项目也已经在小范围地引入Swift。关于混编过程中遇到的各种思考与选择，胡波的这篇文章已经阐述得得比较全面了，看完文章回头看自己在混编过程中的各种选择，与胡先生的看法是一致的。在此梳理一下一些值得注意的小细节。
+Optional基于Object
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2016-04-12T03:31:27.000Z" class="post-list__meta--date date">2016-04-12</time> &#8226; <span class="post-list__meta--tags tags">于 </span><a class="btn-border-small" href="/usingswiftwithobjc/">继续阅读</a></div>
+                           
+            </div>
+        
+        
+               
+            <div class="read-more-item">
+                <span class="read-more-item-dim">Older Post</span>
+                <h2 class="post-list__post-title post-title"><a href="/storyboard/" title="Storyboard的爱与恨（上）">Storyboard的爱与恨（上）</a></h2>
+                <p class="excerpt">
+                
+                尽管现在已经是Apple将Storyboard整合进Xcode中的第四个年头，大家对于Storyboard的评价仍然褒贬不一。有早期就选择转向Storyboard用于UI开发的国内业界领头人物，也有创建项目就立马删除Storyboard的大牛。我经历过纯代码布局，同时也在多个多人合作项目中使用Sto
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2016-02-01T22:30:53.000Z" class="post-list__meta--date date">2016-02-02</time> &#8226; <span class="post-list__meta--tags tags">于 </span><a class="btn-border-small" href="/storyboard/">继续阅读</a></div>
+                       
+            </div>
+        
+     
+   
+   
+  
+</section>
+
+  
+
+            <footer class="footer">
+    <span class="footer__copyright">
+        &copy; 2018 PPPan - 本站点采用 <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+       
+    </span>
+    <span class="footer__copyright">
+            基于 <a href="http://hexo.io">Hexo</a> 搭建，使用 <a href="https://github.com/monniya/hexo-theme-new-vno ">new-vno</a> 主题，由<a href="https://monniya.com ">@Monniya</a> 修改自 <a href="https://github.com/lenbo-ma/hexo-theme-vno" target="_blank">Vno</a>, 原创出自<a href="http://github.com/onevcat/vno" target="_blank">onevcat</a>
+    </span>
+    <span class="footer__copyright">
+            <a href="http://www.miitbeian.gov.cn/">浙ICP备15035859号</a>
+    </span>
+    
+    
+</footer>
+
+
+        </div>
+    </div>
+
+     
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-86796774-1', 'auto');
+	ga('send', 'pageview');
+</script>
+
+    
+
+
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    
+</body>
+</html>

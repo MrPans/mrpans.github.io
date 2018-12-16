@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="z">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    
+    <title>iOS 持续集成系列 - 自动化 Code Review | PPPan&#39;s 平凡之路</title>
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="PPPan&#39;s 平凡之路 一个技术博客覆盖范围包括 iOS Objecticve-C Swift Xcode 等">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="iOS 持续集成系列 - 自动化 Code Review | PPPan&#39;s 平凡之路">
+    <meta name="twitter:description" content="PPPan&#39;s 平凡之路 一个技术博客覆盖范围包括 iOS Objecticve-C Swift Xcode 等">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="iOS 持续集成系列 - 自动化 Code Review | PPPan&#39;s 平凡之路">
+    <meta property="og:description" content="PPPan&#39;s 平凡之路 一个技术博客覆盖范围包括 iOS Objecticve-C Swift Xcode 等">
+
+    
+    <meta name="author" content="PPPan">
+    
+    <link rel="stylesheet" href="../css/vno.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+
+    
+    <link rel="icon" href="/images/favicon.png">
+    
+
+    <meta name="generator" content="hexo"/>
+    
+    <link rel="alternate" type="application/rss+xml" title="PPPan&#39;s 平凡之路" href="/atom.xml">
+    
+
+    <link rel="canonical" href="https://shengpan.net/auto-code-review/"/>
+
+                 
+</head>
+
+<body class="home-template no-js">
+    <script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="../js/main.js"></script>
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+<header class="panel-cover panel-cover--collapsed" style="background-image: url(/images/background-cover.jpg)">
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/" title="前往 PPPan&#39;s 平凡之路 的主页"><img src="/images/avatar.jpg" width="80" alt="PPPan&#39;s 平凡之路 logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for PPPan&#39;s 平凡之路">PPPan&#39;s 平凡之路</a></h1>
+        
+        <span class="panel-cover__subtitle panel-subtitle">做一个互联网内容的贡献者</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">PPPan's 平凡之路 一个技术博客覆盖范围包括 iOS Objecticve-C Swift Xcode 等</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+
+        <div class="navigation-wrapper">
+          <div>
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item"><a href="/#blog" title="Visit the blog" class="blog-button">Blog</a></li>
+            
+              <li class="navigation__item"><a href="https://github.com/DeveloperPans">GitHub</a></li>
+            
+            </ul>
+          </nav>
+          </div>
+          <div>
+          <nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  <!-- Weibo-->
+  
+  <li class="navigation__item">
+    <a href="http://weibo.com/u/5666355111" title="Weibo" target="_blank">
+      <i class='social fa fa-weibo'></i>
+      <span class="label">Weibo</span>
+    </a>
+  </li> 
+
+
+  <!-- Github -->
+  
+  <li class="navigation__item">
+    <a href="https://github.com/DeveloperPans" title="GitHub" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+
+
+<!-- Stack Overflow -->
+        
+
+  <!-- Google Plus -->
+  
+
+<!-- Facebook -->
+
+  
+<!-- Twitter -->
+
+  <li class="navigation__item">
+    <a href="https://twitter.com/developerpans" title="Twitter" target="_blank">
+      <i class='social fa fa-twitter'></i>
+      <span class="label">Twitter</span>
+    </a>
+  </li>
+
+  
+
+  <li class="navigation__item">
+    <a href="/atom.xml" title="RSS" target="_blank">
+      <i class='social fa fa-rss'></i>
+      <span class="label">RSS</span>
+    </a>
+  </li>
+
+
+
+  </ul>
+</nav>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay cover-blue"></div>
+  </div> 
+</header>
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single">
+
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2016-09-13T21:16:55.000Z" class="post-list__meta--date date">2016-09-14</time> &#8226; <span class="post-meta__tags tags">于  </span>
+      <span class="page-pv">
+       Read <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>
+      </span> 
+   
+    </div>
+    <h1 class="post-title">iOS 持续集成系列 - 自动化 Code Review</h1>
+  </header>
+
+  <section class="post">
+    <ul>
+<li><a href="/ios-ci-index/">iOS 持续集成 - 开篇</a></li>
+<li><a href="#">iOS 持续集成 - 自动化 Code Review</a></li>
+<li>[iOS 持续集成 - 自动化单元测试]</li>
+<li>[iOS 持续集成 - 自动化打包与分发]</li>
+</ul>
+<p>为了保证代码质量，Code Review 是非常重要的一环。细到<code>*</code>的位置是否正确，大到代码的结构是否符合了软件开发的一些基本原则，都在这项工作的范围内。</p>
+<p>受限于现实情况，大多数团队没有足够的时间进行 Code Review，那么只能把一部分 CR 工作交给计算机去完成了。我们只需要定下合理的流程，用代码告诉计算机需要做什么，剩下的就交给我们可靠的伙伴吧。</p>
+<p>应用了自动化 Code Review 后，如果你的代码写得不好，Xcode 会表示不开心。</p>
+<p><img src="/content/images/2016/11/xcode.png" alt=""></p>
+<p>如果你忽略 Xcode 的心情，那么质量管理平台会默默地记录这一切。</p>
+<p><img src="/content/images/2016/11/sonar.png" alt=""></p>
+<p>这套东西既帮助开发们写出更高质量的的代码，也给经理们对工程质量的评估提供了一个切面的支持，同时只需要花费较少的人力维护，听起来是不是跃跃欲试了呢 ： ）</p>
+<h2 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h2><p>整体的工作流程非常简单，如图：</p>
+<p><img src="/content/images/2016/11/flow-1.png" alt="自动化 Code Review 总体流程"></p>
+<p>关键点在于<strong>本地 Review</strong>和<strong>远端 Review</strong>这两步。前者是提供给开发者一个即时的代码质量反馈，以便开发者修改，从而避免在接下来的远端 Review 中得到一个较低的得分。后者则是为了生成相关报表，为项目管理人员跟踪项目质量提供依据。在很多大公司里，这也是开发者们绩效的参考之一。</p>
+<p>剩下的就是一些胶水步骤了，如何让过程更自动化，就是胶水步骤要做的事。例如利用 WebHook 自动触发远端 Review，利用 Git 的钩子进行增量校验而不是全量校验等。这些我们放在后面聊，先来看看本地校验的流程。</p>
+<h2 id="本地-Review"><a href="#本地-Review" class="headerlink" title="本地 Review"></a>本地 Review</h2><p><img src="/content/images/2016/11/local-flow-1.png" alt="本地自动化 Code Review"></p>
+<p>在本地 Review 环节，开发者只需要像往常一样按下 CMD + B，然后只要静静地等待进度条读完，满屏的⚠️就会精确地指示出某一行的代码违反了哪条规则。此时开发者就可以根据代码规范进行对应修改。</p>
+<p>从按下按键到产生警告主要发生了这么几件事情：</p>
+<ul>
+<li>生成 compile_commands.json 文件</li>
+<li>OCLint 读取相关的 Rules，逐个扫描 compile_commands.json 中的 .m 文件</li>
+<li>OCLint 将生成的报告展示在 Xcode 上</li>
+</ul>
+<p><strong>实现本地 Review 的核心就是 OCLint 和 compile_commands.json文件</strong></p>
+<h3 id="OCLint"><a href="#OCLint" class="headerlink" title="OCLint"></a>OCLint</h3><blockquote>
+<p>工欲善其事，必先利其器</p>
+</blockquote>
+<p><a href="http://oclint.org" target="_blank" rel="noopener">OCLint</a> 是一个开源的，基于 Clang 用 C++ 编写而成的，可以用于 C、C++ 和 Objective-C 的静态代码分析器。它可以在扫描的过程中动态加载规则文件（Rules），因此可以实现非常灵活的，高度可自定义的代码分析方案。它几乎可以和大多数系统无缝集成，例如 Cmake、Bear、xcodebuild、xctool、Xcode、xcpretty、Jenkins CI、Travis CI 等。你可以在<a href="http://docs.oclint.org/en/stable/guide/xcode.html" target="_blank" rel="noopener">这里</a>找到如何将其和 Xcode 配合使用。</p>
+<p>最新版本的 OCLint 已经自带了 71 条 Rules，基本上都是先人宝贵的经验，比如<a href="http://docs.oclint.org/en/stable/rules/basic.html#gotostatement" target="_blank" rel="noopener">这条禁用 goto 语句的 Rule</a>，就是来源于 <a href="https://en.wikipedia.org/wiki/Edsger_W._Dijkstra" target="_blank" rel="noopener">Edsger W. Dijkstra</a> 1968 年的一篇<a href="http://www.cs.utexas.edu/users/EWD/ewd02xx/EWD215.PDF" target="_blank" rel="noopener">手稿</a>。</p>
+<p>这 71 条 Rules 已经可以帮助我们避免一部分因书写习惯和语言误区而导致的问题，但是对于有完整编码规范的公司来说显然是不够的。我们必须要自己开发 Rules。</p>
+<p>幸运的是，OCLint 已经为我们准备好了一切。</p>
+<p>OCLint 提供了 Clang 和 <a href="https://en.wikipedia.org/wiki/Abstract_syntax_tree" target="_blank" rel="noopener">AST (Abstract Syntax Tree)</a> 的一层封装，使我们不必对抽象语法树进行解析，只需要专注规则相关的逻辑开发即可。从其提供的接口中我们可以很明显地看出这一点。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 遇到一元操作符</span></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">VisitUnaryOperator</span><span class="params">(UnaryOperator *node)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="comment">// 遇到二元操作符</span></span></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">VisitBinaryOperator</span><span class="params">(BinaryOperator *node)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="comment">// 遇到 Objective-C 的函数声明</span></span></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">VisitObjCMethodDecl</span><span class="params">(ObjCMethodDecl *node)</span></span></span><br></pre></td></tr></table></figure>
+<p>在开发好相关的规则后，打包成 dylib，就可以在分析的时候<a href="http://docs.oclint.org/en/stable/manual/oclint.html#rule-loading-options" target="_blank" rel="noopener">加载我们自己的 Rule 了</a>。</p>
+<h3 id="compile-commands-json"><a href="#compile-commands-json" class="headerlink" title="compile_commands.json"></a>compile_commands.json</h3><p>compile_commands.json 是 Clang 定义的<a href="http://clang.llvm.org/docs/JSONCompilationDatabase.html" target="_blank" rel="noopener">一个规范</a>，里面存放了一组<strong>工作目录</strong>、<strong>目标文件</strong>、<strong>需要被执行的命令</strong>，帮助相关工具可以独立于编译系统来将源代码文件转换为 AST 并做对应的事。</p>
+<p>看文件内容会更直观一些：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">"directory"</span>: <span class="string">"/path/to/project/"</span>, </span><br><span class="line">  <span class="attr">"command"</span>: <span class="string">"/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x ..."</span>, </span><br><span class="line">  <span class="attr">"file"</span>: <span class="string">"/path/to/project/XXXViewController.m"</span></span><br><span class="line">&#125;,</span><br><span class="line">...</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>OCLint 可以根据 compile_commands.json 中的内容，批量检查源代码文件。</p>
+<h3 id="xcpretty"><a href="#xcpretty" class="headerlink" title="xcpretty"></a>xcpretty</h3><p>还有一个点需要关注的是，如何生成 compile_commands.json 文件？</p>
+<p>最便捷的方式是使用 <code>oclint-xcodebuild</code> 来生成。首先，利用xcodebuild 生成 xcodebuild.log 文件。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xcodebuild | tee xcodebuild.log</span><br></pre></td></tr></table></figure>
+<p>然后利用 <code>oclint-xcodebuild</code> 生成 compile_commands.json</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">oclint-xcodebuild</span><br></pre></td></tr></table></figure>
+<p>截至 Xcode 8.1，这种做法可以正确生成 json 文件。由于 OCLint 团队已经声称不再维护 oclint-xcodebuild , 因此可能在未来的某个 Xcode 版本中这个方法将不再适用。</p>
+<p>另一个推荐的方法是利用 <a href="https://github.com/supermarin/xcpretty" target="_blank" rel="noopener">xcpretty</a> 。</p>
+<p>xcpretty 可以一句话生成 json 文件。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xcodebuild | xcpretty -r json-compilation-database --output /path/to/compile_commands.json</span><br></pre></td></tr></table></figure>
+<h3 id="使用本地-Review"><a href="#使用本地-Review" class="headerlink" title="使用本地 Review"></a>使用本地 Review</h3><p>了解了这些工具后就很容易明白本地自动化 Code Review 是如何工作的，使用方式也非常容易理解了：</p>
+<ol>
+<li>首先在电脑本地安装好 OCLint 并拿到公司自定义的 Rules 文件</li>
+<li><a href="http://docs.oclint.org/en/stable/guide/xcode.html" target="_blank" rel="noopener">在 Xcode 上配置好工程</a></li>
+<li>build 工程，等待结果显示在 Xcode 上。</li>
+</ol>
+<p>附一个我们团队的配置脚本供参考:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> ~/.bash_profile</span><br><span class="line"><span class="built_in">cd</span> <span class="variable">$&#123;SRCROOT&#125;</span></span><br><span class="line">xcodebuild clean</span><br><span class="line">xcodebuild | tee xcodebuild.log</span><br><span class="line">oclint-xcodebuild</span><br><span class="line">oclint-json-compilation-database \</span><br><span class="line">-e Vendor \</span><br><span class="line">-e Pods \</span><br><span class="line">-- \</span><br><span class="line">-max-priority-1 100000 \</span><br><span class="line">-max-priority-2 100000 \</span><br><span class="line">-max-priority-3 100000 \</span><br><span class="line">-report-type xcode \</span><br><span class="line">-R /path/to/rules</span><br></pre></td></tr></table></figure>
+<h2 id="远端-Review"><a href="#远端-Review" class="headerlink" title="远端 Review"></a>远端 Review</h2><p><img src="/content/images/2016/11/remote-flow-1.png" alt="远端自动化 Code Review"></p>
+<p>远端 Review 和 本地 Review 大体相似，区别在与引用构建的脚本的对象从 Xcode 变成了 Jenkins CI ，报告的展示者从 Xcode 变成了 SonarQube 。其流程是这样的：</p>
+<p>工程师通过 <code>git push</code> 提交代码<br>→ Web Hook 触发 <strong>Jenkins</strong> 构建<br>→ <strong>OCLint</strong> 扫描代码生成PMD格式报告<br>→ <strong>Sonar-runner</strong> 读取报告并展现到 <strong>SonarQube</strong>。</p>
+<h3 id="CI-环境"><a href="#CI-环境" class="headerlink" title="CI 环境"></a>CI 环境</h3><p>为了实现远端 Review ，服务端必须首先有一套 CI 环境。鉴于 iOS 的特殊性，服务器必须是 macOS 系统。CI 我们直接选择开源的 <a href="https://jenkins-ci.org" target="_blank" rel="noopener">Jenkins</a>，质量管理平台则选用开源的 <a href="http://www.sonarqube.org" target="_blank" rel="noopener">SonarQube</a>。Jenkins 大名鼎鼎大家都非常熟悉了，SonarQube 则相对少的人了解。</p>
+<p>SonarQube 是一个质量管理平台，在 SonarQube 上，你可以看到一个项目的代码行数、文件数量、代码重复率、违反的代码规范、技术债时间等等指标。SonarQube 对 Java 的支持极度友好，提供了 <strong>SonarScanner</strong> 可以直接对 Java 源代码进行扫描。Objective-C 就没有这么幸运了。虽然 SonarQube 也提供了 Objective-C 的报告展示的支持，但静态分析还是得依靠 OCLint 。</p>
+<h3 id="Sonnar-Runner"><a href="#Sonnar-Runner" class="headerlink" title="Sonnar-Runner"></a>Sonnar-Runner</h3><p>我们在 Jenkins 上运行 OCLint 生成了报告。需要一个中间人将报告解析成 SonarQube 可以理解的格式并传输到 SonarQube 平台。这个中间人就是 Sonnar-Runner。Sonnar-Runner 在我们的系统中也仅仅扮演这个搬运工的角色。你可以从<a href="http://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner+for+Jenkins" target="_blank" rel="noopener">这里</a>了解到如何在 Jenkins 上安装和使用 Sonnar-Runner。</p>
+<p>Sonnar-Runner 只能解析 <a href="http://pmd.github.io" target="_blank" rel="noopener">PMD</a> 格式的报告，因此我们在使用 OCLint 分析代码后，需要将报告格式<a href="http://docs.oclint.org/en/stable/howto/selectreporters.html#pmd-reporter-pmd" target="_blank" rel="noopener">输出为 PMD 格式</a>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">oclint -report-type pmd -o ./report.xml</span><br></pre></td></tr></table></figure>
+<h3 id="Rules-in-Sonar"><a href="#Rules-in-Sonar" class="headerlink" title="Rules in Sonar"></a>Rules in Sonar</h3><p>SonarQube 有一套规则，将代码问题按照严重程度分为 5 个等级，不同等级的问题会以不同权重影响到项目质量评分。这套规则和 OCLint 生成的报告中的 Rule name 必须要一一对应，SonarQube 才能正确将报告中的问题归类并评分。</p>
+<p>如果你使用 OCLint 原生的 Rules 来检查代码，只需要在 SonarQube 上安装 <a href="https://github.com/octo-technology/sonar-objective-c" target="_blank" rel="noopener">SonarQube Plugin for Objective C</a> 插件，相关的报告就会被正确识别了。</p>
+<p>如果是使用了自行开发的 Rules ，只需要 Clone 上述插件，并在<strong>profile-oclint.xml</strong> 和 <strong>rules.txt</strong> 中添加相关的 rule name ，然后打包并将这个插件安装到 SonarQube 上即可。</p>
+<p>举个例子：</p>
+<p>当我们用自行开发的 Rule 检查完代码后，生成了report.xml，内容如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">pmd</span> <span class="attr">version</span>=<span class="string">"oclint-0.11"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">file</span> <span class="attr">name</span>=<span class="string">"/path/to/TerribleCode.m"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">violation</span> <span class="attr">rule</span>=<span class="string">"binary operator space (HT_iOS_Coding_style 2.8)"</span> <span class="attr">begincolumn</span>=<span class="string">"9"</span> <span class="attr">endcolumn</span>=<span class="string">"157"</span> <span class="attr">beginline</span>=<span class="string">"73"</span> <span class="attr">endline</span>=<span class="string">"73"</span> <span class="attr">priority</span>=<span class="string">"3"</span> <span class="attr">ruleset</span>=<span class="string">"HT_iOS_rules"</span> &gt;</span></span><br><span class="line">            多元运算符和他们的操作数之间至少需要一个空格</span><br><span class="line">        <span class="tag">&lt;/<span class="name">violation</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">file</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">pmd</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>其中 <code>binary operator space (HT_iOS_Coding_style 2.8)</code> 是我们定义的错误rule name。在 SonarQube 上，也必须对应有这么一条 rule 的 name，才能正确识别这个错误。</p>
+<p>此时我们只需要在上述插件的 <strong>rules.txt</strong> 中添加一段</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">binary operator space (HT_iOS_Coding_style 2.8)</span><br><span class="line">----------</span><br><span class="line"></span><br><span class="line">Summary:多元运算符和他们的操作数之间至少需要一个空格。 </span><br><span class="line"></span><br><span class="line">Severity: 2</span><br><span class="line">Category: Hengtian iOS Coding Standard</span><br></pre></td></tr></table></figure>
+<p>在上述插件的 <strong>profile-oclint.xml</strong> 中添加另外一段代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"> &lt;rule&gt;</span><br><span class="line">  &lt;repositoryKey&gt;OCLint&lt;/repositoryKey&gt;</span><br><span class="line">  &lt;key&gt;binary operator space (HT_iOS_Coding_style 2.8)&lt;/key&gt;</span><br><span class="line">&lt;/rule&gt;</span><br></pre></td></tr></table></figure>
+<p>然后将这个插件打包并安装到 SonarQube 上，SonarQube 就可以正确识别我们的问题并分类了。</p>
+<h3 id="使用远端-Review"><a href="#使用远端-Review" class="headerlink" title="使用远端 Review"></a>使用远端 Review</h3><p>在使用前，一定要确保你的 macOS 服务器已经安装好了最新版的 Xocde、OCLint、Jenkins、sonnar-runner，安装好 Jenkins 的相关插件，并将自定义的 Rule 放置在服务器上（如果有的话）。</p>
+<h4 id="检查并生成报告"><a href="#检查并生成报告" class="headerlink" title="检查并生成报告"></a>检查并生成报告</h4><p>在 Jenkins 上新建工程并配置好Git、构建触发器等其他内容。在构建步骤中添加一步 <strong>Execute Shell</strong> ，填入下述脚本</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">cd YourProjectDir</span><br><span class="line">xcodebuild clean</span><br><span class="line">xcodebuild -workspace MyProject.xcworkspace -scheme HTMarket -sdk iphonesimulator | tee xcodebuild.log | xcpretty</span><br><span class="line">oclint-xcodebuild</span><br><span class="line">oclint-json-compilation-database -e Pods \</span><br><span class="line">-v \</span><br><span class="line">-- \</span><br><span class="line">-max-priority-1 100000 \</span><br><span class="line">-max-priority-2 100000 \</span><br><span class="line">-max-priority-3 100000 \</span><br><span class="line">-report-type pmd \</span><br><span class="line">-R /path/to/diy-rules \</span><br><span class="line">-o /path/to/report.xml</span><br></pre></td></tr></table></figure>
+<p>脚本大致和本地 Review 一致，有三个地方需要注意一下。</p>
+<ol>
+<li><code>xcodebuild</code> 命令添加了 <code>-sdk iphonesimulator</code>参数，以避免 build 需要 Code Sign 的问题。</li>
+<li><code>-report-type pmd</code> 输出格式必须为 pmd 格式</li>
+<li><code>-o /path/to/report.xml</code> 注意输出报告的路径，下一步sonnar-runner 读取时会用到。</li>
+</ol>
+<h4 id="读取到-SonarQube"><a href="#读取到-SonarQube" class="headerlink" title="读取到 SonarQube"></a>读取到 SonarQube</h4><p>在上一步的下方再添加一步 <strong>Invoke Standalone SonarQube Analysis</strong>，选择好你的 sonnar-runner。并在 <em>Analysis Properties</em> 中添加如下配置：（如果没有这一项，你可能需要安装 SonarQube 相关的插件。）</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">sonar.projectKey=YOUR_PROJECT_NAME</span><br><span class="line">sonar.projectName=YOUR_PROJECT_NAME</span><br><span class="line">sonar.projectVersion=<span class="number">1.0</span></span><br><span class="line">sonar.language=objc</span><br><span class="line">sonar.projectDescription=YOUR_PROJECT_DESCRIPTION</span><br><span class="line"> </span><br><span class="line"><span class="comment"># Path to source directories </span></span><br><span class="line">sonar.sources=<span class="regexp">/path/to</span><span class="regexp">/source/directories</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># Xcode project configuration (.xcodeproj or .xcworkspace)</span></span><br><span class="line"><span class="comment"># -&gt; If you have a project: configure only sonar.objectivec.project</span></span><br><span class="line"><span class="comment"># -&gt; If you have a workspace: configure sonar.objectivec.workspace and sonar.objectivec.project</span></span><br><span class="line"><span class="comment"># and use the later to specify which project(s) to include in the analysis (comma separated list)</span></span><br><span class="line">sonar.objectivec.project=YOUR_PROJECT_NAME.xcodeproj </span><br><span class="line">sonar.objectivec.workspace= YOUR_PROJECT_NAME.xcworkspace</span><br><span class="line"></span><br><span class="line"><span class="comment"># Scheme to build your application</span></span><br><span class="line">sonar.objectivec.appScheme=YOUR_PROJECT_NAME</span><br><span class="line"> </span><br><span class="line">sonar.sourceEncoding=UTF-<span class="number">8</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># OCLint report generated by run-sonar.sh is stored in sonar-reports/oclint.xml</span></span><br><span class="line"><span class="comment"># Change it only if you generate the file on your own</span></span><br><span class="line"> sonar.objectivec.oclint.report=YOUR_REPORT_FILE_PATH</span><br></pre></td></tr></table></figure>
+<p>注意看注释并修改 <code>YOUR_PROJECT_NAME</code> 、<code>YOUR_PROJECT_DESCRIPTION</code>、和 <code>YOUR_REPORT_FILE_PATH</code>为你项目的值。</p>
+<p>一切顺利的话，在 Jenkins 上立即构建，你就可以在你的 Sonar 平台上看到代码质量报告了。</p>
+<p>配合好<strong>构建触发器</strong> 和 Git 平台的 WebHook 功能，就可以在开发提交代码或者合并分支等关键点自动触发构建了。</p>
+<h3 id="Troubleshooting"><a href="#Troubleshooting" class="headerlink" title="Troubleshooting"></a>Troubleshooting</h3><p><strong>为什么生成的 compile_commands.json 为空</strong></p>
+<p>检查 log 是否为空，如果 log 为空则代表 build 失败。排除失败原因后即可正常生成。</p>
+<p><strong>Jenkins 构建遇到了如下问题</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">❌  Code signing is required for product type &apos;Application&apos; in SDK &apos;iOS 10.0&apos;</span><br></pre></td></tr></table></figure></p>
+<p>遇到这样的情况，是因为构建了 Release 版本，且项目在 Xcode8+ 上开启了 Automatic Code Sign。解决方法如下：</p>
+<ol>
+<li>如果只需要检查代码规范，则在 xcodebuild 命令后添加 <code>-sdk iphonesimulator</code> 参数指明以 Debug 方式构建即可。</li>
+<li>如果希望构建 Release 版本，那么关闭自动签名，在 CI 系统上手动配置证书和Proversion Profile。或者保留自动签名，参考<a href="https://testerhome.com/topics/5954" target="_blank" rel="noopener">这个回答</a>用 <code>sed</code> 命令在构建前修改相关配置。</li>
+</ol>
+<h4 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h4><ul>
+<li><a href="http://oclint.org" target="_blank" rel="noopener">OCLint</a></li>
+<li><a href="https://jenkins-ci.org" target="_blank" rel="noopener">Jenkins</a></li>
+<li><a href="http://www.sonarqube.org" target="_blank" rel="noopener">SonarQube</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Edsger_W._Dijkstra" target="_blank" rel="noopener">Edsger W. Dijkstra</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Abstract_syntax_tree" target="_blank" rel="noopener">AST (Abstract Syntax Tree)</a></li>
+<li><a href="http://clang.llvm.org/docs/JSONCompilationDatabase.html" target="_blank" rel="noopener">json compilation database format specification</a></li>
+<li><a href="https://github.com/supermarin/xcpretty" target="_blank" rel="noopener">xcpretty</a> </li>
+<li><a href="http://pmd.github.io" target="_blank" rel="noopener">PMD</a></li>
+<li><a href="https://testerhome.com/topics/5954" target="_blank" rel="noopener">xcode8 和 ios10 升级之后的问题集中讨论帖 – TesterHome</a></li>
+</ul>
+
+  </section>
+
+</article>
+
+<section class="read-more">
+           
+    
+               
+            <div class="read-more-item">
+                <span class="read-more-item-dim">Newer Post</span>
+                <h2 class="post-list__post-title post-title"><a href="/https/" title="全站 HTTPS 边做边记">全站 HTTPS 边做边记</a></h2>
+                <p class="excerpt">
+                
+                没错，这是一篇可以 Step by Step 跟着做的操作指南。
+keyword: Let’s Encrypt, Ubuntu 14.04, Nginx
+前言关于 HTTPS 可以先看看鹅厂的这篇文章涨涨姿势。
+我们知道 HTTPS 需要一个 CA 来解决信息抵赖和中间人攻击的隐患。Let’s En
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2016-10-07T06:32:00.000Z" class="post-list__meta--date date">2016-10-07</time> &#8226; <span class="post-list__meta--tags tags">于 </span><a class="btn-border-small" href="/https/">继续阅读</a></div>
+                           
+            </div>
+        
+        
+               
+            <div class="read-more-item">
+                <span class="read-more-item-dim">Older Post</span>
+                <h2 class="post-list__post-title post-title"><a href="/string-comparable/" title="深挖 Swift 中的字符串可比性">深挖 Swift 中的字符串可比性</a></h2>
+                <p class="excerpt">
+                
+                
+在写 《从 Swift 中的 max(_:_:) 看设计哲学》的过程中，产生了这样一个想法: 既然 max(_:_:) 可以用来对比任何 Comparable ,而 String 是符合 Comparable 的，那么用它来比较两个字符串”谁大谁小”会怎么样呢？
+由于实验结果的捉摸不定，于是产生了
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2016-09-06T01:13:20.000Z" class="post-list__meta--date date">2016-09-06</time> &#8226; <span class="post-list__meta--tags tags">于 </span><a class="btn-border-small" href="/string-comparable/">继续阅读</a></div>
+                       
+            </div>
+        
+     
+   
+   
+  
+</section>
+
+  
+
+            <footer class="footer">
+    <span class="footer__copyright">
+        &copy; 2018 PPPan - 本站点采用 <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+       
+    </span>
+    <span class="footer__copyright">
+            基于 <a href="http://hexo.io">Hexo</a> 搭建，使用 <a href="https://github.com/monniya/hexo-theme-new-vno ">new-vno</a> 主题，由<a href="https://monniya.com ">@Monniya</a> 修改自 <a href="https://github.com/lenbo-ma/hexo-theme-vno" target="_blank">Vno</a>, 原创出自<a href="http://github.com/onevcat/vno" target="_blank">onevcat</a>
+    </span>
+    <span class="footer__copyright">
+            <a href="http://www.miitbeian.gov.cn/">浙ICP备15035859号</a>
+    </span>
+    
+    
+</footer>
+
+
+        </div>
+    </div>
+
+     
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-86796774-1', 'auto');
+	ga('send', 'pageview');
+</script>
+
+    
+
+
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    
+</body>
+</html>

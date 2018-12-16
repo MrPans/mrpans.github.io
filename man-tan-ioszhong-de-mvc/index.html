@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="z">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    
+    <title>漫谈iOS中的MVC | PPPan&#39;s 平凡之路</title>
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="PPPan&#39;s 平凡之路 一个技术博客覆盖范围包括 iOS Objecticve-C Swift Xcode 等">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="漫谈iOS中的MVC | PPPan&#39;s 平凡之路">
+    <meta name="twitter:description" content="PPPan&#39;s 平凡之路 一个技术博客覆盖范围包括 iOS Objecticve-C Swift Xcode 等">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="漫谈iOS中的MVC | PPPan&#39;s 平凡之路">
+    <meta property="og:description" content="PPPan&#39;s 平凡之路 一个技术博客覆盖范围包括 iOS Objecticve-C Swift Xcode 等">
+
+    
+    <meta name="author" content="PPPan">
+    
+    <link rel="stylesheet" href="../css/vno.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+
+    
+    <link rel="icon" href="/images/favicon.png">
+    
+
+    <meta name="generator" content="hexo"/>
+    
+    <link rel="alternate" type="application/rss+xml" title="PPPan&#39;s 平凡之路" href="/atom.xml">
+    
+
+    <link rel="canonical" href="https://shengpan.net/man-tan-ioszhong-de-mvc/"/>
+
+                 
+</head>
+
+<body class="home-template no-js">
+    <script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="../js/main.js"></script>
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+<header class="panel-cover panel-cover--collapsed" style="background-image: url(/images/background-cover.jpg)">
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/" title="前往 PPPan&#39;s 平凡之路 的主页"><img src="/images/avatar.jpg" width="80" alt="PPPan&#39;s 平凡之路 logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for PPPan&#39;s 平凡之路">PPPan&#39;s 平凡之路</a></h1>
+        
+        <span class="panel-cover__subtitle panel-subtitle">做一个互联网内容的贡献者</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">PPPan's 平凡之路 一个技术博客覆盖范围包括 iOS Objecticve-C Swift Xcode 等</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+
+        <div class="navigation-wrapper">
+          <div>
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item"><a href="/#blog" title="Visit the blog" class="blog-button">Blog</a></li>
+            
+              <li class="navigation__item"><a href="https://github.com/DeveloperPans">GitHub</a></li>
+            
+            </ul>
+          </nav>
+          </div>
+          <div>
+          <nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  <!-- Weibo-->
+  
+  <li class="navigation__item">
+    <a href="http://weibo.com/u/5666355111" title="Weibo" target="_blank">
+      <i class='social fa fa-weibo'></i>
+      <span class="label">Weibo</span>
+    </a>
+  </li> 
+
+
+  <!-- Github -->
+  
+  <li class="navigation__item">
+    <a href="https://github.com/DeveloperPans" title="GitHub" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+
+
+<!-- Stack Overflow -->
+        
+
+  <!-- Google Plus -->
+  
+
+<!-- Facebook -->
+
+  
+<!-- Twitter -->
+
+  <li class="navigation__item">
+    <a href="https://twitter.com/developerpans" title="Twitter" target="_blank">
+      <i class='social fa fa-twitter'></i>
+      <span class="label">Twitter</span>
+    </a>
+  </li>
+
+  
+
+  <li class="navigation__item">
+    <a href="/atom.xml" title="RSS" target="_blank">
+      <i class='social fa fa-rss'></i>
+      <span class="label">RSS</span>
+    </a>
+  </li>
+
+
+
+  </ul>
+</nav>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay cover-blue"></div>
+  </div> 
+</header>
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single">
+
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2015-10-14T06:58:31.000Z" class="post-list__meta--date date">2015-10-14</time> &#8226; <span class="post-meta__tags tags">于  </span>
+      <span class="page-pv">
+       Read <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>
+      </span> 
+   
+    </div>
+    <h1 class="post-title">漫谈iOS中的MVC</h1>
+  </header>
+
+  <section class="post">
+    <p>###前言</p>
+<p>做过一段iOS开发的开发者们对MVC肯定不陌生。这是<a href="https://developer.apple.com/library/ios/documentation/General/Conceptual/DevPedia-CocoaCore/MVC.html" target="_blank" rel="noopener">Apple推荐</a>的开发iOS应用程序的标准设计模式。</p>
+<p>我们从一张图开始，谈谈MVC。</p>
+<p>###MVC<br><img src="/content/images/2015/10/MVC.png" alt=""><br>传统的MVC如上图。将不同的对象划分到三个阵营<code>Model</code>、<code>View</code>、<code>Controller</code>。View负责绘图、接收用户的交互，并将交互以<em>Blind</em>的方式传达到Controller。Controller则负责处理相对应的业务逻辑，并告诉Model更新数据。Model则负责更新数据，并将数据以Blind的方式交给View或者Controller。在传统的MVC中C同时知晓V和M两者的状态和所有信息。<strong>View也知晓Model的信息</strong>，但Model是不知道其他两者的任何信息的。</p>
+<p>这种设计在JavaWeb的开发中被广泛使用。因为View层的页面布局，响应，由js和css完成，jsp此时可以直接拿Model解析数据。。在这种情况下，View和Controller的任务最重，Model更像是一个有数据查询功能的Entity。</p>
+<p>###iOS中的MVC</p>
+<p><img src="/content/images/2015/10/StandfordMVC.png" alt=""><br>iOS中的MVC和传统的MVC大同小异，小异的地方是对传统MVC的改进。</p>
+<p>首先是<strong>View</strong>层。View依然负责着接收用户交互和图像的绘制，但是，<strong>View不再直接处理数据了</strong>。而是将数据相关的实现逻辑用协议的形式，交给其他对象（一般是ViewContorller），由这个对象告诉View，View应该如何展现。苹果的TableView、PickerView等View的设计很好地印证了这一点。此时View变成了纯粹的”View”，一个”Data Independent”的View，复用性无疑是非常高的。</p>
+<p><strong>Model</strong>在iOS中也扮演着与Web开发中相同的角色。常常被开发者们误当成Entity使用。它负责持有数据，并且有少量的逻辑。在这样的设计下，Model其实是非常瘦的。</p>
+<p>在iOS中，Model和View是相互分离的，既不相互拥有，也相互不交互，即时是以Blind的模式。当Model有所变化时，常常通过KVO或者Notification的方式通知Controller，而不是View。因此，即时有的时候View中会有Notification的监听者，但也绝对不会是Model发出的Notification的监听者。更何况是，我们在实际开发中，Controller有各种方式来告诉View，你应该显示什么，所以View与Model是可以绝对隔离开的。</p>
+<p>最后是<strong>Controller</strong>。Controller在iOS中被命名为ViewController。从命名就可以看出Controller和View的关系非常密切，它直接拥有View，负责着View的创建，显示，隐藏等等。View的代理，数据源，用户交互的响应，也都由Controller负责。</p>
+<p><code>Controller</code><strong>拥有</strong><code>View和Model</code>。知晓他们二者的一切情况，负责将Model的数据解释给View，负责根据View中的用户交互让Model处理数据并让View做出相对应的反馈。并且Controller也负责接收Model发出的Notification，在Model状态改变时，及时让View做出相对应的变化。</p>
+<p>Controller在iOS开发中扮演了重量级的角色。的在实际的开发过程中，有80%的时间是在ViewController上面做文章。这也直接导致了一些问题…</p>
+<p>###臃肿的Controller</p>
+<p>在以上的MVC中，Model其实大多和业务相关，所以Apple的API设计并没有对这一层有所体现。Apple将诸如<code>didReceiveMemoryWarning</code>的方法都放在了ViewController里面，这让我们有种ViewController什么都可以干的直觉。<br>生命周期管理、依照View的需求将数据格式化，View的初始化及组织,各种Delegate，界面的跳转等等都在Controller中完成。</p>
+<p>正是由于Controller扮演了太过重要的角色。导致Controller在编程过程中变得越来越臃肿。其中的代码动辄上千行。有些其他模块也需要的可以复用的代码只能通过复制黏贴的方式。一旦业务和需求有所修改，就得在混合了各种逻辑的Controller的一堆代码中上下翻找。这对像我一样喜欢偷懒的开发者来说就是噩梦。</p>
+<p>###网络请求放哪儿<br>在以上的MVC分类中，并没有涉及到网络请求。而网络请求几乎是每一个App必须的。那么，网络请求应该归类到哪边？稍微思考一下，觉得放在Model里会不错。但是网络请求是异步的，如果网络请求还没返回，Model的生命周期却结束了，那可不是一件好事。当然，肯定不会把请求放在View里…所以，最后网络请求还是放到了Controller中。在与我共事的许多有经验的iOS开发者都是这么选择的。但是，这又加剧了Controller的臃肿。</p>
+<p>###为Contrller瘦身<br>So，怎么样优化这一结构呢。首先想到的是，把网络请求先移出来。如果解决了Model的生命周期和网络请求的生命周期问题，网络请求相关的代码就可以放在Model里。前面把网络请求放在ViewController里，那么只要保持Model和ViewController的生命周期一致，就可以将网络请求移动到Model里了。</p>
+<p><strong>Bingo，让Model成为ViewController的一个Strong属性。</strong></p>
+<pre><code>@interface ShopListController ()
+@property (strong, nonatomic) ShopListModel *model;
+@end
+</code></pre><p>这个时候Model里可以尽情访问网络请求了。因为Model和ViewController生命周期一直，也不必再担心网络请求着陆点丢失的问题。</p>
+<pre><code>@interface ShopListModel : BaseModel
+- (void)fetchShopListData;
+@end
+</code></pre><p>那么数据的存储和格式化也自然而然地在Model中处理了。同时我们还可以把数据持久化，一些类似于验证用户输入等等与UI不相关的数据处理和计算，都可以放在Model里。</p>
+<pre><code>@interface ShopListModel : BaseModel
+@property (strong, nonatomic) NSMutableArray *dataSource;
+- (void)fetchShopListData;
+@end
+</code></pre><p>最后我们在model中网络请求完成的回调里，处理好相关数据整理成包含UI直接可用对象的DataSource，并发送相对应的Notification来通知ViewController对View进行更新。</p>
+<p>Model实现：</p>
+<pre><code>@implementation ShopListModel
+- (void)fetchShopListData
+{
+    ...
+    ...
+    [[NSNotificationCenter defaultCenter] postNotificationName:FETCH_SHOP_LIST_DATA_NOTIFICATION object:nil];
+    ...
+    ...
+}
+</code></pre><p>ViewController实现：</p>
+<pre><code>- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didReceiveModelNotification:)
+                                                 name:FETCH_SHOP_LIST_DATA_NOTIFICATION
+                                               object:nil];
+
+}
+
+- (void)didReceiveModelNotification:(NSNotification *)notification
+{
+    if ([notification.name isEqualToString:FETCH_SHOP_LIST_DATA_NOTIFICATION])
+    {
+        [self.tableView reloadData];
+        return;
+    }
+}
+</code></pre><p>此时我们得到了一个功能丰富的且易于复用的Model。如果别的界面也需要相同的数据，我们只需要将这个Model给另一个Controller使用，并注册相对应的Notification监听即可。</p>
+<p>###MVC进化版——MVCE<br>其实我们做的这一系列事情，无非是不断地将代码分离。力求做到一种”原子性”。最终最求的目标就是更高的可维护性、可拓展性和复用性。以这种思维反观上面的MVC，Controller已经变得相对较瘦，但随之而来的是Model又胖了起来。</p>
+<p>于是就有人提出了<strong>MVCS</strong>的模式。<strong>S</strong>即<strong>Store</strong>。将网络请求与数据持久化相关的操作，分到Store模块中去。</p>
+<p>借鉴微软的<strong>MVVM</strong>，应用到iOS中的<strong>ReactiveCocoa</strong>，考虑到View与Controller的紧密联系，将View和ViewController直接划分为View。开辟出一个ViewModel来解决上述问题。在MVVM里，你可以把输入验证，网络请求，数据持久化都放在ViewModel里，Model仍然是Model，不与View直接交互。</p>
+<p>其实以上的设计模式，都脱不开MVC的影子，只是在实践中不断借鉴，不断优化。包括我想到的这些解决方案。在了解过MVVM设计模式后，这套解决方案还真颇有点MVVM的味道。在我的解决方案里，Model差不多等于MVVM中的ViewModel，而MVVM中的Model在这边等同于Entity。嗯。。于是我打算给它取个名字叫——MVCE。哈哈。。开个玩笑。（为了下文方便，暂且称为MVCE）。</p>
+<p>###留下的思考<br>设计模式这么多，该如何选择？</p>
+<p>在实战中，不一定非要抓住某个模式不放，更重要的是理解模式背后的意义，并且灵活运用。比如说在MVCE中，ViewController中还剩下什么呢？生命周期，Delegate，界面跳转，Notification响应。有这么一种情况：</p>
+<pre><code>有时候有几个TableView高度相似，想要复用之前ViewController中的代理。
+一般来说，我们复制黏贴相关代理方法到另一个ViewController中，并稍微修改一下不同的地方。
+</code></pre><p>以上情况其实可以抽象出一个Adapter，专门放TableView的代理，这样在ViewController中，只需要Import这个Adapter，稍微修改Adapter的一些属性，而不需要一遍遍地复制黏贴代理代码。</p>
+<p>当然，这样做的后果，牺牲了少部分原有代理的灵活性——我们可以在ViewController中任意定义TableView，切我们的代码中又多出了一个Adapter类。但好处是，封装性更好了，复用性更好了。</p>
+<p>##最后<br>返璞归真，所有的设计模式，都是为了更好地解决问题存在的。每个系统有每个系统固有的复杂度，当设计模式将其细分到一定程度，所做的事情只不过是将复杂度的位置挪了挪。所以，我们要了解设计模式，更要在合理的地方，合理地利用设计模式。诸如App中的关于页面，信息量少，逻辑少。所有逻辑直接放在ViewController里，也不会超过100行代码，那就放吧。</p>
+
+  </section>
+
+</article>
+
+<section class="read-more">
+           
+    
+               
+            <div class="read-more-item">
+                <span class="read-more-item-dim">Newer Post</span>
+                <h2 class="post-list__post-title post-title"><a href="/pscarouselview/" title="谈谈组件封装的思路和实现--PSCarouselView">谈谈组件封装的思路和实现--PSCarouselView</a></h2>
+                <p class="excerpt">
+                
+                前两天面试了一个应聘者，他的演示项目里有广告轮播功能。恰好之前我封装过一个实现了此功能的控件，于是就顺着他广告轮播的实现一直往下聊，从需求的抽象一直聊到各种实现的细节和需要考虑的问题等等。组件的封装是开发中比较有趣的一件事。今天我们就拿轮播控件举例，聊聊组件的封装。
+授人予渔先要授人予鱼。先给出鱼(
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2015-11-12T01:08:29.000Z" class="post-list__meta--date date">2015-11-12</time> &#8226; <span class="post-list__meta--tags tags">于 </span><a class="btn-border-small" href="/pscarouselview/">继续阅读</a></div>
+                           
+            </div>
+        
+        
+               
+            <div class="read-more-item">
+                <span class="read-more-item-dim">Older Post</span>
+                <h2 class="post-list__post-title post-title"><a href="/basevc/" title="iOS项目架构 - 统一行为">iOS项目架构 - 统一行为</a></h2>
+                <p class="excerpt">
+                
+                “我们虽然在构造软件，但软件也会重新塑造我们”。在写iOS项目架构-模块化的时候，我仍然觉得我所构建的统一行为方式还算不错，可以写出来与大家探讨探讨。昨日将应用发布的闲暇之余阅读了objc中国的这篇文章，令我明白尚有更优的解决方案。本文从实际的例子出发，发表一下我的拙见，用以和上文做对照，权当抛砖引
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2015-10-14T06:55:43.000Z" class="post-list__meta--date date">2015-10-14</time> &#8226; <span class="post-list__meta--tags tags">于 </span><a class="btn-border-small" href="/basevc/">继续阅读</a></div>
+                       
+            </div>
+        
+     
+   
+   
+  
+</section>
+
+  
+
+            <footer class="footer">
+    <span class="footer__copyright">
+        &copy; 2018 PPPan - 本站点采用 <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+       
+    </span>
+    <span class="footer__copyright">
+            基于 <a href="http://hexo.io">Hexo</a> 搭建，使用 <a href="https://github.com/monniya/hexo-theme-new-vno ">new-vno</a> 主题，由<a href="https://monniya.com ">@Monniya</a> 修改自 <a href="https://github.com/lenbo-ma/hexo-theme-vno" target="_blank">Vno</a>, 原创出自<a href="http://github.com/onevcat/vno" target="_blank">onevcat</a>
+    </span>
+    <span class="footer__copyright">
+            <a href="http://www.miitbeian.gov.cn/">浙ICP备15035859号</a>
+    </span>
+    
+    
+</footer>
+
+
+        </div>
+    </div>
+
+     
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-86796774-1', 'auto');
+	ga('send', 'pageview');
+</script>
+
+    
+
+
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    
+</body>
+</html>
