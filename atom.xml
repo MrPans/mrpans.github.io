@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://shengpan.net/"/>
-  <updated>2017-07-10T20:57:31.000Z</updated>
+  <updated>2019-08-22T07:37:05.217Z</updated>
   <id>https://shengpan.net/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>iOS 本地化省力小技巧</title>
+    <link href="https://shengpan.net/localizad/"/>
+    <id>https://shengpan.net/localizad/</id>
+    <published>2019-08-22T03:39:33.000Z</published>
+    <updated>2019-08-22T07:37:05.217Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="/content/images/2019/localizaed-header.png" alt=""></p><p>我们造不出巴别塔，却可以通过本地化让不同语言环境的人舒坦地用上我们的 App。</p><p>但提起本地化，开发者们最直观的感受一定是一堆细碎繁琐的本地化文件字符串文件，以及永远也想不起来的<code>Key</code>。</p><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Chinese Simplified</span></span><br><span class="line"><span class="string">"zelda.btn.confirm"</span> = <span class="string">"确定"</span>;</span><br><span class="line"><span class="string">"zelda.btn.cancel"</span> = <span class="string">"取消"</span>;</span><br><span class="line"><span class="string">"zelda.dish.backed.cocoanut"</span> = <span class="string">"烤椰子"</span>;</span><br><span class="line"><span class="string">"zelda.dish.backed.mushroom.skewer"</span> = <span class="string">"精力烤鱼蘑菇串"</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// English</span></span><br><span class="line"><span class="string">"zelda.btn.confirm"</span> = <span class="string">"Confirm"</span>;</span><br><span class="line"><span class="string">"zelda.btn.cancel"</span> = <span class="string">"Cancel"</span>;</span><br><span class="line"><span class="string">"zelda.dish.backed.cocoanut"</span> = <span class="string">"Baked Palm Fruit"</span>;</span><br><span class="line"><span class="string">"zelda.dish.backed.mushroom.skewer"</span> = <span class="string">"Energizing Fish and Mushroom Skewer"</span></span><br></pre></td></tr></table></figure><p>在开发的时候，代码里充满了类似不直观的代码。降低了我们的可读性。</p><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">titleLabel.text = <span class="type">NSLocalizedString</span>(@<span class="string">"zelda.dish.backed.cocoanut"</span>, <span class="literal">nil</span>);</span><br></pre></td></tr></table></figure><p>另外，如果开发者一不小心漏掉了某个翻译，界面上就会直接显示你定义的 key。</p><p><img src="/content/images/2019/localizaed-not-translate.jpg" alt=""></p><p>那么我们能不能…</p><ul><li>减少一些 Strings 文件维护的工作量</li><li>代码可读性更高一些，不用全局搜索就可以知道某个 Label 将会显示什么内容</li><li>忘记翻译了不至于对用户显示“乱码”</li></ul><p>答案是肯定的。<br>使用本地语言作为 Key 就可以解决这三个问题。例如「确定」按钮，我们写代码的时候可以这么写：</p><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">titleLabel.text = <span class="type">NSLocalizedString</span>(<span class="string">"确定"</span>, comment: <span class="string">""</span>);</span><br></pre></td></tr></table></figure><p>同时，在目标语言（例如英语）资源文件中添加：</p><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"确定"</span> = <span class="string">"Comfirm"</span>;</span><br></pre></td></tr></table></figure><p>这样便一次性解决了上述的所有问题。</p><p>唯一的一点小遗憾是 NSLocalizedString 宏定义的第二个参数在 99% 的情况下都是空字符，在代码上是一个噪音。我们可以通过为 String 添加一个 extension 来解决它。</p><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">extension</span> <span class="title">String</span> </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> ps_localized: <span class="type">String</span> &#123;</span><br><span class="line">        <span class="keyword">get</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="type">NSLocalizedString</span>(<span class="keyword">self</span>, comment: <span class="string">""</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p><img src="/content/images/2019/localizaed-header.png" alt=""></p><p>愉快地使用新的本地化方式 Coding 吧！</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;&lt;img src=&quot;/content/images/2019/localizaed-header.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;我们造不出巴别塔，却可以通过本地化让不同语言环境的人舒坦地用上我们的 App。&lt;/p&gt;
+&lt;p&gt;但提起本地化，开发者们最直观的感受一定是一
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>全站 HTTPS 边做边记</title>
@@ -432,29 +455,6 @@
 &lt;/ol&gt;
 &lt;p&gt;本文主要就以上模块化，以网络请求模块的抽取为例稍作讨论。&lt;/p&gt;
 &lt;p&gt;###模块化&lt;br&gt;模块化的目的是实现
-      
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>iOS的多Target应用</title>
-    <link href="https://shengpan.net/iosmultitarget/"/>
-    <id>https://shengpan.net/iosmultitarget/</id>
-    <published>2015-09-16T00:29:49.000Z</published>
-    <updated>2015-10-14T06:47:08.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>最近刚完成了一个多Target的项目，做了许多思考与选择，现写下心得总结，权当抛砖引玉。</p><p>####项目背景<br>本项目是一个适用于正在学车人群的预约学车平台。分为学生端和教练端。学生端主功能为预约学车，教练端主功能为排课。</p><h3 id="什么时候选用多Target"><a href="#什么时候选用多Target" class="headerlink" title="什么时候选用多Target"></a>什么时候选用多Target</h3><p>多target的选用，意在实现最大化重用代码。其经典情景是有多个类似的App，界面设计与业务逻辑有许多相似之处，仅仅有少数不同的业务逻辑，只需要在打包时将不同的配置文件打包好，就可以形成一个个不同的客户端。</p><p>我负责两个客户端有以下共同点：</p><ol><li>近乎相同的登陆注册界面与逻辑</li><li>近乎相同的主页布局与逻辑</li><li>近乎相同的个人中心主界面</li><li>近乎相同的课表界面</li><li>近乎相同的选课/排课界面</li></ol><p>不同点有：</p><ol><li>不同的应用主题色</li><li>排课与选课的逻辑不同</li><li>一些图标资源和其他细节的不同</li></ol><p>本项目选择多Target方案是十分合适的。</p><p>###为多Target打基础</p><ol><li>编写共用的层（<code>WebService</code>，<code>Common</code>等）</li><li>抽取基类(<code>BaseViewController</code>,<code>BaseModel</code>,<code>BaseView</code>)</li><li>编写子模块，利用MVC模式保持单个子模块的独立性，并预留相对应的差异化枚举和接口。</li></ol><p>项目的结构是这样的</p><p><img src="https://coding.net/u/Shengpan/p/Ghost-On-Coding-Paas/git/raw/master/images/filestruct.png" alt="文件结构"> </p><p>网络层不使用单例，而是采用了<code>Category</code>的模式。<strong>只将最基本的<code>RESTful</code>请求封装好放在<code>WebService</code>中。</strong>而具体的实现采用<code>Category</code>拓展方法。这样的好处是<strong>各自的WebService有各自的生命周期，每个Webservice可以只负责自己模块的网络层服务。</strong>比如说在这个项目中我分了Account，Teacher，Student等Category，分别负责登陆注册，教练端和学生端的网络请求服务。</p><p>View中是通用的View，比如全项目通用的定制<code>AlertView</code>，一模一样的Login界面。</p><p>Category放通用的拓展类，比如说<code>NSCalendar</code>在iOS8.0之后新增了很多日期计算和比较的Api，但是基于目前的项目大多数都需要最低支持iOS7.0，因此可以为<code>NSCalaner</code>或者<code>NSDate</code>写一些拓展方法，可以作为不同项目公用的工具。</p><p>其他例如UserInfo还有Validation则是项目业务需求抽取，在此就不赘述了。</p><p>###实战<br>做好以上准备后，就可以进行业务开发了。多Target项目的开发和普通项目的开发并没有什么不同，只是在新建文件时，注意选择Target即可。<br><img src="https://coding.net/u/Shengpan/p/Ghost-On-Coding-Paas/git/raw/master/images/%E5%A4%9ATarget%E5%BA%94%E7%94%A8%E6%9E%84%E6%9E%B6%E5%B0%8F%E7%BB%93/choose.png" alt="选择Target"></p><p>另外，如果想调整文件的Target归属，只需要选择文件，在右边的工具窗口里的File Inspector选项下面，就可以找到与之前新建文件夹时相同的勾选项。勾选你想要的Target吧！</p><p><img src="https://coding.net/u/Shengpan/p/Ghost-On-Coding-Paas/git/raw/master/images/%E5%A4%9ATarget%E5%BA%94%E7%94%A8%E6%9E%84%E6%9E%B6%E5%B0%8F%E7%BB%93/File_inspector.png" alt="勾选Target"> </p><p>最后，在Debug和打包的时候，注意选择Target即可。</p><p><img src="https://coding.net/u/Shengpan/p/Ghost-On-Coding-Paas/git/raw/master/images/%E5%A4%9ATarget%E5%BA%94%E7%94%A8%E6%9E%84%E6%9E%B6%E5%B0%8F%E7%BB%93/change.png" alt="选择target"> </p><p>###一些应该避免的坑</p><ul><li>除了公用的模块，其他各自不同的类都加上前缀</li></ul><p>由于OC并没有像Java命名空间一样的东西，因此在引入头文件时，如果文件名相同，编译器有时候会错误地引入头文件，这一就会导致找不到对应的方法，进而导致编译不通过。解决这个问题最直接了当的方法就是在新建每一个类的时候加上前缀。</p><ul><li>统一单独的常量或者宏定义文件</li></ul><p>.h文件没有Target选项。因此，如果你有Define或者Constant一类的.h文件，要么为各自target用加前缀的方法创建不同的.h文件，要么将.h文件统一在Common中。不然会触发上面那个坑。</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;最近刚完成了一个多Target的项目，做了许多思考与选择，现写下心得总结，权当抛砖引玉。&lt;/p&gt;
-&lt;p&gt;####项目背景&lt;br&gt;本项目是一个适用于正在学车人群的预约学车平台。分为学生端和教练端。学生端主功能为预约学车，教练端主功能为排课。&lt;/p&gt;
-&lt;h3 id=&quot;什么时候选
       
     
     </summary>
