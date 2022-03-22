@@ -4,7 +4,7 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     
-    <title>iOS项目架构 - 统一行为 | PPPan&#39;s 平凡之路</title>
+    <title>《艾尔登法环地图》App 技术服务支持页面 | PPPan&#39;s 平凡之路</title>
     <meta name="renderer" content="webkit">
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
@@ -15,11 +15,11 @@
     <meta name="description" content="PPPan&#39;s 平凡之路 一个技术博客覆盖范围包括 iOS Objecticve-C Swift Xcode 等">
 
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="iOS项目架构 - 统一行为 | PPPan&#39;s 平凡之路">
+    <meta name="twitter:title" content="《艾尔登法环地图》App 技术服务支持页面 | PPPan&#39;s 平凡之路">
     <meta name="twitter:description" content="PPPan&#39;s 平凡之路 一个技术博客覆盖范围包括 iOS Objecticve-C Swift Xcode 等">
 
     <meta property="og:type" content="article">
-    <meta property="og:title" content="iOS项目架构 - 统一行为 | PPPan&#39;s 平凡之路">
+    <meta property="og:title" content="《艾尔登法环地图》App 技术服务支持页面 | PPPan&#39;s 平凡之路">
     <meta property="og:description" content="PPPan&#39;s 平凡之路 一个技术博客覆盖范围包括 iOS Objecticve-C Swift Xcode 等">
 
     
@@ -37,7 +37,7 @@
     <link rel="alternate" type="application/rss+xml" title="PPPan&#39;s 平凡之路" href="/atom.xml">
     
 
-    <link rel="canonical" href="https://shengpan.net/basevc/"/>
+    <link rel="canonical" href="https://shengpan.net/eldenring-support/"/>
 
                  
 </head>
@@ -149,61 +149,19 @@
 
   <header class="post-header">
     <div class="post-meta">
-      <time datetime="2015-10-14T06:55:43.000Z" class="post-list__meta--date date">2015-10-14</time> &#8226; <span class="post-meta__tags tags">于  </span>
+      <time datetime="2022-03-22T16:40:16.000Z" class="post-list__meta--date date">2022-03-23</time> &#8226; <span class="post-meta__tags tags">于  </span>
       <span class="page-pv">
        Read <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>
       </span> 
    
     </div>
-    <h1 class="post-title">iOS项目架构 - 统一行为</h1>
+    <h1 class="post-title">《艾尔登法环地图》App 技术服务支持页面</h1>
   </header>
 
   <section class="post">
-    <p>“我们虽然在构造软件，但软件也会重新塑造我们”。在写<a href="http://shengpan.coding.io/architecture-module/" target="_blank" rel="noopener">iOS项目架构-模块化</a>的时候，我仍然觉得我所构建的统一行为方式还算不错，可以写出来与大家探讨探讨。昨日将应用发布的闲暇之余阅读了<a href="http://objccn.io/issue-13-4/" target="_blank" rel="noopener">objc中国的这篇文章</a>，令我明白尚有更优的解决方案。本文从实际的例子出发，发表一下我的拙见，用以和上文做对照，权当抛砖引玉。</p>
-<p>###BaseViewController</p>
-<p>####例子1<br>我们在构建一个App的时候，会有许多相同的行为。例如，任何需要网络请求的界面，总会需要一个indicator来告诉用户，“噢，我正在操作，请等我一下”。或者某个时候我们需要给用户一点小提示，来对他们的操作进行反馈等等。每一个ViewController都会有这样的行为。这是我们很直接地想到<strong>我们需要一个父类</strong>。</p>
-<p>于是我们新建一个基类，<code>BaseViewController</code>继承于<code>UIViewController</code></p>
-<pre><code>@interface BaseViewController : UIViewController
-/**
- *  a little pop window used to replace laertView
- *
- *  @param tips tips will show to user
- */
-- (void)showTips:(NSString *)tips;
-
-/**
- *  When some operation need user waiting,use this method to show a HDU.
- *
- *  @param title will show to user
- */
-- (void)showIndicatorWithTitle:(NSString *)title;
-
-- (void)hideIndicator;
-@end
-</code></pre><p>好了，现在我们所有的业务相关ViewController都继承自BaseViewController，并且在调用网络请求前轻松地写一句<code>[self showIndicatorWithTitle:@&quot;加载中...&quot;]</code>，并且在网络请求完成后的回调里写下<code>[self hideIndicator]</code>就可以轻松地完成指示器的显示隐藏了。感谢我们的继承！</p>
-<p>####例子2<br>再举个例子。在我的项目里访问服务器的时候需要Token，Token在某些情况下有可能过期。Token过期的时候会返回一个Token过期的状态码，此时需要用户重新登录。这个情况我们可以总结成：</p>
-<ul>
-<li>绝大多数ViewController都会发送网络请求</li>
-<li>每一个网络请求都会返回Token过期</li>
-<li>每个ViewController都需要处理Token过期的情况</li>
-</ul>
-<p>因此我们可以将这一行为抽取出来，写在BaseViewController中。这样只需要在各个业务模块的的Model层收到Token过期消息的时候，用Notification转发给BaseViewController就可以了。其他诸如网络请求失败等情况都是如此。</p>
-<p>每个项目有不同的统一行为，我们需要根据不同的行为抽取不同的基类。</p>
-<p>###使用协议<br>但是有一种情况。例如<code>LoginViewController</code>需要和<code>BaseViewController</code>一样的显示/隐藏Indicator的接口，但却没有其他相同的行为。这时继承就显得不太合适了。</p>
-<p>想象一下<code>BaseViewController</code>因为Token过期Present了<code>LoginViewController</code>,而<code>LoginViewController</code>因为继承了<code>BaseViewController</code>又不停地Present另一个<code>LoginViewController</code>…这时候如果使用继承的话，就不得不写一些脏代码来避免这样的情况。</p>
-<p>正如那篇文章所说，此时我们可以用协议<code>@protocol</code>来替代继承。</p>
-<pre><code>@protocol PSIndicator &lt;NSObject&gt;
-
-- (void)showTips:(NSString *)tips;
-- (void)showIndicatorWithTitle:(NSString *)title;
-- (void)hideIndicator;
-
-@end
-</code></pre><p>然后在<code>LoginViewController</code>中：</p>
-<pre><code>@interface LoginViewController : UIViewController&lt;PSIndicator&gt;
-
-@end
-</code></pre><p>###最后<br>如果你在读这篇文章的时候想到，网络请求相关的内容为什么不直接封装在网络操作相关的模块，由它来负责指示器的显示和隐藏。这样还能省去手动调用的麻烦。关于这一点，在<a href="http://shengpan.coding.io/architecture-module/" target="_blank" rel="noopener">这篇文章</a>里已经做了讨论。</p>
+    <h1 id="《艾尔登法环地图》App-技术服务支持"><a href="#《艾尔登法环地图》App-技术服务支持" class="headerlink" title="《艾尔登法环地图》App 技术服务支持"></a>《艾尔登法环地图》App 技术服务支持</h1><p><img src="https://cdn.nlark.com/yuque/0/2022/png/125203/1647967293364-2180a392-1a85-4529-b9ab-caa361cf07e0.png?x-oss-process=image%2Fresize%2Cw_1458%2Climit_0" alt=""></p>
+<p>这里是《艾尔登法环地图》App 技术服务支持页面<br>如果您在使用艾尔登法环地图 App 的过程中遇到任何问题，请联系：</p>
+<p>邮箱：<a href="mailto:shengpann@163.com" target="_blank" rel="noopener">shengpann@163.com</a><br>微信：yuyuan_ps<br>QQ群：720236011</p>
 
   </section>
 
@@ -212,35 +170,21 @@
 <section class="read-more">
            
     
-               
-            <div class="read-more-item">
-                <span class="read-more-item-dim">Newer Post</span>
-                <h2 class="post-list__post-title post-title"><a href="/man-tan-ioszhong-de-mvc/" title="漫谈iOS中的MVC">漫谈iOS中的MVC</a></h2>
-                <p class="excerpt">
-                
-                ###前言
-做过一段iOS开发的开发者们对MVC肯定不陌生。这是Apple推荐的开发iOS应用程序的标准设计模式。
-我们从一张图开始，谈谈MVC。
-###MVC传统的MVC如上图。将不同的对象划分到三个阵营Model、View、Controller。View负责绘图、接收用户的交互，并将交互以Bli
-                &hellip;
-                </p>
-                <div class="post-list__meta"><time datetime="2015-10-14T06:58:31.000Z" class="post-list__meta--date date">2015-10-14</time> &#8226; <span class="post-list__meta--tags tags">于 </span><a class="btn-border-small" href="/man-tan-ioszhong-de-mvc/">继续阅读</a></div>
-                           
-            </div>
         
         
                
             <div class="read-more-item">
                 <span class="read-more-item-dim">Older Post</span>
-                <h2 class="post-list__post-title post-title"><a href="/standard/" title="iOS项目架构 - 规范">iOS项目架构 - 规范</a></h2>
+                <h2 class="post-list__post-title post-title"><a href="/localizad/" title="iOS 本地化省力小技巧">iOS 本地化省力小技巧</a></h2>
                 <p class="excerpt">
                 
-                记得刚工作的时候，我的Mentor带我参加某银行业务系统研发成果交流分享会。会议让我印象很深的一点，是关于规范。发言人在说规范的时候，举了他见过的这么一个例子：
-&amp;lt;div class=&amp;quot;div1&amp;quot; ...&amp;gt;
-  &amp;lt;div class=&amp;quot;div2&amp;quo
+                
+我们造不出巴别塔，却可以通过本地化让不同语言环境的人舒坦地用上我们的 App。
+但提起本地化，开发者们最直观的感受一定是一堆细碎繁琐的本地化文件字符串文件，以及永远也想不起来的Key。
+1234567891011// Chinese Simplified&#34;zelda.btn.confirm&#34; = 
                 &hellip;
                 </p>
-                <div class="post-list__meta"><time datetime="2015-10-14T06:51:46.000Z" class="post-list__meta--date date">2015-10-14</time> &#8226; <span class="post-list__meta--tags tags">于 </span><a class="btn-border-small" href="/standard/">继续阅读</a></div>
+                <div class="post-list__meta"><time datetime="2019-08-22T03:39:33.000Z" class="post-list__meta--date date">2019-08-22</time> &#8226; <span class="post-list__meta--tags tags">于 </span><a class="btn-border-small" href="/localizad/">继续阅读</a></div>
                        
             </div>
         
