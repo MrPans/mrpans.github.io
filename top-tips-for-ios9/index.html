@@ -71,7 +71,7 @@
             <ul class="navigation">
               <li class="navigation__item"><a href="/#blog" title="Visit the blog" class="blog-button">Blog</a></li>
             
-              <li class="navigation__item"><a href="https://github.com/DeveloperPans">GitHub</a></li>
+              <li class="navigation__item"><a href="https://github.com/mrpans">GitHub</a></li>
             
             </ul>
           </nav>
@@ -93,7 +93,7 @@
   <!-- Github -->
   
   <li class="navigation__item">
-    <a href="https://github.com/DeveloperPans" title="GitHub" target="_blank">
+    <a href="https://github.com/mrpans" title="GitHub" target="_blank">
       <i class='social fa fa-github'></i>
       <span class="label">Github</span>
     </a>
@@ -112,7 +112,7 @@
 <!-- Twitter -->
 
   <li class="navigation__item">
-    <a href="https://twitter.com/developerpans" title="Twitter" target="_blank">
+    <a href="https://twitter.com/coldcola_x" title="Twitter" target="_blank">
       <i class='social fa fa-twitter'></i>
       <span class="label">Twitter</span>
     </a>
@@ -149,7 +149,7 @@
 
   <header class="post-header">
     <div class="post-meta">
-      <time datetime="2015-12-15T00:26:57.000Z" class="post-list__meta--date date">2015-12-15</time> &#8226; <span class="post-meta__tags tags">于  </span>
+      <time datetime="2015-12-15T13:26:57.000Z" class="post-list__meta--date date">2015-12-15</time> &#8226; <span class="post-meta__tags tags">于  </span>
       <span class="page-pv">
        Read <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>
       </span> 
@@ -162,7 +162,7 @@
     <p>###前言<br>“小黄鸭”法不仅适用于debug,也适用于学习新知识。表达是最好的吸收。<a href="https://realm.io/news/tips-for-ios-9-development/" target="_blank" rel="noopener">本文原文</a>发表在realm.io上。我翻译并整理成此文。希望可以为国内的iOS朋友提供一些资料。</p>
 <p>###LayoutGuide</p>
 <p>在iOS9.0 和 OS X10.11中，分别有两个新的类：<code>UILayoutGuide</code> 和 <code>NSLayoutGuide</code>。他们可以作为一种类似View的对象，参与到AutoLayout的布局约束中。作为一种新的布局解决方案,这两个类的出现使你无需再创建、显示无关的View了。举个栗子，原本需要一个空的<code>UIView</code>占位的地方，现在只需要用<code>UILayoutGuide</code>去替代它就可以了。</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建LayoutGuide</span></span><br><span class="line"><span class="keyword">let</span> layoutGuideA = <span class="type">UILayoutGuide</span>()</span><br><span class="line"><span class="keyword">let</span> layoutGuideB = <span class="type">UILayoutGuide</span>()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 添加到View上</span></span><br><span class="line"><span class="keyword">let</span> view: <span class="type">UIView</span> = ...</span><br><span class="line">view.addLayoutGuide(layoutGuideA)</span><br><span class="line">view.addLayoutGuide(layoutGuideB)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 用UILayoutGuide来添加布局约束</span></span><br><span class="line">layoutGuideA.heightAnchor.constraintEqualToAnchor(layoutGuideB.heightAnchor).active = <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置Identifier，为了方便DEBUG</span></span><br><span class="line">layoutGuideA.identifier = <span class="string">"layoutGuideA"</span></span><br><span class="line">layoutGuideB.identifier = <span class="string">"layoutGuideB"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// ...然后看看他们的Frame吧</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"layoutGuideA.layoutFrame -&gt; \(layoutGuideA.layoutFrame)"</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建LayoutGuide</span></span><br><span class="line"><span class="keyword">let</span> layoutGuideA = <span class="type">UILayoutGuide</span>()</span><br><span class="line"><span class="keyword">let</span> layoutGuideB = <span class="type">UILayoutGuide</span>()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 添加到View上</span></span><br><span class="line"><span class="keyword">let</span> view: <span class="type">UIView</span> = ...</span><br><span class="line">view.addLayoutGuide(layoutGuideA)</span><br><span class="line">view.addLayoutGuide(layoutGuideB)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 用UILayoutGuide来添加布局约束</span></span><br><span class="line">layoutGuideA.heightAnchor.constraintEqualToAnchor(layoutGuideB.heightAnchor).active = <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置Identifier，为了方便DEBUG</span></span><br><span class="line">layoutGuideA.identifier = <span class="string">"layoutGuideA"</span></span><br><span class="line">layoutGuideB.identifier = <span class="string">"layoutGuideB"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// ...然后看看他们的Frame吧</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"layoutGuideA.layoutFrame -&gt; <span class="subst">\(layoutGuideA.layoutFrame)</span>"</span>)</span><br></pre></td></tr></table></figure>
 <p>###NSLayoutAnchor<br>iOS9中另一个新增的API是<code>NSLayoutAnchor</code>。它的出现不仅仅是让使用代码添加约束变得简洁明了。通过该类强大的静态检查能力，还提供了额外的约束正确定保证。举个栗子，考虑以下使用<code>NSLayoutConstraint</code>API创建的约束会出现什么问题：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">NSLayoutConstraint *constraint = </span><br><span class="line">    [NSLayoutConstraint constraintWithItem:view1 </span><br><span class="line">                                 attribute:NSLayoutAttributeLeading </span><br><span class="line">                                 relatedBy:NSLayoutRelationEqual </span><br><span class="line">                                    toItem:view2 </span><br><span class="line">                                 attribute:NSLayoutAttributeTop </span><br><span class="line">                                multiplier:1.0 </span><br><span class="line">                                  constant:0.0];</span><br></pre></td></tr></table></figure>
 <p>这个约束是无效的。因为你将一个X轴上的属性(leading)同一个Y轴属性(top)绑定。然而，这个错误可以毫无警告地通过编译，在运行的时候<strong>默默地</strong>就失效了，最终留下一个出错的布局。由于这个错误不会产生任何的日志信息，导致极难debug。假如工程里有许多(成千上万)这样的约束代码，那对于维护来说真是一场噩梦。</p>
@@ -204,7 +204,7 @@
                 最近在为公司写框架和组件库。大家都建议在文档上需要更加完善一些。于是在思考如何规范地完善文档？面向非技术型的boss们的说明性文档，手工写即可。面向组件使用者的文档呢？一方面，要保证注释的完整性，以保证其他同事在使用的时候只看注释即可。另一方面又需要要一份文本文档，以便随时查阅。如何同时做到这两点？
                 &hellip;
                 </p>
-                <div class="post-list__meta"><time datetime="2016-01-23T20:23:57.000Z" class="post-list__meta--date date">2016-01-24</time> &#8226; <span class="post-list__meta--tags tags">于 </span><a class="btn-border-small" href="/headerdoc/">继续阅读</a></div>
+                <div class="post-list__meta"><time datetime="2016-01-24T09:23:57.000Z" class="post-list__meta--date date">2016-01-24</time> &#8226; <span class="post-list__meta--tags tags">于 </span><a class="btn-border-small" href="/headerdoc/">继续阅读</a></div>
                            
             </div>
         
@@ -219,7 +219,7 @@
 授人予渔先要授人予鱼。先给出鱼(
                 &hellip;
                 </p>
-                <div class="post-list__meta"><time datetime="2015-11-12T01:08:29.000Z" class="post-list__meta--date date">2015-11-12</time> &#8226; <span class="post-list__meta--tags tags">于 </span><a class="btn-border-small" href="/pscarouselview/">继续阅读</a></div>
+                <div class="post-list__meta"><time datetime="2015-11-12T14:08:29.000Z" class="post-list__meta--date date">2015-11-12</time> &#8226; <span class="post-list__meta--tags tags">于 </span><a class="btn-border-small" href="/pscarouselview/">继续阅读</a></div>
                        
             </div>
         
@@ -233,14 +233,14 @@
 
             <footer class="footer">
     <span class="footer__copyright">
-        &copy; 2022 PPPan - 本站点采用 <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+        &copy; 2026 PPPan - 本站点采用 <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
        
     </span>
     <span class="footer__copyright">
             基于 <a href="http://hexo.io">Hexo</a> 搭建，使用 <a href="https://github.com/monniya/hexo-theme-new-vno ">new-vno</a> 主题，由<a href="https://monniya.com ">@Monniya</a> 修改自 <a href="https://github.com/lenbo-ma/hexo-theme-vno" target="_blank">Vno</a>, 原创出自<a href="http://github.com/onevcat/vno" target="_blank">onevcat</a>
     </span>
     <span class="footer__copyright">
-            <a href="https://beian.miit.gov.cn/">浙ICP备15035859号</a>
+            <a href="http://www.miitbeian.gov.cn/">浙ICP备15035859号</a>
     </span>
     
     
