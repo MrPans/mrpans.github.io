@@ -25,8 +25,12 @@
     
     <meta name="author" content="PPPan">
     
-    <link rel="stylesheet" href="../css/vno.css">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+    
+<link rel="stylesheet" href="../css/vno.css">
+
+    
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+
 
     
     <link rel="icon" href="/images/favicon.png">
@@ -43,8 +47,12 @@
 </head>
 
 <body class="home-template no-js">
-    <script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
-    <script src="../js/main.js"></script>
+    
+<script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+
+    
+<script src="../js/main.js"></script>
+
     <span class="mobile btn-mobile-menu">
         <i class="fa fa-list btn-mobile-menu__icon"></i>
         <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
@@ -71,7 +79,7 @@
             <ul class="navigation">
               <li class="navigation__item"><a href="/#blog" title="Visit the blog" class="blog-button">Blog</a></li>
             
-              <li class="navigation__item"><a href="https://github.com/mrpans">GitHub</a></li>
+              <li class="navigation__item"><a target="_blank" rel="noopener" href="https://github.com/mrpans">GitHub</a></li>
             
             </ul>
           </nav>
@@ -159,20 +167,24 @@
   </header>
 
   <section class="post">
-    <p>优步最近公布的数据显示，<a href="http://www.npr.org/2016/05/17/478266839/this-is-your-brain-on-uber" title="UberNews" target="_blank" rel="noopener">当电池快没电的时候，人们更愿意接受溢价</a>。同时，优步也表明他们并没有利用电量相关的数据来设置溢价规则。换句话说，我们在开发App的时候，可以通过电池电量来”提升用户体验”。</p>
+    <p>优步最近公布的数据显示，<a target="_blank" rel="noopener" href="http://www.npr.org/2016/05/17/478266839/this-is-your-brain-on-uber" title="UberNews">当电池快没电的时候，人们更愿意接受溢价</a>。同时，优步也表明他们并没有利用电量相关的数据来设置溢价规则。换句话说，我们在开发App的时候，可以通过电池电量来”提升用户体验”。</p>
 <h3 id="电池状态与电量"><a href="#电池状态与电量" class="headerlink" title="电池状态与电量"></a>电池状态与电量</h3><p><code>UIDevice</code> 中有三个电池相关的属性:</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>,<span class="keyword">getter</span>=isBatteryMonitoringEnabled) <span class="built_in">BOOL</span> batteryMonitoringEnabled <span class="built_in">NS_AVAILABLE_IOS</span>(<span class="number">3</span>_0) __TVOS_PROHIBITED;  <span class="comment">// default is NO</span></span><br><span class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>,<span class="keyword">readonly</span>) <span class="built_in">UIDeviceBatteryState</span>          batteryState <span class="built_in">NS_AVAILABLE_IOS</span>(<span class="number">3</span>_0) __TVOS_PROHIBITED;  <span class="comment">// UIDeviceBatteryStateUnknown if monitoring disabled</span></span><br><span class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>,<span class="keyword">readonly</span>) <span class="keyword">float</span>                         batteryLevel <span class="built_in">NS_AVAILABLE_IOS</span>(<span class="number">3</span>_0) __TVOS_PROHIBITED;  <span class="comment">// 0 .. 1.0. -1.0 if UIDeviceBatteryStateUnknown</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>,<span class="keyword">getter</span>=isBatteryMonitoringEnabled) <span class="type">BOOL</span> batteryMonitoringEnabled <span class="built_in">NS_AVAILABLE_IOS</span>(<span class="number">3</span>_0) __TVOS_PROHIBITED;  <span class="comment">// default is NO</span></span><br><span class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>,<span class="keyword">readonly</span>) <span class="built_in">UIDeviceBatteryState</span>          batteryState <span class="built_in">NS_AVAILABLE_IOS</span>(<span class="number">3</span>_0) __TVOS_PROHIBITED;  <span class="comment">// UIDeviceBatteryStateUnknown if monitoring disabled</span></span><br><span class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>,<span class="keyword">readonly</span>) <span class="type">float</span>                         batteryLevel <span class="built_in">NS_AVAILABLE_IOS</span>(<span class="number">3</span>_0) __TVOS_PROHIBITED;  <span class="comment">// 0 .. 1.0. -1.0 if UIDeviceBatteryStateUnknown</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
 <p>我们可以通过 <code>batteryState</code> 来获取电池状态，通过 <code>batteryLevel</code>来获取电池电量信息。</p>
 <p>值得一提的是，在获取电池信息之前，需要手动设置 <code>batteryMonitoringEnabled</code> 为 <code>YES</code>，不然<code>batterystate</code> 会返回 <code>Unkonw</code>. </p>
 <p>如果想要订阅电池状态，可以注册为以下两个通知的观察者:</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">UIKIT_EXTERN</span> <span class="built_in">NSString</span> *<span class="keyword">const</span> <span class="built_in">UIDeviceBatteryStateDidChangeNotification</span>;</span><br><span class="line"><span class="built_in">UIKIT_EXTERN</span> <span class="built_in">NSString</span> *<span class="keyword">const</span> <span class="built_in">UIDeviceBatteryLevelDidChangeNotification</span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">UIKIT_EXTERN</span> <span class="built_in">NSString</span> *<span class="keyword">const</span> <span class="built_in">UIDeviceBatteryStateDidChangeNotification</span>;</span><br><span class="line"><span class="built_in">UIKIT_EXTERN</span> <span class="built_in">NSString</span> *<span class="keyword">const</span> <span class="built_in">UIDeviceBatteryLevelDidChangeNotification</span>;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
 <p><code>batteryLevel</code> 的值每改变 0.05（也就是电池电量的 <strong>5%</strong>）, 就会触发一次 <code>UIDeviceBatteryLevelDidChangeNotification</code>。</p>
-<h3 id="低电量模式"><a href="#低电量模式" class="headerlink" title="低电量模式"></a>低电量模式</h3><p>为了解决续航问题，Apple 在 iOS 9 中为 iPhone 添加了<a href="https://support.apple.com/en-gb/HT205234" title="低电量模式" target="_blank" rel="noopener">低电量模式</a> 。在此模式下，系统会通过禁用一些特性诸如电子邮件自动获取、后台刷新、Hey Siri等，来达到降低能耗的目的。</p>
+<h3 id="低电量模式"><a href="#低电量模式" class="headerlink" title="低电量模式"></a>低电量模式</h3><p>为了解决续航问题，Apple 在 iOS 9 中为 iPhone 添加了<a target="_blank" rel="noopener" href="https://support.apple.com/en-gb/HT205234" title="低电量模式">低电量模式</a> 。在此模式下，系统会通过禁用一些特性诸如电子邮件自动获取、后台刷新、Hey Siri等，来达到降低能耗的目的。</p>
 <p>低电量模式的设置藏得比较深，以至于从设置中找到它对大多数人来说是一件非常困难的事。换句话说，用户打开了低电量模式，才能真正说明用户所处的情景需要尽可能地节约电量。因此，相比较于直接获取电池电量来说，探测低电量模式是否开启，更能直观地反应产品情景和用户心理。</p>
 <h4 id="检测低电量模式"><a href="#检测低电量模式" class="headerlink" title="检测低电量模式"></a>检测低电量模式</h4><p>在 iOS 9 中，我们可以很容易地检测到用户是否开启了低电量模式，<code>NSProcessInfo</code> 提供了相对于的属性。</p>
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ([[<span class="built_in">NSProcessInfo</span> processInfo] isLowPowerModeEnabled]) </span><br><span class="line">&#123;</span><br><span class="line">  <span class="comment">// 做低电量模式下该做的事</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>同时，如果想要对低电量模式的变化做出响应，可以注册为以下通知的观察者：</p>
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSString</span> * <span class="keyword">const</span> <span class="built_in">NSProcessInfoPowerStateDidChangeNotification</span>;</span><br></pre></td></tr></table></figure>
+
 <p>当我们检测低电量模式的时候，需要注意以下两点:</p>
 <ul>
 <li>低电量模式仅支持 iOS 9 。当 App 需要兼容更早的版本时，先检查api的可用性。</li>
@@ -186,9 +198,9 @@
 <li>禁用运动追踪</li>
 </ul>
 <h4 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h4><ul>
-<li><a href="https://developer.apple.com/library/ios/documentation/Performance/Conceptual/EnergyGuide-iOS/index.html" target="_blank" rel="noopener">Energy Efficiency Guide for iOS Apps</a></li>
-<li><a href="https://developer.apple.com/videos/play/wwdc2015/707/" target="_blank" rel="noopener">WWDC 2015 Session 707 Achieving All-day Battery Life</a></li>
-<li><a href="http://useyourloaf.com/blog/detecting-low-power-mode/" target="_blank" rel="noopener">Detecting low power mode</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.apple.com/library/ios/documentation/Performance/Conceptual/EnergyGuide-iOS/index.html">Energy Efficiency Guide for iOS Apps</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.apple.com/videos/play/wwdc2015/707/">WWDC 2015 Session 707 Achieving All-day Battery Life</a></li>
+<li><a target="_blank" rel="noopener" href="http://useyourloaf.com/blog/detecting-low-power-mode/">Detecting low power mode</a></li>
 </ul>
 
   </section>
@@ -234,18 +246,19 @@ Optional基于Object
   
 </section>
 
+
   
 
             <footer class="footer">
     <span class="footer__copyright">
-        &copy; 2026 PPPan - 本站点采用 <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+        &copy; 2026 PPPan - 本站点采用 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
        
     </span>
     <span class="footer__copyright">
-            基于 <a href="http://hexo.io">Hexo</a> 搭建，使用 <a href="https://github.com/monniya/hexo-theme-new-vno ">new-vno</a> 主题，由<a href="https://monniya.com ">@Monniya</a> 修改自 <a href="https://github.com/lenbo-ma/hexo-theme-vno" target="_blank">Vno</a>, 原创出自<a href="http://github.com/onevcat/vno" target="_blank">onevcat</a>
+            基于 <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a> 搭建，使用 <a target="_blank" rel="noopener" href="https://github.com/monniya/hexo-theme-new-vno ">new-vno</a> 主题，由<a target="_blank" rel="noopener" href="https://monniya.com ">@Monniya</a> 修改自 <a href="https://github.com/lenbo-ma/hexo-theme-vno" target="_blank">Vno</a>, 原创出自<a href="http://github.com/onevcat/vno" target="_blank">onevcat</a>
     </span>
     <span class="footer__copyright">
-            <a href="https://beian.miit.gov.cn/">浙ICP备15035859号</a>
+            <a target="_blank" rel="noopener" href="https://beian.miit.gov.cn/">浙ICP备15035859号</a>
     </span>
     
     

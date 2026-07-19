@@ -25,8 +25,12 @@
     
     <meta name="author" content="PPPan">
     
-    <link rel="stylesheet" href="../css/vno.css">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+    
+<link rel="stylesheet" href="../css/vno.css">
+
+    
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+
 
     
     <link rel="icon" href="/images/favicon.png">
@@ -43,8 +47,12 @@
 </head>
 
 <body class="home-template no-js">
-    <script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
-    <script src="../js/main.js"></script>
+    
+<script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+
+    
+<script src="../js/main.js"></script>
+
     <span class="mobile btn-mobile-menu">
         <i class="fa fa-list btn-mobile-menu__icon"></i>
         <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
@@ -71,7 +79,7 @@
             <ul class="navigation">
               <li class="navigation__item"><a href="/#blog" title="Visit the blog" class="blog-button">Blog</a></li>
             
-              <li class="navigation__item"><a href="https://github.com/mrpans">GitHub</a></li>
+              <li class="navigation__item"><a target="_blank" rel="noopener" href="https://github.com/mrpans">GitHub</a></li>
             
             </ul>
           </nav>
@@ -160,12 +168,12 @@
 
   <section class="post">
     <p>###前言</p>
-<p>做过一段iOS开发的开发者们对MVC肯定不陌生。这是<a href="https://developer.apple.com/library/ios/documentation/General/Conceptual/DevPedia-CocoaCore/MVC.html" target="_blank" rel="noopener">Apple推荐</a>的开发iOS应用程序的标准设计模式。</p>
+<p>做过一段iOS开发的开发者们对MVC肯定不陌生。这是<a target="_blank" rel="noopener" href="https://developer.apple.com/library/ios/documentation/General/Conceptual/DevPedia-CocoaCore/MVC.html">Apple推荐</a>的开发iOS应用程序的标准设计模式。</p>
 <p>我们从一张图开始，谈谈MVC。</p>
-<p>###MVC<br><img src="/content/images/2015/10/MVC.png" alt=""><br>传统的MVC如上图。将不同的对象划分到三个阵营<code>Model</code>、<code>View</code>、<code>Controller</code>。View负责绘图、接收用户的交互，并将交互以<em>Blind</em>的方式传达到Controller。Controller则负责处理相对应的业务逻辑，并告诉Model更新数据。Model则负责更新数据，并将数据以Blind的方式交给View或者Controller。在传统的MVC中C同时知晓V和M两者的状态和所有信息。<strong>View也知晓Model的信息</strong>，但Model是不知道其他两者的任何信息的。</p>
+<p>###MVC<br><img src="/content/images/2015/10/MVC.png"><br>传统的MVC如上图。将不同的对象划分到三个阵营<code>Model</code>、<code>View</code>、<code>Controller</code>。View负责绘图、接收用户的交互，并将交互以<em>Blind</em>的方式传达到Controller。Controller则负责处理相对应的业务逻辑，并告诉Model更新数据。Model则负责更新数据，并将数据以Blind的方式交给View或者Controller。在传统的MVC中C同时知晓V和M两者的状态和所有信息。<strong>View也知晓Model的信息</strong>，但Model是不知道其他两者的任何信息的。</p>
 <p>这种设计在JavaWeb的开发中被广泛使用。因为View层的页面布局，响应，由js和css完成，jsp此时可以直接拿Model解析数据。。在这种情况下，View和Controller的任务最重，Model更像是一个有数据查询功能的Entity。</p>
 <p>###iOS中的MVC</p>
-<p><img src="/content/images/2015/10/StandfordMVC.png" alt=""><br>iOS中的MVC和传统的MVC大同小异，小异的地方是对传统MVC的改进。</p>
+<p><img src="/content/images/2015/10/StandfordMVC.png"><br>iOS中的MVC和传统的MVC大同小异，小异的地方是对传统MVC的改进。</p>
 <p>首先是<strong>View</strong>层。View依然负责着接收用户交互和图像的绘制，但是，<strong>View不再直接处理数据了</strong>。而是将数据相关的实现逻辑用协议的形式，交给其他对象（一般是ViewContorller），由这个对象告诉View，View应该如何展现。苹果的TableView、PickerView等View的设计很好地印证了这一点。此时View变成了纯粹的”View”，一个”Data Independent”的View，复用性无疑是非常高的。</p>
 <p><strong>Model</strong>在iOS中也扮演着与Web开发中相同的角色。常常被开发者们误当成Entity使用。它负责持有数据，并且有少量的逻辑。在这样的设计下，Model其实是非常瘦的。</p>
 <p>在iOS中，Model和View是相互分离的，既不相互拥有，也相互不交互，即时是以Blind的模式。当Model有所变化时，常常通过KVO或者Notification的方式通知Controller，而不是View。因此，即时有的时候View中会有Notification的监听者，但也绝对不会是Model发出的Notification的监听者。更何况是，我们在实际开发中，Controller有各种方式来告诉View，你应该显示什么，所以View与Model是可以绝对隔离开的。</p>
@@ -181,16 +189,19 @@
 <pre><code>@interface ShopListController ()
 @property (strong, nonatomic) ShopListModel *model;
 @end
-</code></pre><p>这个时候Model里可以尽情访问网络请求了。因为Model和ViewController生命周期一直，也不必再担心网络请求着陆点丢失的问题。</p>
+</code></pre>
+<p>这个时候Model里可以尽情访问网络请求了。因为Model和ViewController生命周期一直，也不必再担心网络请求着陆点丢失的问题。</p>
 <pre><code>@interface ShopListModel : BaseModel
 - (void)fetchShopListData;
 @end
-</code></pre><p>那么数据的存储和格式化也自然而然地在Model中处理了。同时我们还可以把数据持久化，一些类似于验证用户输入等等与UI不相关的数据处理和计算，都可以放在Model里。</p>
+</code></pre>
+<p>那么数据的存储和格式化也自然而然地在Model中处理了。同时我们还可以把数据持久化，一些类似于验证用户输入等等与UI不相关的数据处理和计算，都可以放在Model里。</p>
 <pre><code>@interface ShopListModel : BaseModel
 @property (strong, nonatomic) NSMutableArray *dataSource;
 - (void)fetchShopListData;
 @end
-</code></pre><p>最后我们在model中网络请求完成的回调里，处理好相关数据整理成包含UI直接可用对象的DataSource，并发送相对应的Notification来通知ViewController对View进行更新。</p>
+</code></pre>
+<p>最后我们在model中网络请求完成的回调里，处理好相关数据整理成包含UI直接可用对象的DataSource，并发送相对应的Notification来通知ViewController对View进行更新。</p>
 <p>Model实现：</p>
 <pre><code>@implementation ShopListModel
 - (void)fetchShopListData
@@ -201,7 +212,8 @@
     ...
     ...
 }
-</code></pre><p>ViewController实现：</p>
+</code></pre>
+<p>ViewController实现：</p>
 <pre><code>- (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -220,7 +232,8 @@
         return;
     }
 }
-</code></pre><p>此时我们得到了一个功能丰富的且易于复用的Model。如果别的界面也需要相同的数据，我们只需要将这个Model给另一个Controller使用，并注册相对应的Notification监听即可。</p>
+</code></pre>
+<p>此时我们得到了一个功能丰富的且易于复用的Model。如果别的界面也需要相同的数据，我们只需要将这个Model给另一个Controller使用，并注册相对应的Notification监听即可。</p>
 <p>###MVC进化版——MVCE<br>其实我们做的这一系列事情，无非是不断地将代码分离。力求做到一种”原子性”。最终最求的目标就是更高的可维护性、可拓展性和复用性。以这种思维反观上面的MVC，Controller已经变得相对较瘦，但随之而来的是Model又胖了起来。</p>
 <p>于是就有人提出了<strong>MVCS</strong>的模式。<strong>S</strong>即<strong>Store</strong>。将网络请求与数据持久化相关的操作，分到Store模块中去。</p>
 <p>借鉴微软的<strong>MVVM</strong>，应用到iOS中的<strong>ReactiveCocoa</strong>，考虑到View与Controller的紧密联系，将View和ViewController直接划分为View。开辟出一个ViewModel来解决上述问题。在MVVM里，你可以把输入验证，网络请求，数据持久化都放在ViewModel里，Model仍然是Model，不与View直接交互。</p>
@@ -229,7 +242,8 @@
 <p>在实战中，不一定非要抓住某个模式不放，更重要的是理解模式背后的意义，并且灵活运用。比如说在MVCE中，ViewController中还剩下什么呢？生命周期，Delegate，界面跳转，Notification响应。有这么一种情况：</p>
 <pre><code>有时候有几个TableView高度相似，想要复用之前ViewController中的代理。
 一般来说，我们复制黏贴相关代理方法到另一个ViewController中，并稍微修改一下不同的地方。
-</code></pre><p>以上情况其实可以抽象出一个Adapter，专门放TableView的代理，这样在ViewController中，只需要Import这个Adapter，稍微修改Adapter的一些属性，而不需要一遍遍地复制黏贴代理代码。</p>
+</code></pre>
+<p>以上情况其实可以抽象出一个Adapter，专门放TableView的代理，这样在ViewController中，只需要Import这个Adapter，稍微修改Adapter的一些属性，而不需要一遍遍地复制黏贴代理代码。</p>
 <p>当然，这样做的后果，牺牲了少部分原有代理的灵活性——我们可以在ViewController中任意定义TableView，切我们的代码中又多出了一个Adapter类。但好处是，封装性更好了，复用性更好了。</p>
 <p>##最后<br>返璞归真，所有的设计模式，都是为了更好地解决问题存在的。每个系统有每个系统固有的复杂度，当设计模式将其细分到一定程度，所做的事情只不过是将复杂度的位置挪了挪。所以，我们要了解设计模式，更要在合理的地方，合理地利用设计模式。诸如App中的关于页面，信息量少，逻辑少。所有逻辑直接放在ViewController里，也不会超过100行代码，那就放吧。</p>
 
@@ -274,18 +288,19 @@
   
 </section>
 
+
   
 
             <footer class="footer">
     <span class="footer__copyright">
-        &copy; 2026 PPPan - 本站点采用 <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+        &copy; 2026 PPPan - 本站点采用 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
        
     </span>
     <span class="footer__copyright">
-            基于 <a href="http://hexo.io">Hexo</a> 搭建，使用 <a href="https://github.com/monniya/hexo-theme-new-vno ">new-vno</a> 主题，由<a href="https://monniya.com ">@Monniya</a> 修改自 <a href="https://github.com/lenbo-ma/hexo-theme-vno" target="_blank">Vno</a>, 原创出自<a href="http://github.com/onevcat/vno" target="_blank">onevcat</a>
+            基于 <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a> 搭建，使用 <a target="_blank" rel="noopener" href="https://github.com/monniya/hexo-theme-new-vno ">new-vno</a> 主题，由<a target="_blank" rel="noopener" href="https://monniya.com ">@Monniya</a> 修改自 <a href="https://github.com/lenbo-ma/hexo-theme-vno" target="_blank">Vno</a>, 原创出自<a href="http://github.com/onevcat/vno" target="_blank">onevcat</a>
     </span>
     <span class="footer__copyright">
-            <a href="https://beian.miit.gov.cn/">浙ICP备15035859号</a>
+            <a target="_blank" rel="noopener" href="https://beian.miit.gov.cn/">浙ICP备15035859号</a>
     </span>
     
     

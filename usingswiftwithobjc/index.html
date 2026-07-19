@@ -25,8 +25,12 @@
     
     <meta name="author" content="PPPan">
     
-    <link rel="stylesheet" href="../css/vno.css">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+    
+<link rel="stylesheet" href="../css/vno.css">
+
+    
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+
 
     
     <link rel="icon" href="/images/favicon.png">
@@ -43,8 +47,12 @@
 </head>
 
 <body class="home-template no-js">
-    <script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
-    <script src="../js/main.js"></script>
+    
+<script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+
+    
+<script src="../js/main.js"></script>
+
     <span class="mobile btn-mobile-menu">
         <i class="fa fa-list btn-mobile-menu__icon"></i>
         <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
@@ -71,7 +79,7 @@
             <ul class="navigation">
               <li class="navigation__item"><a href="/#blog" title="Visit the blog" class="blog-button">Blog</a></li>
             
-              <li class="navigation__item"><a href="https://github.com/mrpans">GitHub</a></li>
+              <li class="navigation__item"><a target="_blank" rel="noopener" href="https://github.com/mrpans">GitHub</a></li>
             
             </ul>
           </nav>
@@ -160,12 +168,13 @@
 
   <section class="post">
     <p>###前言</p>
-<p>由于Swift的语法趋于稳定，目前本人负责的项目也已经在小范围地引入Swift。关于混编过程中遇到的各种思考与选择，胡波的<a href="http://mp.weixin.qq.com/s?__biz=MzA3ODg4MDk0Ng==&amp;mid=403474677&amp;idx=1&amp;sn=5163adb2d80aa5b4f0099f79e6d783e1&amp;scene=0#wechat_redirect" target="_blank" rel="noopener">这篇文章</a>已经阐述得得比较全面了，看完文章回头看自己在混编过程中的各种选择，与胡先生的看法是一致的。在此梳理一下一些值得注意的小细节。</p>
+<p>由于Swift的语法趋于稳定，目前本人负责的项目也已经在小范围地引入Swift。关于混编过程中遇到的各种思考与选择，胡波的<a target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzA3ODg4MDk0Ng==&mid=403474677&idx=1&sn=5163adb2d80aa5b4f0099f79e6d783e1&scene=0#wechat_redirect">这篇文章</a>已经阐述得得比较全面了，看完文章回头看自己在混编过程中的各种选择，与胡先生的看法是一致的。在此梳理一下一些值得注意的小细节。</p>
 <h3 id="Optional"><a href="#Optional" class="headerlink" title="Optional"></a>Optional</h3><p>基于Objective-C的工程一般都是将JSON转为Model,把数据以Model的形式在对象之间传递。当服务器传过来的值为空或者类型错误时，大部分解析框架都会将相对应的值置为nil。我们知道在Objective-C的世界里，向nil发送消息是不会引发任何错误的。</p>
 <p>Objective-C中没有任何问题的属性：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@property (nonatomic, strong) NSString *GroupName;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@property (nonatomic, strong) NSString *GroupName;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
 <p>到了Swift的世界里，变成了:</p>
-<p><img src="/content/images/2016/04/nullable-1.png" alt=""></p>
+<p><img src="/content/images/2016/04/nullable-1.png"></p>
 <p>没错，隐式解析的存在，导致了容错能力的下降。只要服务端回传的参数中有一个空字段，必然引发Crash。这简直是自寻死路。</p>
 <p>因此我们需要在Objective-C中，将属性标上<code>nullable</code>，这样Swift中该属性变成了optional,然后采用<code>if let</code>或者<code>guard let</code>来安全地拆包。</p>
 <blockquote>
@@ -173,29 +182,35 @@
 </blockquote>
 <p>想必大家也想到了，这样一来，在混编的过程中，if let充斥着Swift的代码，虽然保证了安全，但一定程度上降低了开发效率。个人还在不断摸索解决这个问题的方法。</p>
 <h3 id="Selector"><a href="#Selector" class="headerlink" title="Selector"></a>Selector</h3><p>在Objective-C的世界里，<code>@selector</code>是我们的老朋友了。但到了Swift中我们不得不这样来用<code>Selector</code>:</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">self</span>.addTarget(<span class="keyword">self</span>, action: <span class="string">"resignFristResponder"</span>, forControlEvents: .<span class="type">EditingDidEndOnExit</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">self</span>.addTarget(<span class="keyword">self</span>, action: <span class="string">&quot;resignFristResponder&quot;</span>, forControlEvents: .<span class="type">EditingDidEndOnExit</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
 <p>如果不仔细看，一定不会发现上面的代码中我错将<code>resignFirstResponder</code>写成了<code>resignFristResponder</code>。这在编译时不会出现任何提醒，但到了运行时会引起崩溃。</p>
 <p>幸运的是，Swift2.2用<code>#selector</code>关键字替代了字符串反射。此时拼写错误可以被编译期正确地纠正了–因为编译期会检查到方法不存在，并报一个error。</p>
 <p>你可以这样写一个不带参数的selector：</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#selector(resignFirstResponder）</span><br></pre></td></tr></table></figure>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">#selector</span>(resignFirstResponder）</span><br></pre></td></tr></table></figure>
+
 <p>如果是带参数的selector,则会稍微特别一点：</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#selector(textFieldDidChange(<span class="number">_</span>:)</span><br></pre></td></tr></table></figure>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">#selector</span>(textFieldDidChange(<span class="keyword">_</span>:)</span><br></pre></td></tr></table></figure>
 <p>采用下划线来忽略参数名，但记得保留分号。</p>
 <p>update:2016年06月22日</p>
 <p>在Swift 3中，由于第一个参数也必须指定参数名，因此，selector的语法稍稍有一点点改变：</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#selector(textFieldDidChange(textField:)</span><br></pre></td></tr></table></figure>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">#selector</span>(textFieldDidChange(textField:)</span><br></pre></td></tr></table></figure>
+
 <p>有一点需要注意一下，Selector只支持反射Objective-C的方法，如果想要让#selector能正确识别Swift的方法，需要在方法前面加上<code>@objc</code>关键字</p>
 <h3 id="命名"><a href="#命名" class="headerlink" title="命名"></a>命名</h3><p>Swift得益于Module而避免了类的命名冲突。在用Swift编写代码的时候，应当遵循Apple官方的命名规范。例如类命名不需要在类名前加前缀。如果类也需要在Objective-C中被调用，可以用@objc关键字来为Objective-C生成对应的类名。</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@objc</span>(<span class="type">PSLimitedTextField</span>) <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LimitedTextField</span>: <span class="title">UITextField</span> </span>&#123;</span><br></pre></td></tr></table></figure>
-<p>同时API的设计也建议按照官方的<a href="https://swift.org/documentation/api-design-guidelines" target="_blank" rel="noopener">指导原则</a>来。我从开始写Objective-C时就尽量模仿Apple的命名方式，后来在Objective-C到Swift的自动桥接上尝到了甜头。比如说:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- (instancetype)initWithName:(NSString *)name;</span><br></pre></td></tr></table></figure>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@objc(PSLimitedTextField)</span> <span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">LimitedTextField</span>: <span class="title class_ inherited__">UITextField</span> &#123;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<p>同时API的设计也建议按照官方的<a target="_blank" rel="noopener" href="https://swift.org/documentation/api-design-guidelines">指导原则</a>来。我从开始写Objective-C时就尽量模仿Apple的命名方式，后来在Objective-C到Swift的自动桥接上尝到了甜头。比如说:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- (instancetype)initWithName:(NSString *)name;</span><br></pre></td></tr></table></figure>
+
 <p>被自动桥接成了</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">init</span>(name: <span class="type">String</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">init</span>(<span class="params">name</span>: <span class="type">String</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <h4 id="工厂方法"><a href="#工厂方法" class="headerlink" title="工厂方法"></a>工厂方法</h4><p>如果仔细对比Objective-C和Swift的接口，你会发现有的类的工厂方法消失了，有的类的还在。这同样是由于命名的问题所导致的。Apple将那些同类名一致的工厂方法桥接成了init方法，将一些默认单词(default,standard,shared etc.)开头的工厂方法保留了下来。</p>
 <p>如：<code>[NSDate date]</code>变成了<code>NSDate()</code>.</p>
-<p>但<code>[NSUserDefaults standardUserDefaults]</code>,保留了下来，变成了<code>NSUserDefaults.standardUserDefaults()</code></p>
-<p><a href="https://github.com/mrpans/PSNumberPad" target="_blank" rel="noopener">PSNumberPad</a>就因为工厂方法的命名问题，没能自动桥接成Swift的方法。因此，在混编过程中，如果Objective-C的组件有可能被Swift调用的，需要妥善设计接口以便自动桥接。一个最佳实践是，多采用<strong>convince initialzer</strong>替代工厂方法。</p>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p>在混编的过程中，大部分问题你可以在<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216-CH2-ID0" target="_blank" rel="noopener">这里</a>找到想要的答案。再一次感谢Apple完善的文档！</p>
+<p>但<code>[NSUserDefaults standardUserDefaults]</code>,保留了下来，变成了<code>       NSUserDefaults.standardUserDefaults()</code></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/mrpans/PSNumberPad">PSNumberPad</a>就因为工厂方法的命名问题，没能自动桥接成Swift的方法。因此，在混编过程中，如果Objective-C的组件有可能被Swift调用的，需要妥善设计接口以便自动桥接。一个最佳实践是，多采用<strong>convince initialzer</strong>替代工厂方法。</p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p>在混编的过程中，大部分问题你可以在<a target="_blank" rel="noopener" href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216-CH2-ID0">这里</a>找到想要的答案。再一次感谢Apple完善的文档！</p>
 
   </section>
 
@@ -212,7 +227,7 @@
                 
                 优步最近公布的数据显示，当电池快没电的时候，人们更愿意接受溢价。同时，优步也表明他们并没有利用电量相关的数据来设置溢价规则。换句话说，我们在开发App的时候，可以通过电池电量来”提升用户体验”。
 电池状态与电量UIDevice 中有三个电池相关的属性:
-123@property(nonatomic,
+1234@property(nonatomic
                 &hellip;
                 </p>
                 <div class="post-list__meta"><time datetime="2016-05-31T07:31:24.000Z" class="post-list__meta--date date">2016-05-31</time> &#8226; <span class="post-list__meta--tags tags">于 </span><a class="btn-border-small" href="/battery/">继续阅读</a></div>
@@ -240,18 +255,19 @@
   
 </section>
 
+
   
 
             <footer class="footer">
     <span class="footer__copyright">
-        &copy; 2026 PPPan - 本站点采用 <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+        &copy; 2026 PPPan - 本站点采用 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
        
     </span>
     <span class="footer__copyright">
-            基于 <a href="http://hexo.io">Hexo</a> 搭建，使用 <a href="https://github.com/monniya/hexo-theme-new-vno ">new-vno</a> 主题，由<a href="https://monniya.com ">@Monniya</a> 修改自 <a href="https://github.com/lenbo-ma/hexo-theme-vno" target="_blank">Vno</a>, 原创出自<a href="http://github.com/onevcat/vno" target="_blank">onevcat</a>
+            基于 <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a> 搭建，使用 <a target="_blank" rel="noopener" href="https://github.com/monniya/hexo-theme-new-vno ">new-vno</a> 主题，由<a target="_blank" rel="noopener" href="https://monniya.com ">@Monniya</a> 修改自 <a href="https://github.com/lenbo-ma/hexo-theme-vno" target="_blank">Vno</a>, 原创出自<a href="http://github.com/onevcat/vno" target="_blank">onevcat</a>
     </span>
     <span class="footer__copyright">
-            <a href="https://beian.miit.gov.cn/">浙ICP备15035859号</a>
+            <a target="_blank" rel="noopener" href="https://beian.miit.gov.cn/">浙ICP备15035859号</a>
     </span>
     
     

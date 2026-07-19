@@ -25,8 +25,12 @@
     
     <meta name="author" content="PPPan">
     
-    <link rel="stylesheet" href="../css/vno.css">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+    
+<link rel="stylesheet" href="../css/vno.css">
+
+    
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+
 
     
     <link rel="icon" href="/images/favicon.png">
@@ -43,8 +47,12 @@
 </head>
 
 <body class="home-template no-js">
-    <script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
-    <script src="../js/main.js"></script>
+    
+<script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+
+    
+<script src="../js/main.js"></script>
+
     <span class="mobile btn-mobile-menu">
         <i class="fa fa-list btn-mobile-menu__icon"></i>
         <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
@@ -71,7 +79,7 @@
             <ul class="navigation">
               <li class="navigation__item"><a href="/#blog" title="Visit the blog" class="blog-button">Blog</a></li>
             
-              <li class="navigation__item"><a href="https://github.com/mrpans">GitHub</a></li>
+              <li class="navigation__item"><a target="_blank" rel="noopener" href="https://github.com/mrpans">GitHub</a></li>
             
             </ul>
           </nav>
@@ -159,8 +167,7 @@
   </header>
 
   <section class="post">
-    <p>最近刚完成了一个多Target的项目，做了许多思考与选择，现写下心得总结，权当抛砖引玉。</p>
-<p>####项目背景<br>本项目是一个适用于正在学车人群的预约学车平台。分为学生端和教练端。学生端主功能为预约学车，教练端主功能为排课。</p>
+    <p>最近刚完成了一个多Target的项目，做了许多思考与选择，现写下心得总结，权当抛砖引玉。<br>####项目背景<br>本项目是一个适用于正在学车人群的预约学车平台。分为学生端和教练端。学生端主功能为预约学车，教练端主功能为排课。</p>
 <h3 id="什么时候选用多Target"><a href="#什么时候选用多Target" class="headerlink" title="什么时候选用多Target"></a>什么时候选用多Target</h3><p>多target的选用，意在实现最大化重用代码。其经典情景是有多个类似的App，界面设计与业务逻辑有许多相似之处，仅仅有少数不同的业务逻辑，只需要在打包时将不同的配置文件打包好，就可以形成一个个不同的客户端。</p>
 <p>我负责两个客户端有以下共同点：</p>
 <ol>
@@ -168,7 +175,7 @@
 <li>近乎相同的主页布局与逻辑</li>
 <li>近乎相同的个人中心主界面</li>
 <li>近乎相同的课表界面</li>
-<li>近乎相同的选课/排课界面</li>
+<li>近乎相同的选课&#x2F;排课界面</li>
 </ol>
 <p>不同点有：</p>
 <ol>
@@ -185,11 +192,10 @@
 </ol>
 <p>项目的结构是这样的</p>
 <p><img src="https://coding.net/u/Shengpan/p/Ghost-On-Coding-Paas/git/raw/master/images/filestruct.png" alt="文件结构"> </p>
-<p>网络层不使用单例，而是采用了<code>Category</code>的模式。<strong>只将最基本的<code>RESTful</code>请求封装好放在<code>WebService</code>中。</strong>而具体的实现采用<code>Category</code>拓展方法。这样的好处是<strong>各自的WebService有各自的生命周期，每个Webservice可以只负责自己模块的网络层服务。</strong>比如说在这个项目中我分了Account，Teacher，Student等Category，分别负责登陆注册，教练端和学生端的网络请求服务。</p>
+<p>网络层不使用单例，而是采用了<code>Category</code>的模式。**只将最基本的<code>RESTful</code>请求封装好放在<code>WebService</code>中。<strong>而具体的实现采用<code>Category</code>拓展方法。这样的好处是</strong>各自的WebService有各自的生命周期，每个Webservice可以只负责自己模块的网络层服务。**比如说在这个项目中我分了Account，Teacher，Student等Category，分别负责登陆注册，教练端和学生端的网络请求服务。</p>
 <p>View中是通用的View，比如全项目通用的定制<code>AlertView</code>，一模一样的Login界面。</p>
 <p>Category放通用的拓展类，比如说<code>NSCalendar</code>在iOS8.0之后新增了很多日期计算和比较的Api，但是基于目前的项目大多数都需要最低支持iOS7.0，因此可以为<code>NSCalaner</code>或者<code>NSDate</code>写一些拓展方法，可以作为不同项目公用的工具。</p>
-<p>其他例如UserInfo还有Validation则是项目业务需求抽取，在此就不赘述了。</p>
-<p>###实战<br>做好以上准备后，就可以进行业务开发了。多Target项目的开发和普通项目的开发并没有什么不同，只是在新建文件时，注意选择Target即可。<br><img src="https://coding.net/u/Shengpan/p/Ghost-On-Coding-Paas/git/raw/master/images/%E5%A4%9ATarget%E5%BA%94%E7%94%A8%E6%9E%84%E6%9E%B6%E5%B0%8F%E7%BB%93/choose.png" alt="选择Target"></p>
+<p>其他例如UserInfo还有Validation则是项目业务需求抽取，在此就不赘述了。<br>###实战<br>做好以上准备后，就可以进行业务开发了。多Target项目的开发和普通项目的开发并没有什么不同，只是在新建文件时，注意选择Target即可。<br><img src="https://coding.net/u/Shengpan/p/Ghost-On-Coding-Paas/git/raw/master/images/%E5%A4%9ATarget%E5%BA%94%E7%94%A8%E6%9E%84%E6%9E%B6%E5%B0%8F%E7%BB%93/choose.png" alt="选择Target"></p>
 <p>另外，如果想调整文件的Target归属，只需要选择文件，在右边的工具窗口里的File Inspector选项下面，就可以找到与之前新建文件夹时相同的勾选项。勾选你想要的Target吧！</p>
 <p><img src="https://coding.net/u/Shengpan/p/Ghost-On-Coding-Paas/git/raw/master/images/%E5%A4%9ATarget%E5%BA%94%E7%94%A8%E6%9E%84%E6%9E%B6%E5%B0%8F%E7%BB%93/File_inspector.png" alt="勾选Target"> </p>
 <p>最后，在Debug和打包的时候，注意选择Target即可。</p>
@@ -239,18 +245,19 @@
   
 </section>
 
+
   
 
             <footer class="footer">
     <span class="footer__copyright">
-        &copy; 2026 PPPan - 本站点采用 <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+        &copy; 2026 PPPan - 本站点采用 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
        
     </span>
     <span class="footer__copyright">
-            基于 <a href="http://hexo.io">Hexo</a> 搭建，使用 <a href="https://github.com/monniya/hexo-theme-new-vno ">new-vno</a> 主题，由<a href="https://monniya.com ">@Monniya</a> 修改自 <a href="https://github.com/lenbo-ma/hexo-theme-vno" target="_blank">Vno</a>, 原创出自<a href="http://github.com/onevcat/vno" target="_blank">onevcat</a>
+            基于 <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a> 搭建，使用 <a target="_blank" rel="noopener" href="https://github.com/monniya/hexo-theme-new-vno ">new-vno</a> 主题，由<a target="_blank" rel="noopener" href="https://monniya.com ">@Monniya</a> 修改自 <a href="https://github.com/lenbo-ma/hexo-theme-vno" target="_blank">Vno</a>, 原创出自<a href="http://github.com/onevcat/vno" target="_blank">onevcat</a>
     </span>
     <span class="footer__copyright">
-            <a href="https://beian.miit.gov.cn/">浙ICP备15035859号</a>
+            <a target="_blank" rel="noopener" href="https://beian.miit.gov.cn/">浙ICP备15035859号</a>
     </span>
     
     

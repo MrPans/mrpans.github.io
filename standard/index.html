@@ -25,8 +25,12 @@
     
     <meta name="author" content="PPPan">
     
-    <link rel="stylesheet" href="../css/vno.css">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+    
+<link rel="stylesheet" href="../css/vno.css">
+
+    
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+
 
     
     <link rel="icon" href="/images/favicon.png">
@@ -43,8 +47,12 @@
 </head>
 
 <body class="home-template no-js">
-    <script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
-    <script src="../js/main.js"></script>
+    
+<script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+
+    
+<script src="../js/main.js"></script>
+
     <span class="mobile btn-mobile-menu">
         <i class="fa fa-list btn-mobile-menu__icon"></i>
         <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
@@ -71,7 +79,7 @@
             <ul class="navigation">
               <li class="navigation__item"><a href="/#blog" title="Visit the blog" class="blog-button">Blog</a></li>
             
-              <li class="navigation__item"><a href="https://github.com/mrpans">GitHub</a></li>
+              <li class="navigation__item"><a target="_blank" rel="noopener" href="https://github.com/mrpans">GitHub</a></li>
             
             </ul>
           </nav>
@@ -167,7 +175,8 @@
     &lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
-</code></pre><p>“只有鬼才知道他的div1是什么！”</p>
+</code></pre>
+<p>“只有鬼才知道他的div1是什么！”</p>
 <p>没有规范的代码，增加了代码的阅读成本，也因此大大降低了团队合作的效率。当产品上线后，出了BUG需要修复，而负责维护的却不是当初的开发团队，这是看混乱的代码成了一个噩梦。我们不只一次地听别的程序猿哀嚎过：“嗷，又要看别人的代码”。不规范的代码也是一方面的成因。</p>
 <p>为了提高生产效率，同时也是本着对自己产出的代码，以及对他人负责的理念，在公司内部（如果客观条件做不到，至少在团队内部）需要践行代码的规范。一般来说，各司有各司的代码规范，基本的代码规范在此就不赘述了。然而，有一些<strong>原则</strong>是通用的，在此略作梳理：</p>
 <p><strong>1. 首先是为人编写程序，其次才是计算机。</strong><br>软件的生命周期贯穿产品的开发，测试，生产，用户使用，版本升级和后期维护等过程，只有易读，易维护的软件代码才具有生命力。</p>
@@ -215,7 +224,8 @@
 #pragma mark - Getter and Setter
 
 - (MainViewModel *)model{...}
-</code></pre><p>在标注<code>Delegate</code>的时候，把Delegate名称直接做作为标注，比如<code>UITableViewDelegate</code>,<code>UITableViewDataSource</code>。这样的好处是，当这个Delegate是自定义的时候，别人在看代码的时候可以直接<em>command+左键</em>点击跳转到Delegate，便于他人阅读和寻找自定的Delegate。</p>
+</code></pre>
+<p>在标注<code>Delegate</code>的时候，把Delegate名称直接做作为标注，比如<code>UITableViewDelegate</code>,<code>UITableViewDataSource</code>。这样的好处是，当这个Delegate是自定义的时候，别人在看代码的时候可以直接<em>command+左键</em>点击跳转到Delegate，便于他人阅读和寻找自定的Delegate。</p>
 <p>Getter 和 Setter放在最后。</p>
 <p>另外，尽可能地减少Controller中的私有方法。私有方法大多可以在Model中实现。</p>
 <p><strong>4.所有属性都使用Getter and Setter</strong></p>
@@ -231,7 +241,8 @@
    self.textLabel ... ...
    [self.view addSubview:self.textLabel];
 }
-</code></pre><p>而是：</p>
+</code></pre>
+<p>而是：</p>
 <pre><code>- (UILabel *)textLabel
 {
     if (!_textLabel)
@@ -244,8 +255,9 @@
     }
     return _textLabel;
 }
-</code></pre><p><strong>5.注释你的公有方法</strong></p>
-<p>使用<a href="https://github.com/onevcat/VVDocumenter-Xcode/archive/master.zip" target="_blank" rel="noopener">这个工具</a>规范注释.h头文件中的属性和方法。十分直白的方法和属性可以不注释。</p>
+</code></pre>
+<p><strong>5.注释你的公有方法</strong></p>
+<p>使用<a target="_blank" rel="noopener" href="https://github.com/onevcat/VVDocumenter-Xcode/archive/master.zip">这个工具</a>规范注释.h头文件中的属性和方法。十分直白的方法和属性可以不注释。</p>
 <p>That’s all.Hope u enjoy it. : )</p>
 
   </section>
@@ -295,18 +307,19 @@
   
 </section>
 
+
   
 
             <footer class="footer">
     <span class="footer__copyright">
-        &copy; 2026 PPPan - 本站点采用 <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+        &copy; 2026 PPPan - 本站点采用 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
        
     </span>
     <span class="footer__copyright">
-            基于 <a href="http://hexo.io">Hexo</a> 搭建，使用 <a href="https://github.com/monniya/hexo-theme-new-vno ">new-vno</a> 主题，由<a href="https://monniya.com ">@Monniya</a> 修改自 <a href="https://github.com/lenbo-ma/hexo-theme-vno" target="_blank">Vno</a>, 原创出自<a href="http://github.com/onevcat/vno" target="_blank">onevcat</a>
+            基于 <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a> 搭建，使用 <a target="_blank" rel="noopener" href="https://github.com/monniya/hexo-theme-new-vno ">new-vno</a> 主题，由<a target="_blank" rel="noopener" href="https://monniya.com ">@Monniya</a> 修改自 <a href="https://github.com/lenbo-ma/hexo-theme-vno" target="_blank">Vno</a>, 原创出自<a href="http://github.com/onevcat/vno" target="_blank">onevcat</a>
     </span>
     <span class="footer__copyright">
-            <a href="https://beian.miit.gov.cn/">浙ICP备15035859号</a>
+            <a target="_blank" rel="noopener" href="https://beian.miit.gov.cn/">浙ICP备15035859号</a>
     </span>
     
     

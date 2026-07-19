@@ -25,8 +25,12 @@
     
     <meta name="author" content="PPPan">
     
-    <link rel="stylesheet" href="../../../css/vno.css">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+    
+<link rel="stylesheet" href="../../../css/vno.css">
+
+    
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+
 
     
     <link rel="icon" href="/images/favicon.png">
@@ -43,8 +47,12 @@
 </head>
 
 <body class="home-template no-js">
-    <script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
-    <script src="../../../js/main.js"></script>
+    
+<script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+
+    
+<script src="../../../js/main.js"></script>
+
     <span class="mobile btn-mobile-menu">
         <i class="fa fa-list btn-mobile-menu__icon"></i>
         <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
@@ -71,7 +79,7 @@
             <ul class="navigation">
               <li class="navigation__item"><a href="/#blog" title="Visit the blog" class="blog-button">Blog</a></li>
             
-              <li class="navigation__item"><a href="https://github.com/mrpans">GitHub</a></li>
+              <li class="navigation__item"><a target="_blank" rel="noopener" href="https://github.com/mrpans">GitHub</a></li>
             
             </ul>
           </nav>
@@ -174,8 +182,8 @@ iOS 持续集成 - 自动化 Code Review
       <p class="excerpt">
     
       
-在写 《从 Swift 中的 max(_:_:) 看设计哲学》的过程中，产生了这样一个想法: 既然 max(_:_:) 可以用来对比任何 Comparable ,而 String 是符合 Comparable 的，那么用它来比较两个字符串”谁大谁小”会怎么样呢？
-由于实验结果的捉摸不定，于是产生了一探究竟的念头。过程很有趣，结果让人感叹计算机科学之深厚。同时也是典型的 How I Resolve
+在写 《从 Swift 中的 max(::) 看设计哲学》的过程中，产生了这样一个想法: 既然 max(_:_:) 可以用来对比任何 Comparable ,而 String 是符合 Comparable 的，那么用它来比较两个字符串”谁大谁小”会怎么样呢？
+由于实验结果的捉摸不定，于是产生了一探究竟的念头。过程很有趣，结果让人感叹计算机科学之深厚。同时也是典型的 How I Resolve A
     &hellip;
       </p>
       <div class="post-list__meta"><time datetime="2016-09-06T13:13:20.000Z" class="post-list__meta--date date">2016-09-06</time> &#8226; <span class="post-list__meta--tags tags">于 </span><a class="btn-border-small" href="/string-comparable/">继续阅读</a></div>
@@ -189,7 +197,8 @@ iOS 持续集成 - 自动化 Code Review
     
       由于 Swift 不再支持宏了，于是 MAX,MIN 等一些列常用宏都被重写为 Swift 函数。我们来看看函数的定义:
 12@warn_unused_resultpublic func max&amp;lt;T : Comparable&amp;gt;(x: T, _ y: T) -&amp;gt; T
-warn_unused_result先说说 @warn_unused_result 注解。 顾名思义，被该注解标记的
+
+warn_unused_result先说说 @warn_unused_result 注解。 顾名思义，被该注解标记
     &hellip;
       </p>
       <div class="post-list__meta"><time datetime="2016-09-05T13:18:09.000Z" class="post-list__meta--date date">2016-09-05</time> &#8226; <span class="post-list__meta--tags tags">于 </span><a class="btn-border-small" href="/swift-max/">继续阅读</a></div>
@@ -238,17 +247,16 @@ iOS 持续集成 - 自动化 Code Review
 </script>
 </div>
 
-
             <footer class="footer">
     <span class="footer__copyright">
-        &copy; 2026 PPPan - 本站点采用 <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+        &copy; 2026 PPPan - 本站点采用 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
        
     </span>
     <span class="footer__copyright">
-            基于 <a href="http://hexo.io">Hexo</a> 搭建，使用 <a href="https://github.com/monniya/hexo-theme-new-vno ">new-vno</a> 主题，由<a href="https://monniya.com ">@Monniya</a> 修改自 <a href="https://github.com/lenbo-ma/hexo-theme-vno" target="_blank">Vno</a>, 原创出自<a href="http://github.com/onevcat/vno" target="_blank">onevcat</a>
+            基于 <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a> 搭建，使用 <a target="_blank" rel="noopener" href="https://github.com/monniya/hexo-theme-new-vno ">new-vno</a> 主题，由<a target="_blank" rel="noopener" href="https://monniya.com ">@Monniya</a> 修改自 <a href="https://github.com/lenbo-ma/hexo-theme-vno" target="_blank">Vno</a>, 原创出自<a href="http://github.com/onevcat/vno" target="_blank">onevcat</a>
     </span>
     <span class="footer__copyright">
-            <a href="https://beian.miit.gov.cn/">浙ICP备15035859号</a>
+            <a target="_blank" rel="noopener" href="https://beian.miit.gov.cn/">浙ICP备15035859号</a>
     </span>
     
     

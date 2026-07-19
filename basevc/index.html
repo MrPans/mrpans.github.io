@@ -25,8 +25,12 @@
     
     <meta name="author" content="PPPan">
     
-    <link rel="stylesheet" href="../css/vno.css">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+    
+<link rel="stylesheet" href="../css/vno.css">
+
+    
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+
 
     
     <link rel="icon" href="/images/favicon.png">
@@ -43,8 +47,12 @@
 </head>
 
 <body class="home-template no-js">
-    <script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
-    <script src="../js/main.js"></script>
+    
+<script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+
+    
+<script src="../js/main.js"></script>
+
     <span class="mobile btn-mobile-menu">
         <i class="fa fa-list btn-mobile-menu__icon"></i>
         <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
@@ -71,7 +79,7 @@
             <ul class="navigation">
               <li class="navigation__item"><a href="/#blog" title="Visit the blog" class="blog-button">Blog</a></li>
             
-              <li class="navigation__item"><a href="https://github.com/mrpans">GitHub</a></li>
+              <li class="navigation__item"><a target="_blank" rel="noopener" href="https://github.com/mrpans">GitHub</a></li>
             
             </ul>
           </nav>
@@ -159,9 +167,8 @@
   </header>
 
   <section class="post">
-    <p>“我们虽然在构造软件，但软件也会重新塑造我们”。在写<a href="http://shengpan.coding.io/architecture-module/" target="_blank" rel="noopener">iOS项目架构-模块化</a>的时候，我仍然觉得我所构建的统一行为方式还算不错，可以写出来与大家探讨探讨。昨日将应用发布的闲暇之余阅读了<a href="http://objccn.io/issue-13-4/" target="_blank" rel="noopener">objc中国的这篇文章</a>，令我明白尚有更优的解决方案。本文从实际的例子出发，发表一下我的拙见，用以和上文做对照，权当抛砖引玉。</p>
-<p>###BaseViewController</p>
-<p>####例子1<br>我们在构建一个App的时候，会有许多相同的行为。例如，任何需要网络请求的界面，总会需要一个indicator来告诉用户，“噢，我正在操作，请等我一下”。或者某个时候我们需要给用户一点小提示，来对他们的操作进行反馈等等。每一个ViewController都会有这样的行为。这是我们很直接地想到<strong>我们需要一个父类</strong>。</p>
+    <p>“我们虽然在构造软件，但软件也会重新塑造我们”。在写<a target="_blank" rel="noopener" href="http://shengpan.coding.io/architecture-module/">iOS项目架构-模块化</a>的时候，我仍然觉得我所构建的统一行为方式还算不错，可以写出来与大家探讨探讨。昨日将应用发布的闲暇之余阅读了<a target="_blank" rel="noopener" href="http://objccn.io/issue-13-4/">objc中国的这篇文章</a>，令我明白尚有更优的解决方案。本文从实际的例子出发，发表一下我的拙见，用以和上文做对照，权当抛砖引玉。</p>
+<p>###BaseViewController<br>####例子1<br>我们在构建一个App的时候，会有许多相同的行为。例如，任何需要网络请求的界面，总会需要一个indicator来告诉用户，“噢，我正在操作，请等我一下”。或者某个时候我们需要给用户一点小提示，来对他们的操作进行反馈等等。每一个ViewController都会有这样的行为。这是我们很直接地想到<strong>我们需要一个父类</strong>。</p>
 <p>于是我们新建一个基类，<code>BaseViewController</code>继承于<code>UIViewController</code></p>
 <pre><code>@interface BaseViewController : UIViewController
 /**
@@ -180,7 +187,8 @@
 
 - (void)hideIndicator;
 @end
-</code></pre><p>好了，现在我们所有的业务相关ViewController都继承自BaseViewController，并且在调用网络请求前轻松地写一句<code>[self showIndicatorWithTitle:@&quot;加载中...&quot;]</code>，并且在网络请求完成后的回调里写下<code>[self hideIndicator]</code>就可以轻松地完成指示器的显示隐藏了。感谢我们的继承！</p>
+</code></pre>
+<p>好了，现在我们所有的业务相关ViewController都继承自BaseViewController，并且在调用网络请求前轻松地写一句<code>[self showIndicatorWithTitle:@&quot;加载中...&quot;]</code>，并且在网络请求完成后的回调里写下<code>[self hideIndicator]</code>就可以轻松地完成指示器的显示隐藏了。感谢我们的继承！</p>
 <p>####例子2<br>再举个例子。在我的项目里访问服务器的时候需要Token，Token在某些情况下有可能过期。Token过期的时候会返回一个Token过期的状态码，此时需要用户重新登录。这个情况我们可以总结成：</p>
 <ul>
 <li>绝大多数ViewController都会发送网络请求</li>
@@ -189,7 +197,7 @@
 </ul>
 <p>因此我们可以将这一行为抽取出来，写在BaseViewController中。这样只需要在各个业务模块的的Model层收到Token过期消息的时候，用Notification转发给BaseViewController就可以了。其他诸如网络请求失败等情况都是如此。</p>
 <p>每个项目有不同的统一行为，我们需要根据不同的行为抽取不同的基类。</p>
-<p>###使用协议<br>但是有一种情况。例如<code>LoginViewController</code>需要和<code>BaseViewController</code>一样的显示/隐藏Indicator的接口，但却没有其他相同的行为。这时继承就显得不太合适了。</p>
+<p>###使用协议<br>但是有一种情况。例如<code>LoginViewController</code>需要和<code>BaseViewController</code>一样的显示&#x2F;隐藏Indicator的接口，但却没有其他相同的行为。这时继承就显得不太合适了。</p>
 <p>想象一下<code>BaseViewController</code>因为Token过期Present了<code>LoginViewController</code>,而<code>LoginViewController</code>因为继承了<code>BaseViewController</code>又不停地Present另一个<code>LoginViewController</code>…这时候如果使用继承的话，就不得不写一些脏代码来避免这样的情况。</p>
 <p>正如那篇文章所说，此时我们可以用协议<code>@protocol</code>来替代继承。</p>
 <pre><code>@protocol PSIndicator &lt;NSObject&gt;
@@ -199,11 +207,13 @@
 - (void)hideIndicator;
 
 @end
-</code></pre><p>然后在<code>LoginViewController</code>中：</p>
+</code></pre>
+<p>然后在<code>LoginViewController</code>中：</p>
 <pre><code>@interface LoginViewController : UIViewController&lt;PSIndicator&gt;
 
 @end
-</code></pre><p>###最后<br>如果你在读这篇文章的时候想到，网络请求相关的内容为什么不直接封装在网络操作相关的模块，由它来负责指示器的显示和隐藏。这样还能省去手动调用的麻烦。关于这一点，在<a href="http://shengpan.coding.io/architecture-module/" target="_blank" rel="noopener">这篇文章</a>里已经做了讨论。</p>
+</code></pre>
+<p>###最后<br>如果你在读这篇文章的时候想到，网络请求相关的内容为什么不直接封装在网络操作相关的模块，由它来负责指示器的显示和隐藏。这样还能省去手动调用的麻烦。关于这一点，在<a target="_blank" rel="noopener" href="http://shengpan.coding.io/architecture-module/">这篇文章</a>里已经做了讨论。</p>
 
   </section>
 
@@ -250,18 +260,19 @@
   
 </section>
 
+
   
 
             <footer class="footer">
     <span class="footer__copyright">
-        &copy; 2026 PPPan - 本站点采用 <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+        &copy; 2026 PPPan - 本站点采用 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
        
     </span>
     <span class="footer__copyright">
-            基于 <a href="http://hexo.io">Hexo</a> 搭建，使用 <a href="https://github.com/monniya/hexo-theme-new-vno ">new-vno</a> 主题，由<a href="https://monniya.com ">@Monniya</a> 修改自 <a href="https://github.com/lenbo-ma/hexo-theme-vno" target="_blank">Vno</a>, 原创出自<a href="http://github.com/onevcat/vno" target="_blank">onevcat</a>
+            基于 <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a> 搭建，使用 <a target="_blank" rel="noopener" href="https://github.com/monniya/hexo-theme-new-vno ">new-vno</a> 主题，由<a target="_blank" rel="noopener" href="https://monniya.com ">@Monniya</a> 修改自 <a href="https://github.com/lenbo-ma/hexo-theme-vno" target="_blank">Vno</a>, 原创出自<a href="http://github.com/onevcat/vno" target="_blank">onevcat</a>
     </span>
     <span class="footer__copyright">
-            <a href="https://beian.miit.gov.cn/">浙ICP备15035859号</a>
+            <a target="_blank" rel="noopener" href="https://beian.miit.gov.cn/">浙ICP备15035859号</a>
     </span>
     
     
